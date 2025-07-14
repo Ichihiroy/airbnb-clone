@@ -1,6 +1,6 @@
 import Navigation from "./Navigation";
-import UserMenu from "./UserMenu";
 import SearchBar from "./SearchBar";
+import { Globe, Menu, User } from "lucide-react";
 
 const Header = () => (
   <header className="bg-zinc-100 border-b border-gray-200 sticky top-0 z-50 hidden lg:block">
@@ -14,7 +14,17 @@ const Header = () => (
         </div>
 
         <Navigation />
-        <UserMenu />
+        <div className="flex items-center space-x-4">
+          <span className="hidden lg:block font-normal">Become a host</span>
+
+          <div className="flex items-center space-x-2 bg-zinc-200 rounded-full p-2 hover:shadow-md transition-shadow">
+            <Globe size={18} />
+          </div>
+
+          <div className="flex items-center bg-zinc-200 space-x-2  rounded-full p-2 hover:shadow-md transition-shadow">
+            <Menu size={18} />
+          </div>
+        </div>
       </div>
       <div className="pb-4 lg:hidden">
         <SearchBar isMobile={true} />

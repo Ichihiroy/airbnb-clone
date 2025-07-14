@@ -1,6 +1,7 @@
 import CategoryNav from "./CategoryNav";
 import MobileSearch from "./MobileSearch";
 import PropertySection from "./PropertySection";
+import Navigation from "./Navigation";
 
 const Main = () => {
   const parisProperties = [
@@ -121,6 +122,11 @@ const Main = () => {
     <main className="bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <MobileSearch />
+
+        <div className="flex md:hidden justify-center items-center mb-6">
+          <Navigation />
+        </div>
+
         <PropertySection
           title="Popular homes in Paris"
           properties={parisProperties}

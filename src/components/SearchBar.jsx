@@ -1,5 +1,4 @@
 import { Search } from "lucide-react";
-import React from "react";
 
 const SearchBar = ({ isMobile = false }) => (
   <div
