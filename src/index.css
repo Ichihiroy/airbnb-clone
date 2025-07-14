@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "AirbnbC";
+  src: url("./assets/AirbnbCereal_W_Md.otf") format("woff2"),
+    url("./assets/AirbnbCereal_W_Md.otf") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: "AirbnbC", sans-serif;
+}
