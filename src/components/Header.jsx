@@ -1,6 +1,6 @@
 import Navigation from "./Navigation";
 import SearchBar from "./SearchBar";
-import { Globe, Menu, User } from "lucide-react";
+import { Globe, Menu } from "lucide-react";
 
 const Header = () => (
   <header className="bg-zinc-100 border-b border-gray-200 sticky top-0 z-50 hidden lg:block">
