@@ -3,7 +3,7 @@ import UserMenu from "./UserMenu";
 import SearchBar from "./SearchBar";
 
 const Header = () => (
-  <header className="bg-white border-b border-gray-200 sticky top-0 z-50 hidden lg:block">
+  <header className="bg-zinc-100 border-b border-gray-200 sticky top-0 z-50 hidden lg:block">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="flex items-center justify-between h-20">
         <div className="flex items-center">

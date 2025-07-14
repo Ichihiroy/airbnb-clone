@@ -126,16 +126,6 @@ const Main = () => {
           properties={parisProperties}
         />
         <PropertySection title="Stay in London" properties={londonProperties} />
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-8 mx-4 lg:mx-0">
-          <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 bg-red-500 rounded flex items-center justify-center">
-              <span className="text-white text-sm">%</span>
-            </div>
-            <span className="font-medium text-gray-900">
-              Prices include all fees
-            </span>
-          </div>
-        </div>
       </div>
     </main>
   );
