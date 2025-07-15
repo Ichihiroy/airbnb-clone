@@ -1,19 +1,22 @@
 const Navigation = () => (
-  <nav className="flex items-centerjustify-center space-x-8">
-    <div className="flex items-center space-x-2">
-      <span className="font-medium">Homes</span>
+  <nav className="flex items-center justify-center gap-4 lg:ms-16">
+    <div className="flex items-center justify-center gap-2 border-b-3 py-2  border-gray-800 ">
+      <span className="text-3xl">🏠</span>
+      <span className="font-medium md:text-md">Homes</span>
     </div>
-    <div className="flex items-center space-x-2">
-      <span className="font-medium">Experiences</span>
-      <span className="bg-gray-800 text-white text-xs px-2 py-1 rounded">
+    <div className="flex items-center gap-2">
+      <span className="text-3xl">🎈</span>
+      <span className="font-medium  md:text-md">Experiences</span>
+      {/* <span className="bg-gray-800 text-white text-xs px-2 py-1 rounded-xl">
         NEW
-      </span>
+      </span> */}
     </div>
-    <div className="flex items-center space-x-2">
-      <span className="font-medium">Services</span>
-      <span className="bg-gray-800 text-white text-xs px-2 py-1 rounded">
+    <div className="flex items-center gap-2">
+      <span className="text-3xl">🔔</span>
+      <span className="font-medium  md:text-md">Services</span>
+      {/* <span className="bg-gray-800 text-white text-xs px-2 py-1 rounded-xl">
         NEW
-      </span>
+      </span> */}
     </div>
   </nav>
 );

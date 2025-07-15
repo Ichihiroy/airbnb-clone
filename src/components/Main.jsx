@@ -1,4 +1,3 @@
-import CategoryNav from "./CategoryNav";
 import MobileSearch from "./MobileSearch";
 import PropertySection from "./PropertySection";
 import Navigation from "./Navigation";
