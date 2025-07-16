@@ -1,5 +1,5 @@
 const Navigation = () => (
-  <nav className="flex items-center justify-center gap-10 lg:ms-16">
+  <nav className="flex items-center justify-center gap-10 lg:ms-32">
     <div className="flex flex-col sm:flex-row items-center justify-center gap-2 border-b-3 py-2  border-gray-800 ">
       <span className="text-3xl">🏠</span>
       <span className="font-medium md:text-md">Homes</span>
