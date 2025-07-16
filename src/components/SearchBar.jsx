@@ -1,5 +1,6 @@
+import { AnimatePresence, motion } from "framer-motion";
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const SearchBar = () => {
   const [active, setActive] = useState({
@@ -9,6 +10,7 @@ const SearchBar = () => {
     guests: false,
     bar: false,
   });
+  const containerRef = useRef(null);
 
   function handleClick(type) {
     // e.target.classList.add("bg-white", "rounded-full");
@@ -21,10 +23,32 @@ const SearchBar = () => {
     });
   }
 
-  console.log(active);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        console.log("Clicked outside", containerRef, event.target);
+        setActive({
+          where: false,
+          bar: false,
+          checkIn: false,
+          checkOut: false,
+          guests: false,
+        });
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setActive]);
 
   return (
     <div
+      ref={containerRef}
       className={`flex
        ${
          active.bar ? "bg-gray-100" : "bg-white"
@@ -45,6 +69,7 @@ const SearchBar = () => {
           className="w-full text-sm text-gray-600 placeholder-gray-400 outline-none"
         />
       </div>
+
       <div
         onClick={() => handleClick("checkIn")}
         className={`ps-6 pe-8 py-3 h-[65px]  border-gray-100  border-r-1 group-hover:border-r-transparent
@@ -91,7 +116,23 @@ const SearchBar = () => {
               active.bar ? "p-3" : "p-4"
             } m-2 hover:bg-red-600 transition-colors flex items-center justify-center gap-2`}
           >
-            <Search size={16} /> {active.bar ? "Search" : ""}
+            <Search size={16} />
+
+            {/* {active.bar ? "Search" : ""} */}
+            <AnimatePresence>
+              {active.bar && (
+                <motion.span
+                  key="text"
+                  initial={{ opacity: 0, width: 0 }}
+                  animate={{ opacity: 1, width: "auto" }}
+                  exit={{ opacity: 0, width: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden whitespace-nowrap"
+                >
+                  Search
+                </motion.span>
+              )}
+            </AnimatePresence>
           </button>
         </div>
       </div>
