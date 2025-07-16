@@ -13,6 +13,7 @@ const Main = () => {
       rating: "4.93",
       badge: "Guest favorite",
     },
+
     {
       image:
         "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=400&fit=crop",
@@ -118,14 +119,8 @@ const Main = () => {
   ];
 
   return (
-    <main className="bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <MobileSearch />
-
-        <div className="flex lg:hidden justify-center items-center mb-6">
-          <Navigation />
-        </div>
-
+    <main className="bg-gray-50 min-h-screen container mx-auto">
+      <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <PropertySection
           title="Popular homes in Paris"
           properties={parisProperties}
