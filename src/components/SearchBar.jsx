@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { div } from "framer-motion/client";
 import { Search } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const SearchBar = () => {
   const [active, setActive] = useState({
@@ -11,6 +10,20 @@ const SearchBar = () => {
     guests: false,
     bar: false,
   });
+
+  const [counts, setCounts] = useState({
+    adults: 0,
+    children: 0,
+    infants: 0,
+    pets: 0,
+  });
+
+  const handleChange = (key, delta) => {
+    setCounts((prev) => ({
+      ...prev,
+      [key]: Math.max(0, prev[key] + delta),
+    }));
+  };
   const containerRef = useRef(null);
 
   const destinations = [
@@ -58,8 +71,22 @@ const SearchBar = () => {
     },
   ];
 
+  const categories = [
+    { key: "adults", label: "Adults", sub: "Ages 13 or above" },
+    { key: "children", label: "Children", sub: "Ages 2 – 12" },
+    { key: "infants", label: "Infants", sub: "Under 2" },
+    {
+      key: "pets",
+      label: "Pets",
+      sub: (
+        <a href="#" className="underline text-zinc-500 text-sm">
+          Bringing a service animal?
+        </a>
+      ),
+    },
+  ];
+
   function handleClick(type) {
-    // e.target.classList.add("bg-white", "rounded-full");
     setActive({
       bar: true,
       where: type === "where" ? true : false,
@@ -120,7 +147,7 @@ const SearchBar = () => {
             initial={{ opacity: 0, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
             className="w-[400px] max-w-md mx-auto mt-10 h-[400px] rounded-4xl overflow-hidden shadow-lg bg-white absolute left-0 top-10 p-5 overflow-y-auto overflow-x-hidden"
           >
             <h2 className="text-sm font-light px-4 pb-1 ">
@@ -176,7 +203,7 @@ const SearchBar = () => {
       </div>
       <div
         onClick={() => handleClick("guests")}
-        className={`flex items-center justify-between h-[65px] flex-1 ps-6 pe-0.5 gap-3 border-gray-100  
+        className={`flex items-center justify-between h-[65px] flex-1 ps-6 pe-0.5 gap-3 border-gray-100  relative
           ${
             active.guests
               ? "bg-white rounded-full shadow-lg"
@@ -213,6 +240,53 @@ const SearchBar = () => {
             </AnimatePresence>
           </button>
         </div>
+
+        {active.guests && (
+          <motion.div
+            initial={{ opacity: 0, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="bg-white rounded-2xl shadow-2xl p-8 w-[400px] max-w-md mx-auto absolute right-0 top-20"
+          >
+            {categories.map(({ key, label, sub }, idx) => (
+              <React.Fragment key={key}>
+                {idx !== 0 && <hr className="my-5 border-gray-200" />}
+                <div className="flex items-center justify-between min-h-[60px]">
+                  <div>
+                    <div className="font-semibold text-lg">{label}</div>
+                    <div className="text-gray-500 text-sm mt-1">
+                      {typeof sub === "string" ? sub : sub}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => handleChange(key, -1)}
+                      disabled={counts[key] === 0}
+                      className={`w-9 h-9 p-1 rounded-full border border-gray-300 bg-white text-2xl flex items-center justify-center transition
+                  ${
+                    counts[key] === 0
+                      ? "text-gray-300 cursor-not-allowed"
+                      : "text-gray-800 hover:border-gray-400 active:bg-gray-100"
+                  }`}
+                    >
+                      –
+                    </button>
+                    <span className="w-6 text-center text-base">
+                      {counts[key]}
+                    </span>
+                    <button
+                      onClick={() => handleChange(key, 1)}
+                      className="w-9 h-9 rounded-full border border-gray-300 bg-white text-2xl flex items-center justify-center text-gray-800 hover:border-gray-400 active:bg-gray-100 transition"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </React.Fragment>
+            ))}
+          </motion.div>
+        )}
       </div>
     </div>
   );
