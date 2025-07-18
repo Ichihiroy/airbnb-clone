@@ -18,13 +18,30 @@ const SearchBar = () => {
     pets: 0,
   });
 
-  const handleChange = (key, delta) => {
-    setCounts((prev) => ({
-      ...prev,
-      [key]: Math.max(0, prev[key] + delta),
-    }));
-  };
   const containerRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        console.log("Clicked outside", containerRef, event.target);
+        setActive({
+          where: false,
+          bar: false,
+          checkIn: false,
+          checkOut: false,
+          guests: false,
+        });
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setActive]);
 
   const destinations = [
     {
@@ -86,6 +103,13 @@ const SearchBar = () => {
     },
   ];
 
+  const handleChange = (key, delta) => {
+    setCounts((prev) => ({
+      ...prev,
+      [key]: Math.max(0, prev[key] + delta),
+    }));
+  };
+
   function handleClick(type) {
     setActive({
       bar: true,
@@ -95,29 +119,6 @@ const SearchBar = () => {
       guests: type === "guests" ? true : false,
     });
   }
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target)
-      ) {
-        console.log("Clicked outside", containerRef, event.target);
-        setActive({
-          where: false,
-          bar: false,
-          checkIn: false,
-          checkOut: false,
-          guests: false,
-        });
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [setActive]);
 
   return (
     <div
