@@ -119,7 +119,7 @@ const Main = () => {
   ];
 
   return (
-    <main className="bg-white min-h-screen container mx-auto">
+    <main className="bg-white  container mx-auto">
       <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <PropertySection
           title="Popular homes in Paris"

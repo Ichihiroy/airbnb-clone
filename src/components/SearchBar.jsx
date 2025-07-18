@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
+import { div } from "framer-motion/client";
 import { Search } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
@@ -11,6 +12,51 @@ const SearchBar = () => {
     bar: false,
   });
   const containerRef = useRef(null);
+
+  const destinations = [
+    {
+      city: "Nearby",
+      desc: "Find what’s around you",
+      icon: "📍",
+      color: "bg-blue-100 text-blue-600",
+    },
+    {
+      city: "Tbilisi, Georgia",
+      desc: "For sights like Bridge of Peace",
+      icon: "🏙️",
+      color: "bg-green-100 text-green-600",
+    },
+    {
+      city: "Baku, Azerbaijan",
+      desc: "For its bustling nightlife",
+      icon: "🌆",
+      color: "bg-amber-100 text-amber-600",
+    },
+    {
+      city: "Istanbul, Türkiye",
+      desc: "For its stunning architecture",
+      icon: "🏛️",
+      color: "bg-blue-100 text-blue-700",
+    },
+    {
+      city: "Batumi, Georgia",
+      desc: "For nature-lovers",
+      icon: "🌳",
+      color: "bg-green-100 text-green-700",
+    },
+    {
+      city: "London, United Kingdom",
+      desc: "For sights like Buckingham Palace",
+      icon: "🏰",
+      color: "bg-yellow-100 text-yellow-700",
+    },
+    {
+      city: "Almaty, Kazakhstan",
+      desc: "Popular lake destination",
+      icon: "🏞️",
+      color: "bg-orange-100 text-orange-700",
+    },
+  ];
 
   function handleClick(type) {
     // e.target.classList.add("bg-white", "rounded-full");
@@ -56,7 +102,7 @@ const SearchBar = () => {
     >
       <div
         onClick={() => handleClick("where")}
-        className={`flex-1 ps-6 pe-0  hover:rounded-full py-3 h-[65px] border-gray-100 border-r-1 group-hover:border-r-transparent ${
+        className={`flex-1 ps-6 pe-0  hover:rounded-full py-3 h-[65px] border-gray-100 border-r-1 group-hover:border-r-transparent relative  ${
           active.where
             ? "bg-white rounded-full shadow-lg"
             : "rounded-r-none hover:rounded-full hover:bg-zinc-200"
@@ -68,6 +114,38 @@ const SearchBar = () => {
           placeholder="Search destinations"
           className="w-full text-sm text-gray-600 placeholder-gray-400 outline-none"
         />
+
+        {active.where ? (
+          <motion.div
+            initial={{ opacity: 0, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="w-[400px] max-w-md mx-auto mt-10 h-[400px] rounded-4xl overflow-hidden shadow-lg bg-white absolute left-0 top-10 p-5 overflow-y-auto overflow-x-hidden"
+          >
+            <h2 className="text-sm font-light px-4 pb-1 ">
+              Suggested destinations
+            </h2>
+            <ul>
+              {destinations.map((dest, index) => (
+                <li
+                  key={index}
+                  className="flex items-center gap-4 px-4 py-3 hover:bg-gray-100 cursor-pointer rounded-xl "
+                >
+                  <div className={`rounded-full p-2 ${dest.color}`}>
+                    <span className="text-xl">{dest.icon}</span>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-gray-800">{dest.city}</h3>
+                    <p className="text-sm text-gray-500">{dest.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        ) : (
+          ""
+        )}
       </div>
 
       <div
