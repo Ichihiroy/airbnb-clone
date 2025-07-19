@@ -5,7 +5,6 @@ const PropertyCard = ({
   image,
   title,
   subtitle,
-  price,
   rating,
   isFavorite = false,
   badge = null,
@@ -32,13 +31,12 @@ const PropertyCard = ({
     <div className="text-sm space-y-0.5">
       <div className="flex items-center justify-between">
         <h3 className="font-medium truncate text-gray-900">{title}</h3>
-        <div className="flex items-center space-x-1">
-          <Star size={10} className="fill-gray-900 text-gray-900" />
-          <span className="text-xs">{rating}</span>
-        </div>
       </div>
-      <p className="text-gray-500">{subtitle}</p>
-      <p className="text-gray-900 font-semibold">{price}</p>
+      <div className="flex items-center space-x-1">
+        <p className="text-gray-500">{subtitle}</p>
+        <Star size={10} className="fill-gray-500 text-gray-500" />
+        <span className="text-xs text-gray-500">{rating}</span>
+      </div>
     </div>
   </div>
 );
