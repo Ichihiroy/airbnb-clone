@@ -4,13 +4,15 @@ import React from "react";
 const PropertyCard = ({
   images,
   type,
+  typeOfPlace,
   price,
   rating,
+  location,
   isFavorite = false,
   badge = null,
 }) => (
   <div className="w-[180px] flex-shrink-0">
-    <div className="relative w-full h-[180px] rounded-lg overflow-hidden mb-2">
+    <div className="relative w-full h-[180px] rounded-3xl overflow-hidden mb-2">
       <img
         src={images[0]}
         alt={type}
@@ -18,8 +20,12 @@ const PropertyCard = ({
       />
       <button className="absolute top-2 right-2 p-1">
         <Heart
-          size={16}
-          className={isFavorite ? "fill-red-500 text-red-500" : "text-white"}
+          size={24}
+          className={
+            isFavorite
+              ? "fill-red-500 text-red-500"
+              : "text-white fill-gray-500/50 hover:scale-120 transition-transform duration-300"
+          }
         />
       </button>
       {badge && (
@@ -30,7 +36,9 @@ const PropertyCard = ({
     </div>
     <div className="text-sm space-y-0.5">
       <div className="flex items-center justify-between">
-        <h3 className="font-medium truncate text-gray-900">{type}</h3>
+        <h3 className="font-medium truncate text-gray-900">
+          {typeOfPlace} in {location.city}
+        </h3>
       </div>
       <div className="flex items-center space-x-1">
         <p className="text-gray-500">
