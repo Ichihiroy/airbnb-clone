@@ -1,6 +1,10 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Search } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
+import { addDays } from "date-fns";
+import { DateRangePicker } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 const SearchBar = () => {
   const [active, setActive] = useState({
@@ -17,6 +21,14 @@ const SearchBar = () => {
     infants: 0,
     pets: 0,
   });
+
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: "selection",
+    },
+  ]);
 
   const containerRef = useRef(null);
 
@@ -178,7 +190,7 @@ const SearchBar = () => {
 
       <div
         onClick={() => handleClick("checkIn")}
-        className={`ps-6 pe-8 py-3 h-[65px]  border-gray-100  border-r-1 group-hover:border-r-transparent
+        className={`ps-6 pe-8 py-3 h-[65px]  border-gray-100  border-r-1 group-hover:border-r-transparent relative
           ${
             active.checkIn
               ? "bg-white rounded-full shadow-lg group-focus:border-r-transparent"
@@ -188,6 +200,22 @@ const SearchBar = () => {
       >
         <div className="text-xs font-medium text-gray-900 mb-1">Check in</div>
         <div className="text-sm text-gray-400">Add dates</div>
+
+        {active.checkIn || active.checkOut ? (
+          <div className="absolute top-70 left-15 w-full h-full flex items-center justify-center shadow-2xl rounded-4xl">
+            <DateRangePicker
+              onChange={(item) => setState([item.selection])}
+              showSelectionPreview={true}
+              moveRangeOnFirstSelection={false}
+              months={2}
+              ranges={state}
+              direction="horizontal"
+            />
+            ;
+          </div>
+        ) : (
+          ""
+        )}
       </div>
       <div
         onClick={() => handleClick("checkOut")}
@@ -248,7 +276,7 @@ const SearchBar = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 0 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="bg-white rounded-2xl shadow-2xl p-8 w-[400px] max-w-md mx-auto absolute right-0 top-20"
+            className="bg-white rounded-4xl shadow-2xl p-8 w-[400px] max-w-md mx-auto absolute right-0 top-20"
           >
             {categories.map(({ key, label, sub }, idx) => (
               <React.Fragment key={key}>
