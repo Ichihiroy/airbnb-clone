@@ -13,6 +13,33 @@ const Main = () => {
       rating: "4.93",
       badge: "Guest favorite",
     },
+    {
+      image:
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=400&fit=crop",
+      title: "Room in Notre Dame",
+      subtitle: "$201 for 2 nights",
+      price: "★ 4.93",
+      rating: "4.93",
+      badge: "Guest favorite",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=400&fit=crop",
+      title: "Room in Notre Dame",
+      subtitle: "$201 for 2 nights",
+      price: "★ 4.93",
+      rating: "4.93",
+      badge: "Guest favorite",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=400&fit=crop",
+      title: "Room in Notre Dame",
+      subtitle: "$201 for 2 nights",
+      price: "★ 4.93",
+      rating: "4.93",
+      badge: "Guest favorite",
+    },
 
     {
       image:
@@ -69,6 +96,24 @@ const Main = () => {
       subtitle: "£180 for 2 nights",
       price: "★ 4.78",
       rating: "4.78",
+      badge: "Guest favorite",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=400&fit=crop",
+      title: "Room in Notre Dame",
+      subtitle: "$201 for 2 nights",
+      price: "★ 4.93",
+      rating: "4.93",
+      badge: "Guest favorite",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=400&fit=crop",
+      title: "Room in Notre Dame",
+      subtitle: "$201 for 2 nights",
+      price: "★ 4.93",
+      rating: "4.93",
       badge: "Guest favorite",
     },
     {
