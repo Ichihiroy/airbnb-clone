@@ -17,7 +17,7 @@ const PropertySection = ({ title, properties }) => {
 
   return (
     <section className="mb-10">
-      <div className="flex items-center justify-between mb-4 px-1">
+      <div className="flex items-center justify-between mb-4 px-3">
         <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
         <div className="flex items-center space-x-2">
           <button
@@ -38,7 +38,7 @@ const PropertySection = ({ title, properties }) => {
       <div className="overflow-x-auto">
         <div
           ref={scrollRef}
-          className="flex gap-4 px-1 pb-2 overflow-x-auto scrollbar-hide"
+          className="flex gap-4 px-3 pb-2 overflow-x-auto scrollbar-hide"
         >
           {properties.map((property, index) => (
             <div key={index} ref={index === 0 ? cardRef : null}>

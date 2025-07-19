@@ -180,7 +180,7 @@ const Main = () => {
 
   return (
     <main className="bg-white  container mx-auto">
-      <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-9xl mx-auto  md:px-6 lg:px-8 py-8">
         <PropertySection title="Popular homes" properties={data} />
         <PropertySection
           title="Stay in Baku"
