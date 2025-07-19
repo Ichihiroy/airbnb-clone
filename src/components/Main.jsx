@@ -181,14 +181,11 @@ const Main = () => {
   return (
     <main className="bg-white  container mx-auto">
       <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <PropertySection title="Popular homes" properties={data} />
         <PropertySection
-          title="Popular homes in Paris"
-          properties={data.filter((item) => item.location.country === "France")}
-        />
-        <PropertySection
-          title="Stay in London"
+          title="Stay in Baku"
           properties={data.filter(
-            (item) => item.location.country === "United Kingdom"
+            (item) => item.location.country === "Azerbaijan"
           )}
         />
       </div>
