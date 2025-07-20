@@ -1,6 +1,7 @@
 import PropertySection from "../components/PropertySection";
 import { useEffect, useState } from "react";
 import { getAllProperties } from "../services/propertyServices";
+import Loading from "./Loading";
 
 const Main = () => {
   const [data, setData] = useState([]);
@@ -10,6 +11,10 @@ const Main = () => {
       setData(properties);
     });
   }, []);
+
+  if (!data.length) {
+    return <Loading />;
+  }
 
   return (
     <main className="bg-white  container mx-auto">

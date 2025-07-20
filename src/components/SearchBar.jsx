@@ -38,7 +38,6 @@ const SearchBar = () => {
         containerRef.current &&
         !containerRef.current.contains(event.target)
       ) {
-        console.log("Clicked outside", containerRef, event.target);
         setActive({
           where: false,
           bar: false,
