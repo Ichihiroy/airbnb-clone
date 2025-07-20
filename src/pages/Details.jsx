@@ -136,7 +136,7 @@ const Details = () => {
             </li>
           </ul>
 
-          <div className="w-3/4 border-b pb-8 border-gray-300">
+          <div className="w-3/4  pb-8 ">
             <p className="text-md text-gray-900">
               Historic and picturesque district. Museums and entertainment
               nearby. World restaurants and mini-markets.
@@ -146,8 +146,9 @@ const Details = () => {
               or troubleshooting needed!
             </p>
           </div>
+          <hr className="mb-6 text-gray-300" />
 
-          <div className="mt-6">
+          <div className="mt-6 border-b pb-8 border-gray-300">
             <h3 className="font-semibold mb-2">Where you’ll sleep</h3>
             <div className="border rounded-xl p-4 w-48">
               <p className="text-sm font-medium">Bedroom</p>
@@ -156,7 +157,9 @@ const Details = () => {
           </div>
 
           <div className="mt-6">
-            <h3 className="font-semibold mb-2">What this place offers</h3>
+            <h3 className="font-semibold mb-3 text-xl">
+              What this place offers
+            </h3>
             <ul className="grid grid-cols-2 gap-4 text-md text-gray-800">
               <li>Kitchen</li>
               <li>Wifi</li>
