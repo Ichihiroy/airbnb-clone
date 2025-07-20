@@ -1,5 +1,5 @@
 import axios from "axios";
-import PropertySection from "./PropertySection";
+import PropertySection from "../components/PropertySection";
 import { useEffect, useState } from "react";
 
 const Main = () => {
