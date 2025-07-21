@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getPropertyById } from "../services/propertyServices";
 import Loading from "./Loading";
+import UserRatings from "../components/UserRatings";
 import {
   CalendarFold,
   Heart,
@@ -9,6 +10,7 @@ import {
   MapPin,
   Share,
   Star,
+  StarIcon,
 } from "lucide-react";
 
 const Details = () => {
@@ -152,7 +154,9 @@ const Details = () => {
             <h3 className="font-semibold mb-2">Where you’ll sleep</h3>
             <div className="border rounded-xl p-4 w-48">
               <p className="text-sm font-medium">Bedroom</p>
-              <p className="text-xs text-gray-500">1 single bed</p>
+              <p className="text-xs text-gray-500">
+                {property.roomDetails.bedType}
+              </p>
             </div>
           </div>
 
@@ -161,20 +165,23 @@ const Details = () => {
               What this place offers
             </h3>
             <ul className="grid grid-cols-2 gap-4 text-md text-gray-800">
-              <li>Kitchen</li>
-              <li>Wifi</li>
-              <li>Dedicated workspace</li>
-              <li>Free washer – In unit</li>
-              <li>Free dryer – In unit</li>
-              <li>Bathtub</li>
-              <li>Indoor fireplace: wood-burning</li>
-              <li>Luggage dropoff allowed</li>
+              {property.amenities.available.map((amenity, i) => (
+                <li key={i}>{amenity}</li>
+              ))}
+              {property.amenities.unavailable.map((amenity, i) => (
+                <li key={i} className=" line-through">
+                  {amenity}
+                </li>
+              ))}
             </ul>
           </div>
         </div>
 
         <div className="w-full lg:w-[400px] border border-gray-200 rounded-xl py-5 px-6 shadow-md sticky top-10 h-[300px]">
-          <div className="text-lg font-semibold">$200 for 2 nights</div>
+          <div className="text-lg font-semibold">
+            {property.price.total} {property.price.currency} for{" "}
+            {property.price.nights} nights
+          </div>
           <div className="text-sm text-gray-500 mb-2">
             Prices include all fees
           </div>
@@ -202,6 +209,50 @@ const Details = () => {
           </p>
         </div>
       </div>
+
+      {property.rating.score > 4.9 ? (
+        <div className="w-full px-6 py-12 flex flex-col items-center text-center space-y-2 border-t border-b border-gray-300 mt-10">
+          <div className="flex items-center justify-center space-x-4 text-6xl font-semibold mt-4">
+            <span className="text-yellow-500">
+              <img
+                src="/rating-left.avif"
+                alt="Rating-left"
+                className="w-[90px]"
+              />
+            </span>
+            <span className="text-8xl mb-8">{property.rating.score}</span>
+            <span className="text-yellow-500">
+              <img
+                src="/rating-right.avif"
+                className="w-[90px]"
+                alt="Rating-right"
+              />
+            </span>
+          </div>
+
+          <div className="text-2xl font-semibold">Guest favorite</div>
+          <p className="text-gray-500 max-w-md">
+            This home is in the <strong className="text-black">top 10%</strong>{" "}
+            of eligible listings based on ratings, reviews, and reliability
+          </p>
+          <UserRatings />
+        </div>
+      ) : (
+        <div className="w-full px-6 py-12 flex flex-col items-center text-center space-y-2 border-t border-b border-gray-300 mt-10">
+          <div className="flex items-center justify-center space-x-4 text-6xl font-semibold mt-4">
+            <span className="text-8xl mb-8">{property.rating.score}</span>
+            <span>
+              <StarIcon size={40} className="mb-5" />
+            </span>
+          </div>
+
+          <div className="text-2xl font-semibold">
+            {property.rating.reviewsCount} reviews
+          </div>
+
+          <UserRatings />
+        </div>
+      )}
     </div>
   );
 };
