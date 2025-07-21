@@ -4,6 +4,7 @@ import Main from "./pages/Main.jsx";
 import Details from "./pages/Details.jsx";
 import "./index.css";
 import HomepageLayout from "./layout/HomepageLayout.jsx";
+import DetailsLayout from "./layout/DetailsLayout.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,8 +16,18 @@ const router = createBrowserRouter([
         index: true,
         element: <Main />,
       },
+      // {
+      //   path: "/details/:id",
+      //   element: <Details />,
+      // },
+    ],
+  },
+  {
+    path: "/details",
+    element: <DetailsLayout />,
+    children: [
       {
-        path: "/details/:id",
+        path: ":id",
         element: <Details />,
       },
     ],

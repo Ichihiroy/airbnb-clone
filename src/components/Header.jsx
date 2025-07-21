@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import MobileSearch from "./MobileSearch";
 import Navigation from "./Navigation";
 import SearchBar from "./SearchBar";
@@ -8,9 +9,12 @@ const Header = () => (
     <div className="bg-zinc-100 sticky top-0 z-50 hidden lg:block container mx-auto">
       <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center w-25">
-            <img src="/logo.png" alt="" />
-          </div>
+          <Link to="/" className="flex items-center">
+            <div className="flex items-center w-25">
+              <img src="/logo.png" alt="" />
+            </div>
+          </Link>
+
           <Navigation />
           <div className="flex items-center space-x-4">
             <span className="hidden lg:block font-normal">Become a host</span>
