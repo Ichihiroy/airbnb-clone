@@ -12,8 +12,8 @@ const UserRatings = () => {
     <>
       <div className="w-full px-4 pt-6 max-w-6xl mx-auto">
         {/* Top section: Overall rating bar */}
-        <div className="flex flex-col sm:flex-row sm:divide-x  pb-8 mb-8">
-          <div className="w-full sm:w-1/6 px-4 mb-6 sm:mb-0">
+        <div className="flex flex-col md:flex-row md:divide-x  pb-8 mb-8">
+          <div className="w-full xs:w-1/6 lg:w-1/6 px-4 mb-6 sm:mb-0">
             <div className="text-sm font-semibold mb-2">Overall rating</div>
             <div className=" text-sm">
               {[
@@ -34,7 +34,7 @@ const UserRatings = () => {
           </div>
 
           <div className="w-full sm:w-5/6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-y-8 text-center">
-            <div className="flex flex-col items-start justify-between w-full border-r border-gray-300 px-4">
+            <div className="flex flex-col items-start justify-between w-full lg:border-r-1 border-r-0 border-gray-300 px-4">
               <div className="flex flex-col  items-start justify-center space-x-2 mb-1">
                 <div className="text-sm mb-1">Cleanliness</div>
                 <div className="text-lg font-semibold">4.8</div>
@@ -43,7 +43,7 @@ const UserRatings = () => {
               <SprayCan size={36} className="mb-1" />
             </div>
 
-            <div className="flex flex-col items-start justify-between w-full border-r border-gray-300 px-4">
+            <div className="flex flex-col lg:items-start justify-between w-full border-r-0 lg:border-r-1 border-gray-300 px-4">
               <div className="flex flex-col  items-start justify-center space-x-2 mb-1">
                 <div className="text-sm mb-1">Accuracy</div>
                 <div className="text-lg font-semibold">5.0</div>
@@ -52,7 +52,7 @@ const UserRatings = () => {
               <CheckCircle size={36} className="mb-1" />
             </div>
 
-            <div className="flex flex-col items-start justify-between w-full border-r border-gray-300 px-4">
+            <div className="flex flex-col items-start justify-between w-full border-r-0 lg:border-r-1 border-gray-300 px-4">
               <div className="flex flex-col  items-start justify-center space-x-2 mb-1">
                 <div className="text-sm mb-1">Check-In</div>
                 <div className="text-lg font-semibold">4.7</div>
@@ -61,7 +61,7 @@ const UserRatings = () => {
               <KeyRound size={36} className="mb-1" />
             </div>
 
-            <div className="flex flex-col items-start justify-between w-full border-r border-gray-300 px-4">
+            <div className="flex flex-col items-start justify-between w-full border-r-0 lg:border-r-1 border-gray-300 px-4">
               <div className="flex flex-col  items-start justify-center space-x-2 mb-1">
                 <div className="text-sm mb-1">Communication</div>
                 <div className="text-lg font-semibold">4.9</div>
@@ -70,7 +70,7 @@ const UserRatings = () => {
               <MessageSquare size={36} className="mb-1" />
             </div>
 
-            <div className="flex flex-col items-start justify-between w-full border-r border-gray-300 px-4">
+            <div className="flex flex-col items-start justify-between w-full border-r-0 lg:border-r-1 border-gray-300 px-4">
               <div className="flex flex-col  items-start justify-center space-x-2 mb-1">
                 <div className="text-sm mb-1">Location</div>
                 <div className="text-lg font-semibold">4.9</div>
@@ -79,7 +79,7 @@ const UserRatings = () => {
               <MapIcon size={36} className="mb-1" />
             </div>
 
-            <div className="flex flex-col items-start justify-between w-full border-r md:border-r-0 border-gray-300 px-4">
+            <div className="flex flex-col items-start justify-between w-full   px-4">
               <div className="flex flex-col  items-start justify-center space-x-2 mb-1">
                 <div className="text-sm mb-1">Value</div>
                 <div className="text-lg font-semibold">4.8</div>

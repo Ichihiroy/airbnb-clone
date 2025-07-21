@@ -5,6 +5,7 @@ import Loading from "./Loading";
 import UserRatings from "../components/UserRatings";
 import {
   CalendarFold,
+  ChevronRight,
   Heart,
   KeyRound,
   MapPin,
@@ -164,7 +165,7 @@ const Details = () => {
             <h3 className="font-semibold mb-3 text-xl">
               What this place offers
             </h3>
-            <ul className="grid grid-cols-2 gap-4 text-md text-gray-800">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-md text-gray-800">
               {property.amenities.available.map((amenity, i) => (
                 <li key={i}>{amenity}</li>
               ))}
@@ -177,7 +178,7 @@ const Details = () => {
           </div>
         </div>
 
-        <div className="w-full lg:w-[400px] border border-gray-200 rounded-xl py-5 px-6 shadow-md sticky top-10 h-[300px]">
+        <div className="w-full lg:w-[400px] border hidden lg:block border-gray-200 rounded-xl py-5 px-6 shadow-md sticky top-10 h-[300px]">
           <div className="text-lg font-semibold">
             {property.price.total} {property.price.currency} for{" "}
             {property.price.nights} nights
@@ -253,6 +254,62 @@ const Details = () => {
           <UserRatings />
         </div>
       )}
+
+      <div className="w-full max-w-6xl mx-auto px-4 py-10 ">
+        <h2 className="text-2xl font-semibold mb-8">Things to know</h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="border-b lg:border-b-0 border-gray-300 pb-4">
+            <h3 className="text-base font-semibold mb-2">House rules</h3>
+            <ul className="text-md space-y-3">
+              <li className="text-gray-500 lg:text-black">
+                Check-in after 3:00 PM
+              </li>
+              <li className="text-gray-500 lg:text-black">
+                Checkout before 11:00 AM
+              </li>
+              <li className="text-gray-500 lg:text-black">1 guest maximum</li>
+            </ul>
+            <button className="mt-4 text-sm font-semibold underline inline-flex items-center hover:opacity-80">
+              Show more <ChevronRight className="ml-1" size={16} />
+            </button>
+          </div>
+
+          <div className="border-b lg:border-b-0 border-gray-300 pb-4">
+            <h3 className="text-base font-semibold mb-2">Safety & property</h3>
+            <ul className="text-md space-y-3">
+              <li className="text-gray-500 lg:text-black">
+                No carbon monoxide alarm
+              </li>
+              <li className="text-gray-500 lg:text-black">Smoke alarm</li>
+              <li className="text-gray-500 lg:text-black">
+                Some spaces are shared
+              </li>
+            </ul>
+            <button className="mt-4 text-sm font-semibold underline inline-flex items-center hover:opacity-80">
+              Show more <ChevronRight className="ml-1" size={16} />
+            </button>
+          </div>
+
+          <div>
+            <h3 className="text-base font-semibold mb-2">
+              Cancellation policy
+            </h3>
+            <ul className="text-md space-y-3">
+              <li className="text-gray-500 lg:text-black">
+                Free cancellation before Dec 11. Cancel before check-in on Dec
+                12 for a partial refund.
+              </li>
+              <li className="text-gray-500 lg:text-black">
+                Review this Host's full policy for details.
+              </li>
+            </ul>
+            <button className="mt-4 text-sm font-semibold underline inline-flex items-center hover:opacity-80">
+              Show more <ChevronRight className="ml-1" size={16} />
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

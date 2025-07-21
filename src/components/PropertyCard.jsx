@@ -10,10 +10,9 @@ const PropertyCard = ({
   rating,
   location,
   isFavorite = false,
-  badge = null,
 }) => (
   <Link to={`/details/${id}`}>
-    <div className="w-[180px] flex-shrink-0">
+    <div className="w-[180px] flex-shrink-0 relative">
       <div className="relative w-full h-[180px] rounded-3xl overflow-hidden mb-2">
         <img
           src={images[0]}
@@ -30,10 +29,12 @@ const PropertyCard = ({
             }
           />
         </button>
-        {badge && (
-          <div className="absolute top-2 left-2 bg-white text-xs px-2 py-0.5 rounded-full font-medium shadow">
-            {badge}
+        {rating.score > 4.9 ? (
+          <div className="absolute top-3 left-3 bg-gray-100 border border-white text-xs px-2 py-0.5 rounded-full font-medium shadow">
+            Guest Favorite
           </div>
+        ) : (
+          ""
         )}
       </div>
       <div className="text-sm space-y-0.5">
