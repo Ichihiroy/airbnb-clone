@@ -29,8 +29,8 @@ const Details = () => {
   }
 
   return (
-    <div className="max-w-screen-xl mx-auto py-4 px-5 lg:px-14 lg:py-8">
-      <div className="flex justify-between items-center mb-4">
+    <div className="max-w-screen-xl mx-auto py-4 px-5 lg:px-14 lg:py-8 ">
+      <div className="flex justify-between items-center mb-4 ">
         <h1 className="text-2xl font-semibold ">
           {property.title} in {property.location.city}
         </h1>
@@ -202,7 +202,7 @@ const Details = () => {
             </div>
           </div>
 
-          <button className="w-full bg-pink-600 hover:bg-pink-700 text-white py-2 rounded-full font-semibold transition-colors">
+          <button className="w-full bg-[#FF385C] hover:bg-[#ff3860d2] text-white py-2 rounded-full font-semibold transition-colors">
             Reserve
           </button>
           <p className="text-xs text-center text-gray-500 mt-2">

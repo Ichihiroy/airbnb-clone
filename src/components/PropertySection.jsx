@@ -22,13 +22,13 @@ const PropertySection = ({ title, properties }) => {
         <div className="flex items-center space-x-2">
           <button
             onClick={() => scroll("left")}
-            className="p-1 rounded-full hover:bg-gray-200"
+            className="p-1 rounded-full hover:bg-gray-200 hidden md:block"
           >
             <ChevronLeft size={20} />
           </button>
           <button
             onClick={() => scroll("right")}
-            className="p-1 rounded-full hover:bg-gray-200"
+            className="p-1 rounded-full hover:bg-gray-200 hidden md:block"
           >
             <ChevronRight size={20} />
           </button>

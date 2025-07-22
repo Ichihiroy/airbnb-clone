@@ -6,7 +6,7 @@ import { Globe, Menu } from "lucide-react";
 
 const Header = () => (
   <header className="bg-zinc-100 w-full md:border-b border-gray-200 ">
-    <div className="bg-zinc-100 sticky top-0 z-50 hidden lg:block container mx-auto">
+    <div className="bg-zinc-100 sticky top-0 z-50 hidden md:block container mx-auto">
       <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <Link to="/" className="flex items-center">
@@ -37,7 +37,7 @@ const Header = () => (
       </div>
     </div>
 
-    <div className="pt-4 lg:hidden shadow-lg">
+    <div className="pt-4 md:hidden shadow-lg">
       <MobileSearch />
       <div className="flex lg:hidden justify-center items-center">
         <Navigation />
