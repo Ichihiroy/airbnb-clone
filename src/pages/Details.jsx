@@ -17,6 +17,7 @@ import {
 const Details = () => {
   const { id } = useParams();
   const [property, setProperty] = useState(null);
+  const [showHeader, setShowHeader] = useState(false);
 
   useEffect(() => {
     getPropertyById(id).then((data) => {
@@ -24,12 +25,31 @@ const Details = () => {
     });
   }, [id]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowHeader(window.scrollY > 650);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   if (!property) {
     return <Loading />;
   }
 
   return (
-    <div className="max-w-screen-xl mx-auto py-4 px-5 lg:px-14 lg:py-8 ">
+    <div
+      className={`max-w-screen-xl mx-auto py-4 px-5 lg:px-14 lg:py-8 ${
+        showHeader ? "mt-40" : ""
+      }`}
+    >
+      {showHeader && (
+        <div className="fixed top-0 left-0 w-full p-7 shadow-lg border-b border-gray-300 z-50 bg-white mb-10">
+          I am the sticky header!
+        </div>
+      )}
+
       <div className="flex justify-between items-center mb-4 ">
         <h1 className="text-2xl font-semibold ">
           {property.title} in {property.location.city}
@@ -178,7 +198,9 @@ const Details = () => {
           </div>
         </div>
 
-        <div className="w-full lg:w-[400px] border hidden lg:block border-gray-200 rounded-xl py-5 px-6 shadow-md sticky top-10 h-[300px]">
+        <div
+          className={`w-full lg:w-[400px] border hidden lg:block border-gray-200 rounded-xl py-5 px-6 shadow-md sticky top-10 h-[300px] `}
+        >
           <div className="text-lg font-semibold">
             {property.price.total} {property.price.currency} for{" "}
             {property.price.nights} nights
