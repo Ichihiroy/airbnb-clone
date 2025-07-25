@@ -87,7 +87,7 @@ const Details = () => {
                   </span>
                 </div>
               </div>
-              <button className="w-full bg-[#FF385C] hover:bg-[#ff3860d2] text-white py-3 rounded-full font-semibold transition-colors px-10">
+              <button className="w-full bg-[#FF385C] hover:bg-[#a1233a] text-white py-3 rounded-full font-semibold transition-colors px-10">
                 Reserve
               </button>
             </div>
@@ -262,7 +262,7 @@ const Details = () => {
             </div>
           </div>
 
-          <button className="w-full bg-[#FF385C] hover:bg-[#ff3860d2] text-white py-2 rounded-full font-semibold transition-colors">
+          <button className="w-full bg-[#FF385C] hover:bg-[#a1233a] text-white py-2 rounded-full font-semibold transition-colors">
             Reserve
           </button>
           <p className="text-xs text-center text-gray-500 mt-2">

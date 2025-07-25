@@ -11,6 +11,7 @@ const Loading = () => {
         justifyContent: "center",
         background: "#fff",
       }}
+      className="mt-45"
     >
       <svg
         width="64"

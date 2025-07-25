@@ -36,7 +36,7 @@ const Header = () => {
             {showCompactHeader ? (
               <motion.div
                 key="header"
-                initial={{ opacity: 0, y: -20 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
@@ -58,7 +58,14 @@ const Header = () => {
                 </div>
               </motion.div>
             ) : (
-              <Navigation />
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Navigation />
+              </motion.div>
             )}
 
             <div className="flex items-center space-x-4">

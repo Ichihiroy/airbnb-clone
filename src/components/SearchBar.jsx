@@ -245,9 +245,9 @@ const SearchBar = () => {
         </div>
         <div>
           <button
-            className={`bg-red-500 text-white rounded-full ${
+            className={` text-white rounded-full ${
               active.bar ? "p-3" : "p-4"
-            } m-2 hover:bg-red-600 transition-colors flex items-center justify-center gap-2`}
+            } m-2 bg-[#FF385C] hover:bg-[#a1233a] transition-colors flex items-center justify-center gap-2`}
           >
             <Search size={16} />
 
