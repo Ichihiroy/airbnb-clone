@@ -41,8 +41,19 @@ const Details = () => {
   return (
     <div className={`max-w-screen-xl mx-auto py-4 px-5 lg:px-14 lg:py-8 `}>
       {showHeader && (
-        <div className="hidden md:block fixed top-0 left-0 w-full p-7 shadow-lg border-b  px-34 mx-auto border-gray-300 z-50 bg-white ">
-          I am the sticky header!
+        <div className="hidden md:flex gap-5 fixed top-0 left-0 w-full p-7 shadow-lg border-b  lg:px-34 mx-auto border-gray-300 z-50 bg-white ">
+          <p className="text-sm">
+            <a href="#photos">Photos</a>
+          </p>
+          <p className="text-sm">
+            <a href="#amenities">Amenities</a>
+          </p>
+          <p className="text-sm">
+            <a href="#reviews">Reviews</a>
+          </p>
+          <p className="text-sm">
+            <a href="#location">Location</a>
+          </p>
         </div>
       )}
 
@@ -62,7 +73,7 @@ const Details = () => {
         </div>
       </div>
 
-      <div className="flex justify-center gap-2 mb-8 ">
+      <div className="flex justify-center gap-2 mb-8" id="photos">
         <img
           src={property.images[0]}
           alt="Main room"
@@ -177,7 +188,7 @@ const Details = () => {
             </div>
           </div>
 
-          <div className="mt-6">
+          <div className="mt-6" id="amenities">
             <h3 className="font-semibold mb-3 text-xl">
               What this place offers
             </h3>
@@ -230,7 +241,10 @@ const Details = () => {
       </div>
 
       {property.rating.score > 4.9 ? (
-        <div className="w-full px-6 py-12 flex flex-col items-center text-center space-y-2 border-t border-b border-gray-300 mt-10">
+        <div
+          className="w-full px-6 py-12 flex flex-col items-center text-center space-y-2 border-t border-b border-gray-300 mt-10"
+          id="reviews"
+        >
           <div className="flex items-center justify-center space-x-4 text-6xl font-semibold mt-4">
             <span className="text-yellow-500">
               <img
@@ -257,7 +271,10 @@ const Details = () => {
           <UserRatings />
         </div>
       ) : (
-        <div className="w-full px-6 py-12 flex flex-col items-center text-center space-y-2 border-t border-b border-gray-300 mt-10">
+        <div
+          className="w-full px-6 py-12 flex flex-col items-center text-center space-y-2 border-t border-b border-gray-300 mt-10"
+          id="reviews"
+        >
           <div className="flex items-center justify-center space-x-4 text-6xl font-semibold mt-4">
             <span className="text-8xl mb-8">{property.rating.score}</span>
             <span>
