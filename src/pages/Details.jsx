@@ -115,7 +115,7 @@ const Details = () => {
         <img
           src={property.images[0]}
           alt="Main room"
-          className="w-[550px] h-101 object-cover rounded-tl-xl rounded-bl-xl col-span-2"
+          className="w-max-[550px] h-101 object-cover rounded-tl-xl rounded-bl-xl col-span-2"
         />
         <div className="grid grid-cols-2 gap-1">
           {[2, 3].map((id) => (
