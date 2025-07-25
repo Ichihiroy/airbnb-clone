@@ -14,7 +14,7 @@ const AirbnbDatePicker = () => {
   ]);
 
   return (
-    <div className="bg-white rounded-3xl p-6 shadow-xl w-[870px] ml-16">
+    <div className="bg-white rounded-3xl p-6 shadow-xl w-[870px] ml-18">
       <div className="flex justify-center">
         <DateRange
           ranges={range}
