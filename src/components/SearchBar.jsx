@@ -1,10 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Search } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
-import { addDays } from "date-fns";
-import { DateRangePicker } from "react-date-range";
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
+import AirbnbDatePicker from "./AirbnbDatePicker";
 
 const SearchBar = () => {
   const [active, setActive] = useState({
@@ -21,14 +18,6 @@ const SearchBar = () => {
     infants: 0,
     pets: 0,
   });
-
-  const [state, setState] = useState([
-    {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
-      key: "selection",
-    },
-  ]);
 
   const containerRef = useRef(null);
 
@@ -201,17 +190,17 @@ const SearchBar = () => {
         <div className="text-sm text-gray-400">Add dates</div>
 
         {active.checkIn || active.checkOut ? (
-          <div className="absolute top-70 left-15 w-full h-full flex items-center justify-center shadow-2xl rounded-4xl">
-            <DateRangePicker
-              onChange={(item) => setState([item.selection])}
-              showSelectionPreview={true}
-              moveRangeOnFirstSelection={false}
-              months={2}
-              ranges={state}
-              direction="horizontal"
-            />
-            ;
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 0 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="absolute w-full h-full flex items-center justify-center shadow-2xl rounded-4xl"
+          >
+            <div className="absolute z-50 top-7">
+              <AirbnbDatePicker />
+            </div>
+          </motion.div>
         ) : (
           ""
         )}
