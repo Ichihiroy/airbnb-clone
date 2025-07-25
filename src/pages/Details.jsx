@@ -27,7 +27,7 @@ const Details = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowHeader(window.scrollY > 650);
+      setShowHeader(window.scrollY > 550);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -39,13 +39,9 @@ const Details = () => {
   }
 
   return (
-    <div
-      className={`max-w-screen-xl mx-auto py-4 px-5 lg:px-14 lg:py-8 ${
-        showHeader ? "mt-40" : ""
-      }`}
-    >
+    <div className={`max-w-screen-xl mx-auto py-4 px-5 lg:px-14 lg:py-8 `}>
       {showHeader && (
-        <div className="fixed top-0 left-0 w-full p-7 shadow-lg border-b border-gray-300 z-50 bg-white mb-10">
+        <div className="hidden md:block fixed top-0 left-0 w-full p-7 shadow-lg border-b  px-34 mx-auto border-gray-300 z-50 bg-white ">
           I am the sticky header!
         </div>
       )}
@@ -66,7 +62,7 @@ const Details = () => {
         </div>
       </div>
 
-      <div className="flex justify-center gap-2 mb-8">
+      <div className="flex justify-center gap-2 mb-8 ">
         <img
           src={property.images[0]}
           alt="Main room"
@@ -96,7 +92,7 @@ const Details = () => {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-35">
+      <div className="flex flex-col md:flex-row gap-35">
         <div className="flex-1 ">
           <p className="text-xl font-medium">
             {property.typeOfPlace} in {property.location.city},{" "}
@@ -199,7 +195,7 @@ const Details = () => {
         </div>
 
         <div
-          className={`w-full lg:w-[400px] border hidden lg:block border-gray-200 rounded-xl py-5 px-6 shadow-md sticky top-10 h-[300px] `}
+          className={`w-[300px] lg:w-[400px]  border hidden md:block border-gray-200 rounded-xl py-5 px-6 shadow-md sticky top-25 h-[300px] self-start `}
         >
           <div className="text-lg font-semibold">
             {property.price.total} {property.price.currency} for{" "}
@@ -281,7 +277,7 @@ const Details = () => {
         <h2 className="text-2xl font-semibold mb-8">Things to know</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="border-b lg:border-b-0 border-gray-300 pb-4">
+          <div className="border-b md:border-b-0 border-gray-300 pb-4">
             <h3 className="text-base font-semibold mb-2">House rules</h3>
             <ul className="text-md space-y-3">
               <li className="text-gray-500 lg:text-black">
@@ -297,7 +293,7 @@ const Details = () => {
             </button>
           </div>
 
-          <div className="border-b lg:border-b-0 border-gray-300 pb-4">
+          <div className="border-b md:border-b-0 border-gray-300 pb-4">
             <h3 className="text-base font-semibold mb-2">Safety & property</h3>
             <ul className="text-md space-y-3">
               <li className="text-gray-500 lg:text-black">
