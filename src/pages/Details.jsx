@@ -205,14 +205,7 @@ const Details = () => {
           </ul>
 
           <div className="w-3/4  pb-8 ">
-            <p className="text-md text-gray-900">
-              Historic and picturesque district. Museums and entertainment
-              nearby. World restaurants and mini-markets.
-            </p>
-            <p className="text-md text-gray-900 mt-2">
-              During your stay, I am very easily reachable for any information
-              or troubleshooting needed!
-            </p>
+            <p className="text-md text-gray-900">{property.description}</p>
           </div>
           <hr className="mb-6 text-gray-300" />
 
