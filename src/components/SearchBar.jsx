@@ -34,8 +34,6 @@ const SearchBar = () => {
     },
   });
 
-  console.log("Filters:", filters);
-
   // const [filteredData, setFilteredData] = useState(data);
 
   // function filterByDestination(city) {
@@ -278,7 +276,11 @@ const SearchBar = () => {
             className="absolute w-full h-full flex items-center justify-center shadow-2xl rounded-4xl"
           >
             <div className="absolute z-50 top-7">
-              <AirbnbDatePicker />
+              <AirbnbDatePicker
+                setFilters={setFilters}
+                filters={filters}
+                handleClick={handleClick}
+              />
             </div>
           </motion.div>
         ) : (
@@ -297,6 +299,7 @@ const SearchBar = () => {
       >
         <div className="text-xs font-medium text-gray-900 ">Check out</div>
         <input
+          value={filters.checkOut}
           className="text-sm text-gray-600 placeholder-gray-400 w-[80px]"
           placeholder="Add dates"
         />
@@ -316,26 +319,20 @@ const SearchBar = () => {
           <input
             className="text-sm text-gray-600 placeholder-gray-400 outline-none w-full"
             placeholder="Add guests"
-            value={
-              Object.entries(filters.guests)
-                .map(([key, value]) => (value ? "" + value + " " + key : " "))
-                .join(", ") === " ,  ,  ,  "
-                ? ""
-                : Object.entries(filters.guests)
-                    .map(([key, value]) =>
-                      value
-                        ? value +
-                          " " +
-                          (key !== "children" && value == 1
-                            ? key.slice(0, -1)
-                            : key) +
-                          ","
-                        : ""
-                    )
-                    .join(" ")
-                    .trim()
-                    .slice(0, -1)
-            }
+            value={Object.entries(filters.guests)
+              .map(([key, value]) =>
+                value
+                  ? value +
+                    " " +
+                    (key !== "children" && value == 1
+                      ? key.slice(0, -1)
+                      : key) +
+                    ","
+                  : ""
+              )
+              .join(" ")
+              .trim()
+              .slice(0, -1)}
           />
         </div>
         <div>
