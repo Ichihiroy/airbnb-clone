@@ -1,16 +1,10 @@
 import PropertySection from "../components/PropertySection";
-import { useEffect, useState } from "react";
-import { getAllProperties } from "../services/propertyServices";
+import { useContext } from "react";
 import Loading from "./Loading";
+import { PropertyContext } from "../context/PropertyContext";
 
 const Main = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    getAllProperties().then((properties) => {
-      setData(properties);
-    });
-  }, []);
+  const { data } = useContext(PropertyContext);
 
   if (!data.length) {
     return <Loading />;

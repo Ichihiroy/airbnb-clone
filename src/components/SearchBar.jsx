@@ -45,12 +45,6 @@ const SearchBar = () => {
 
   const destinations = [
     {
-      city: "Nearby",
-      desc: "Find what’s around you",
-      icon: "📍",
-      color: "bg-blue-100 text-blue-600",
-    },
-    {
       city: "Tbilisi, Georgia",
       desc: "For sights like Bridge of Peace",
       icon: "🏙️",
@@ -240,7 +234,6 @@ const SearchBar = () => {
           >
             <Search size={16} />
 
-            {/* {active.bar ? "Search" : ""} */}
             <AnimatePresence>
               {active.bar && (
                 <motion.span
