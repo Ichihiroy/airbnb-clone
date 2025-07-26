@@ -19,7 +19,7 @@ const PropertyCard = ({
           alt={type}
           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
-        <button className="absolute top-2 right-2 p-1">
+        <button className="absolute top-2 right-2 p-1 cursor-pointer">
           <Heart
             size={24}
             className={

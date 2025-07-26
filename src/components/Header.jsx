@@ -41,7 +41,7 @@ const Header = () => {
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="bg-white shadow-md rounded-full flex items-center justify-between gap-5 px-4 lg:ml-30 py-3  border border-gray-300 relative">
+                <div className="bg-white shadow-md cursor-pointer rounded-full flex items-center justify-between gap-5 px-4 lg:ml-30 py-3  border border-gray-300 relative">
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 text-2xl">
                     🏠
                   </div>
@@ -69,13 +69,15 @@ const Header = () => {
             )}
 
             <div className="flex items-center space-x-4">
-              <span className="hidden lg:block font-normal">Become a host</span>
+              <span className="hidden lg:block font-normal cursor-pointer">
+                Become a host
+              </span>
 
-              <div className="flex items-center space-x-2 bg-zinc-200 rounded-full p-2 hover:shadow-md transition-shadow">
+              <div className="flex items-center space-x-2 cursor-pointer bg-zinc-200 rounded-full p-2 hover:shadow-md transition-shadow">
                 <Globe size={18} />
               </div>
 
-              <div className="flex items-center bg-zinc-200 space-x-2  rounded-full p-2 hover:shadow-md transition-shadow">
+              <div className="flex items-center bg-zinc-200 space-x-2 cursor-pointer  rounded-full p-2 hover:shadow-md transition-shadow">
                 <Menu size={18} />
               </div>
             </div>

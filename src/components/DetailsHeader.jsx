@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 const DetailsHeader = () => {
   return (
-    <header className="bg-white  md:border-b border-gray-200  mx-auto   ">
+    <header className="bg-white  md:border-b border-gray-200  mx-auto ">
       <div className="bg-white sticky top-0 z-50 hidden md:block mx-auto container max-w-screen-xl  lg:px-8">
         <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
@@ -13,7 +13,7 @@ const DetailsHeader = () => {
               </div>
             </Link>
 
-            <div className="bg-white shadow-md rounded-full flex items-center justify-between gap-5 px-4 lg:ml-30 py-3  border border-gray-300 relative">
+            <div className="bg-white shadow-md rounded-full flex items-center justify-between gap-5 px-4 lg:ml-30 py-3  border border-gray-300 relative cursor-pointer">
               <div className="absolute left-3 top-1/2 -translate-y-1/2 text-2xl">
                 🏠
               </div>
@@ -30,13 +30,15 @@ const DetailsHeader = () => {
             </div>
 
             <div className="flex items-center space-x-4">
-              <span className="hidden lg:block font-normal">Become a host</span>
+              <span className="hidden lg:block font-normal cursor-pointer">
+                Become a host
+              </span>
 
-              <div className="flex items-center space-x-2 bg-zinc-200 rounded-full p-2 hover:shadow-md transition-shadow">
+              <div className="flex items-center space-x-2 cursor-pointer bg-zinc-200 rounded-full p-2 hover:shadow-md transition-shadow">
                 <Globe size={18} />
               </div>
 
-              <div className="flex items-center bg-zinc-200 space-x-2  rounded-full p-2 hover:shadow-md transition-shadow">
+              <div className="flex items-center bg-zinc-200 space-x-2 cursor-pointer rounded-full p-2 hover:shadow-md transition-shadow">
                 <Menu size={18} />
               </div>
             </div>

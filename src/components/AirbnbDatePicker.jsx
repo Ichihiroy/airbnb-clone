@@ -7,35 +7,40 @@ import "react-date-range/dist/theme/default.css";
 const AirbnbDatePicker = ({ setFilters, filters }) => {
   const [range, setRange] = useState([
     {
-      startDate: filters?.checkIn ? new Date(filters.checkIn) : new Date(),
-      endDate: filters?.checkOut
-        ? new Date(filters.checkOut)
-        : addDays(new Date(), 1),
+      startDate:
+        filters?.checkIn && !isNaN(new Date(filters.checkIn))
+          ? new Date(filters.checkIn)
+          : new Date(),
+      endDate:
+        filters?.checkOut && !isNaN(new Date(filters.checkOut))
+          ? new Date(filters.checkOut)
+          : addDays(new Date(), 1),
       key: "selection",
     },
   ]);
 
   useEffect(() => {
-    const date = range
-      .map(
-        (obj) =>
-          `${obj.startDate?.toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-          })} , ${obj.endDate?.toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-          })}`
-      )[0]
-      .split(" , ");
+    const formatDate = (dateObj) => {
+      if (!(dateObj instanceof Date) || isNaN(dateObj.getTime())) return null;
 
-    console.log(date);
+      return dateObj.toLocaleDateString("en-US", {
+        month: "long",
+        day: "numeric",
+      });
+    };
 
-    setFilters({
-      ...filters,
-      checkIn: date[0],
-      checkOut: date[1] == date[0] ? "" : date[1],
-    });
+    const formattedStart = formatDate(range[0].startDate);
+    const formattedEnd = formatDate(range[0].endDate);
+
+    if (formattedStart && formattedEnd) {
+      setFilters({
+        ...filters,
+        checkIn: formattedStart,
+        checkOut: formattedEnd === formattedStart ? "" : formattedEnd,
+      });
+
+      console.log([formattedStart, formattedEnd]);
+    }
   }, [range]);
 
   return (

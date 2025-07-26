@@ -87,7 +87,7 @@ const Details = () => {
                   </span>
                 </div>
               </div>
-              <button className="w-full bg-[#FF385C] hover:bg-[#a1233a] text-white py-3 rounded-full font-semibold transition-colors px-10">
+              <button className="w-full bg-[#FF385C] hover:bg-[#a1233a] text-white py-3 rounded-full font-semibold transition-colors px-10 cursor-pointer">
                 Reserve
               </button>
             </div>
@@ -100,11 +100,11 @@ const Details = () => {
           {property.title} in {property.location.city}
         </h1>
         <div className="flex gap-4 ">
-          <p className="text-sm flex items-center gap-2">
+          <p className="text-sm flex items-center gap-2 cursor-pointer">
             <Share size={15} />
             <span className="underline">Share</span>
           </p>
-          <p className="text-sm flex items-center gap-2">
+          <p className="text-sm flex items-center gap-2 cursor-pointer">
             <Heart size={15} />
             <span className="underline">Save</span>
           </p>
@@ -262,7 +262,7 @@ const Details = () => {
             </div>
           </div>
 
-          <button className="w-full bg-[#FF385C] hover:bg-[#a1233a] text-white py-2 rounded-full font-semibold transition-colors">
+          <button className="w-full bg-[#FF385C] hover:bg-[#a1233a] text-white py-2 rounded-full font-semibold transition-colors cursor-pointer">
             Reserve
           </button>
           <p className="text-xs text-center text-gray-500 mt-2">

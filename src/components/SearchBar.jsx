@@ -178,7 +178,7 @@ const SearchBar = () => {
   };
 
   useEffect(() => {
-    filters.checkIn && filters.checkOut === "" && handleClick("checkOut");
+    filters.checkIn && filters.checkOut === "" && handleClick("checkIn");
   }, [filters]);
 
   function handleClick(type) {
@@ -194,7 +194,7 @@ const SearchBar = () => {
   return (
     <div
       ref={containerRef}
-      className={`flex
+      className={`flex cursor-pointer
        ${
          active.bar ? "bg-gray-100" : "bg-white"
        } border my-3 items-center h-full border-zinc-200 rounded-full shadow-sm hover:shadow-md transition-shadow group`}
@@ -210,6 +210,7 @@ const SearchBar = () => {
         <div className="text-xs font-medium text-gray-900">Where</div>
         <input
           value={filters.destination}
+          readOnly
           type="text"
           placeholder="Search destinations"
           className="w-full text-sm text-gray-600 placeholder-gray-400 outline-none "
@@ -267,10 +268,11 @@ const SearchBar = () => {
         <div className="text-xs font-medium text-gray-900 ">Check in</div>
         <input
           value={filters.checkIn}
-          type="text"
-          className="text-sm text-gray-600 placeholder-gray-400 outline-none w-[80px]"
-          placeholder="Add dates"
+          readOnly
           onChange={(e) => setFilters({ ...filters, checkIn: e.target.value })}
+          type="text"
+          className="text-sm text-gray-600 placeholder-gray-400 outline-none w-[85px] cursor-pointer"
+          placeholder="Add dates"
         />
 
         {active.checkIn || active.checkOut ? (
@@ -305,8 +307,10 @@ const SearchBar = () => {
       >
         <div className="text-xs font-medium text-gray-900 ">Check out</div>
         <input
+          readOnly
           value={filters.checkOut}
-          className="text-sm text-gray-600 placeholder-gray-400 w-[80px]"
+          onChange={(e) => setFilters({ ...filters, checkOut: e.target.value })}
+          className="text-sm text-gray-600 placeholder-gray-400 w-[85px] cursor-pointer"
           placeholder="Add dates"
         />
       </div>
@@ -323,8 +327,9 @@ const SearchBar = () => {
         <div className="flex flex-col items-start">
           <div className="text-xs font-medium text-gray-900">Who</div>
           <input
-            className="text-sm text-gray-600 placeholder-gray-400 outline-none w-full"
+            className="text-sm text-gray-600 placeholder-gray-400 outline-none w-full cursor-pointer"
             placeholder="Add guests"
+            readOnly
             value={Object.entries(filters.guests)
               .map(([key, value]) =>
                 value
@@ -345,7 +350,7 @@ const SearchBar = () => {
           <button
             className={` text-white rounded-full ${
               active.bar ? "p-3" : "p-4"
-            } m-2 bg-[#FF385C] hover:bg-[#a1233a] transition-colors flex items-center justify-center gap-2`}
+            } m-2 bg-[#FF385C] hover:bg-[#a1233a] transition-colors flex items-center justify-center gap-2 cursor-pointer`}
           >
             <Search size={16} />
 
