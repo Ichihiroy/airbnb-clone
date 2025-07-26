@@ -1,9 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Search } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import AirbnbDatePicker from "./AirbnbDatePicker";
+import { PropertyContext } from "../context/PropertyContext";
 
 const SearchBar = () => {
+  const { data } = useContext(PropertyContext);
+
   const [active, setActive] = useState({
     where: false,
     checkIn: false,
@@ -18,6 +21,29 @@ const SearchBar = () => {
     infants: 0,
     pets: 0,
   });
+
+  const [filters, setFilters] = useState({
+    destination: "",
+    checkIn: "",
+    checkOut: "",
+    guests: {
+      adults: 0,
+      children: 0,
+      infants: 0,
+      pets: 0,
+    },
+  });
+
+  console.log("Filters:", filters);
+
+  // const [filteredData, setFilteredData] = useState(data);
+
+  // function filterByDestination(city) {
+  //   const filtered = data.filter(
+  //     (property) => property.location.city === city.split(",")[0]
+  //   );
+  //   setFilteredData(filtered);
+  // }
 
   const containerRef = useRef(null);
 
@@ -144,6 +170,11 @@ const SearchBar = () => {
       ...prev,
       [key]: Math.max(0, prev[key] + delta),
     }));
+
+    setFilters({
+      ...filters,
+      guests: { ...filters.guests, [key]: Math.max(0, counts[key] + delta) },
+    });
   };
 
   function handleClick(type) {
@@ -174,9 +205,10 @@ const SearchBar = () => {
       >
         <div className="text-xs font-medium text-gray-900">Where</div>
         <input
+          value={filters.destination}
           type="text"
           placeholder="Search destinations"
-          className="w-full text-sm text-gray-600 placeholder-gray-400 outline-none"
+          className="w-full text-sm text-gray-600 placeholder-gray-400 outline-none "
         />
 
         {active.where ? (
@@ -193,6 +225,12 @@ const SearchBar = () => {
             <ul>
               {destinations.map((dest, index) => (
                 <li
+                  onClick={() =>
+                    setFilters({
+                      ...filters,
+                      destination: dest.city.split(",")[0],
+                    })
+                  }
                   key={index}
                   className="flex items-center gap-4 px-4 py-3 hover:bg-gray-100 cursor-pointer rounded-xl "
                 >
@@ -222,8 +260,14 @@ const SearchBar = () => {
           }
           `}
       >
-        <div className="text-xs font-medium text-gray-900 mb-1">Check in</div>
-        <div className="text-sm text-gray-400">Add dates</div>
+        <div className="text-xs font-medium text-gray-900 ">Check in</div>
+        <input
+          value={filters.checkIn}
+          type="text"
+          className="text-sm text-gray-600 placeholder-gray-400 outline-none w-[80px]"
+          placeholder="Add dates"
+          onChange={(e) => setFilters({ ...filters, checkIn: e.target.value })}
+        />
 
         {active.checkIn || active.checkOut ? (
           <motion.div
@@ -251,8 +295,11 @@ const SearchBar = () => {
           }
           `}
       >
-        <div className="text-xs font-medium text-gray-900 mb-1">Check out</div>
-        <div className="text-sm text-gray-400">Add dates</div>
+        <div className="text-xs font-medium text-gray-900 ">Check out</div>
+        <input
+          className="text-sm text-gray-600 placeholder-gray-400 w-[80px]"
+          placeholder="Add dates"
+        />
       </div>
       <div
         onClick={() => handleClick("guests")}
@@ -266,7 +313,30 @@ const SearchBar = () => {
       >
         <div className="flex flex-col items-start">
           <div className="text-xs font-medium text-gray-900">Who</div>
-          <div className="text-sm text-gray-400">Add guests</div>
+          <input
+            className="text-sm text-gray-600 placeholder-gray-400 outline-none w-full"
+            placeholder="Add guests"
+            value={
+              Object.entries(filters.guests)
+                .map(([key, value]) => (value ? "" + value + " " + key : " "))
+                .join(", ") === " ,  ,  ,  "
+                ? ""
+                : Object.entries(filters.guests)
+                    .map(([key, value]) =>
+                      value
+                        ? value +
+                          " " +
+                          (key !== "children" && value == 1
+                            ? key.slice(0, -1)
+                            : key) +
+                          ","
+                        : ""
+                    )
+                    .join(" ")
+                    .trim()
+                    .slice(0, -1)
+            }
+          />
         </div>
         <div>
           <button
