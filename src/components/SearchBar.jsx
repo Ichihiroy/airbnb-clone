@@ -45,9 +45,57 @@ const SearchBar = () => {
 
   const destinations = [
     {
-      city: "Tbilisi, Georgia",
-      desc: "For sights like Bridge of Peace",
-      icon: "🏙️",
+      city: "Paris, France",
+      desc: "For sights like the Eiffel Tower",
+      icon: "🗼",
+      color: "bg-pink-100 text-pink-600",
+    },
+    {
+      city: "Amsterdam, Netherlands",
+      desc: "For its scenic canals and bikes",
+      icon: "🚲",
+      color: "bg-blue-100 text-blue-600",
+    },
+    {
+      city: "Berlin, Germany",
+      desc: "For its rich history and museums",
+      icon: "🏛️",
+      color: "bg-gray-100 text-gray-600",
+    },
+    {
+      city: "Lisbon, Portugal",
+      desc: "For its vibrant culture and hills",
+      icon: "🌉",
+      color: "bg-red-100 text-red-600",
+    },
+    {
+      city: "Barcelona, Spain",
+      desc: "For Gaudí architecture and beaches",
+      icon: "🏖️",
+      color: "bg-yellow-100 text-yellow-600",
+    },
+    {
+      city: "London, United Kingdom",
+      desc: "For sights like Buckingham Palace",
+      icon: "🏰",
+      color: "bg-yellow-100 text-yellow-700",
+    },
+    {
+      city: "Rome, Italy",
+      desc: "For its ancient ruins and pasta",
+      icon: "🏺",
+      color: "bg-green-100 text-green-700",
+    },
+    {
+      city: "Dublin, Ireland",
+      desc: "For cozy pubs and folklore",
+      icon: "🍀",
+      color: "bg-emerald-100 text-emerald-700",
+    },
+    {
+      city: "Ljubljana, Slovenia",
+      desc: "For a peaceful green escape",
+      icon: "🌿",
       color: "bg-green-100 text-green-600",
     },
     {
@@ -57,28 +105,22 @@ const SearchBar = () => {
       color: "bg-amber-100 text-amber-600",
     },
     {
-      city: "Istanbul, Türkiye",
-      desc: "For its stunning architecture",
+      city: "Athens, Greece",
+      desc: "For ancient ruins and history",
       icon: "🏛️",
-      color: "bg-blue-100 text-blue-700",
+      color: "bg-indigo-100 text-indigo-700",
     },
     {
-      city: "Batumi, Georgia",
-      desc: "For nature-lovers",
-      icon: "🌳",
-      color: "bg-green-100 text-green-700",
-    },
-    {
-      city: "London, United Kingdom",
-      desc: "For sights like Buckingham Palace",
+      city: "Prague, Czech Republic",
+      desc: "For fairy tale castles",
       icon: "🏰",
-      color: "bg-yellow-100 text-yellow-700",
+      color: "bg-purple-100 text-purple-700",
     },
     {
-      city: "Almaty, Kazakhstan",
-      desc: "Popular lake destination",
-      icon: "🏞️",
-      color: "bg-orange-100 text-orange-700",
+      city: "Vienna, Austria",
+      desc: "For music and elegant cafés",
+      icon: "🎻",
+      color: "bg-red-100 text-red-700",
     },
   ];
 

@@ -5,22 +5,15 @@ const PropertyContext = createContext();
 
 export const PropertyProvider = ({ children }) => {
   const [data, setData] = useState([]);
-  const [destination, setDestination] = useState(new Set());
 
   useEffect(() => {
     getAllProperties().then((properties) => {
       setData(properties);
     });
-
-    getAllProperties().then((properties) => {
-      setDestination(
-        new Set(properties.map((property) => property.location.country))
-      );
-    });
   }, []);
 
   return (
-    <PropertyContext.Provider value={{ data, destination }}>
+    <PropertyContext.Provider value={{ data }}>
       {children}
     </PropertyContext.Provider>
   );
