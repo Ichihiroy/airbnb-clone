@@ -34,6 +34,8 @@ const SearchBar = () => {
     },
   });
 
+  console.log("Filters:", filters);
+
   // const [filteredData, setFilteredData] = useState(data);
 
   // function filterByDestination(city) {
@@ -174,6 +176,10 @@ const SearchBar = () => {
       guests: { ...filters.guests, [key]: Math.max(0, counts[key] + delta) },
     });
   };
+
+  useEffect(() => {
+    filters.checkIn && filters.checkOut === "" && handleClick("checkOut");
+  }, [filters]);
 
   function handleClick(type) {
     setActive({
