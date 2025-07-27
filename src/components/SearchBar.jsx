@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import AirbnbDatePicker from "./AirbnbDatePicker";
 import { PropertyContext } from "../context/PropertyContext";
@@ -34,16 +34,43 @@ const SearchBar = () => {
     },
   });
 
-  console.log("Filters:", filters);
+  // console.log("Filters:", filters);
 
-  // const [filteredData, setFilteredData] = useState(data);
+  const [filteredData, setFilteredData] = useState([]);
 
-  // function filterByDestination(city) {
-  //   const filtered = data.filter(
-  //     (property) => property.location.city === city.split(",")[0]
-  //   );
-  //   setFilteredData(filtered);
-  // }
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
+
+  function filterData() {
+    console.log(filteredData);
+    const filtered = filteredData
+      .filter(
+        (property) =>
+          filters.destination === "" ||
+          property.location.city === filters.destination
+      )
+      .filter(
+        (property) =>
+          filters.checkIn == "" || property.checkIn === filters.checkIn
+      )
+      .filter(
+        (property) =>
+          filters.checkOut == "" || property.checkOut === filters.checkOut
+      );
+    // .filter((property) => {
+    //   const { adults, children, infants, pets } = filters.guests;
+    //   return (
+    //     property.guests.adults === adults &&
+    //     property.guests.children === children &&
+    //     property.guests.infants === infants &&
+    //     property.guests.pets === pets
+    //   );
+    // });
+
+    setFilteredData(filtered);
+    console.log("Filtered Data:", filtered);
+  }
 
   const containerRef = useRef(null);
 
@@ -191,6 +218,10 @@ const SearchBar = () => {
     });
   }
 
+  function handleClear(type) {
+    setFilters({ ...filters, [type]: "" });
+  }
+
   return (
     <div
       ref={containerRef}
@@ -215,6 +246,17 @@ const SearchBar = () => {
           placeholder="Search destinations"
           className="w-full text-sm text-gray-600 placeholder-gray-400 outline-none "
         />
+
+        {active.where && (
+          <div className="absolute top-0 right-0 h-full flex items-center pr-4 ">
+            <button
+              onClick={() => handleClear("destination")}
+              className="text-gray-500 hover:bg-gray-100 rounded-full p-1 transition-colors duration-200 cursor-pointer"
+            >
+              <X size={14} strokeWidth={3} />
+            </button>
+          </div>
+        )}
 
         {active.where ? (
           <motion.div
@@ -275,6 +317,17 @@ const SearchBar = () => {
           placeholder="Add dates"
         />
 
+        {active.checkIn && (
+          <div className="absolute top-0 right-0 h-full flex items-center pr-4">
+            <button
+              onClick={() => handleClear("checkIn")}
+              className="text-gray-500 hover:bg-gray-100 rounded-full p-1 transition-colors duration-200 cursor-pointer"
+            >
+              <X size={14} strokeWidth={3} />
+            </button>
+          </div>
+        )}
+
         {active.checkIn || active.checkOut ? (
           <motion.div
             initial={{ opacity: 0, y: 0 }}
@@ -297,7 +350,7 @@ const SearchBar = () => {
       </div>
       <div
         onClick={() => handleClick("checkOut")}
-        className={`ps-6 pe-8 py-3 h-[65px] border-gray-100   border-r-1 group-hover:border-r-transparent
+        className={`ps-6 pe-8 py-3 h-[65px] border-gray-100  relative  border-r-1 group-hover:border-r-transparent
           ${
             active.checkOut
               ? "bg-white rounded-full shadow-lg"
@@ -313,6 +366,16 @@ const SearchBar = () => {
           className="text-sm text-gray-600 placeholder-gray-400 w-[85px] cursor-pointer"
           placeholder="Add dates"
         />
+        {active.checkOut && (
+          <div className="absolute top-0 right-0 h-full flex items-center pr-4">
+            <button
+              onClick={() => handleClear("checkOut")}
+              className="text-gray-500 hover:bg-gray-100 rounded-full p-1 transition-colors duration-200 cursor-pointer"
+            >
+              <X size={14} strokeWidth={3} />
+            </button>
+          </div>
+        )}
       </div>
       <div
         onClick={() => handleClick("guests")}
@@ -346,8 +409,19 @@ const SearchBar = () => {
               .slice(0, -1)}
           />
         </div>
+        {active.guests && (
+          <div className="absolute top-0 right-26 h-full flex items-center pr-4">
+            <button
+              onClick={() => handleClear("guests")}
+              className="text-gray-500 hover:bg-gray-100 rounded-full p-1 transition-colors duration-200 cursor-pointer"
+            >
+              <X size={14} strokeWidth={3} />
+            </button>
+          </div>
+        )}
         <div>
           <button
+            onClick={() => filterData("guests")}
             className={` text-white rounded-full ${
               active.bar ? "p-3" : "p-4"
             } m-2 bg-[#FF385C] hover:bg-[#a1233a] transition-colors flex items-center justify-center gap-2 cursor-pointer`}

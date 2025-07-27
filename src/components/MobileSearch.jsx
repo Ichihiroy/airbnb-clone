@@ -1,10 +1,10 @@
 import { Search } from "lucide-react";
 
 const MobileSearch = () => (
-  <div className="md:hidden bg-white border border-gray-300 rounded-full shadow-sm mx-4 mb-8">
-    <div className="flex items-center px-4 py-3">
-      <Search size={20} className="text-gray-600 mr-3" />
-      <span className="text-gray-600">Start your search</span>
+  <div className="md:hidden bg-white border-gray-300 rounded-full shadow-lg mx-4 mb-4">
+    <div className="flex items-center justify-center px-4 py-4">
+      <Search size={14} className="mr-3" />
+      <span className="text-sm">Start your search</span>
     </div>
   </div>
 );
