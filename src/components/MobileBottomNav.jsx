@@ -1,7 +1,7 @@
 import { Heart, Search, User } from "lucide-react";
 
 const MobileBottomNav = () => (
-  <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+  <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-40">
     <div className="grid grid-cols-3 py-2">
       <button className="flex flex-col items-center py-2 text-red-500">
         <Search size={20} />

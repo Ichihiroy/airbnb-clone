@@ -5,9 +5,11 @@ import SearchBar from "./SearchBar";
 import { Globe, Menu, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import MobileSearchBar from "./MobileSearchBar";
 
 const Header = () => {
   const [showCompactHeader, setShowCompactHeader] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -108,11 +110,13 @@ const Header = () => {
       </div>
 
       <div className="pt-4 md:hidden shadow-lg">
-        <MobileSearch />
+        <MobileSearch setIsOpen={setIsOpen} />
         <div className="flex md:hidden justify-center items-center">
           <Navigation />
         </div>
       </div>
+
+      {isOpen && <MobileSearchBar setIsOpen={setIsOpen} />}
     </header>
   );
 };
