@@ -1,107 +1,32 @@
-import { useEffect, useState } from "react";
-import {
-  Calendar,
-  Users,
-  Search,
-  ChevronDown,
-  ChevronUp,
-  X,
-} from "lucide-react";
+import React, { useContext, useEffect, useState } from "react";
+import { Minus, Plus, X } from "lucide-react";
+import { FiltersContext } from "../context/FiltersContext";
+import AirbnbDatePicker from "./AirbnbDatePicker";
 
 export default function MobileSearchBar({ setIsOpen }) {
   const [openSection, setOpenSection] = useState(null);
-
-  const destinations = [
-    {
-      city: "Paris, France",
-      desc: "For sights like the Eiffel Tower",
-      icon: "🗼",
-      color: "bg-pink-100 text-pink-600",
-    },
-    {
-      city: "Amsterdam, Netherlands",
-      desc: "For its scenic canals and bikes",
-      icon: "🚲",
-      color: "bg-blue-100 text-blue-600",
-    },
-    {
-      city: "Berlin, Germany",
-      desc: "For its rich history and museums",
-      icon: "🏛️",
-      color: "bg-gray-100 text-gray-600",
-    },
-    {
-      city: "Lisbon, Portugal",
-      desc: "For its vibrant culture and hills",
-      icon: "🌉",
-      color: "bg-red-100 text-red-600",
-    },
-    {
-      city: "Barcelona, Spain",
-      desc: "For Gaudí architecture and beaches",
-      icon: "🏖️",
-      color: "bg-yellow-100 text-yellow-600",
-    },
-    {
-      city: "London, United Kingdom",
-      desc: "For sights like Buckingham Palace",
-      icon: "🏰",
-      color: "bg-yellow-100 text-yellow-700",
-    },
-    {
-      city: "Rome, Italy",
-      desc: "For its ancient ruins and pasta",
-      icon: "🏺",
-      color: "bg-green-100 text-green-700",
-    },
-    {
-      city: "Dublin, Ireland",
-      desc: "For cozy pubs and folklore",
-      icon: "🍀",
-      color: "bg-emerald-100 text-emerald-700",
-    },
-    {
-      city: "Ljubljana, Slovenia",
-      desc: "For a peaceful green escape",
-      icon: "🌿",
-      color: "bg-green-100 text-green-600",
-    },
-    {
-      city: "Baku, Azerbaijan",
-      desc: "For its bustling nightlife",
-      icon: "🌆",
-      color: "bg-amber-100 text-amber-600",
-    },
-    {
-      city: "Athens, Greece",
-      desc: "For ancient ruins and history",
-      icon: "🏛️",
-      color: "bg-indigo-100 text-indigo-700",
-    },
-    {
-      city: "Prague, Czech Republic",
-      desc: "For fairy tale castles",
-      icon: "🏰",
-      color: "bg-purple-100 text-purple-700",
-    },
-    {
-      city: "Vienna, Austria",
-      desc: "For music and elegant cafés",
-      icon: "🎻",
-      color: "bg-red-100 text-red-700",
-    },
-  ];
+  const {
+    filters,
+    setFilters,
+    handleChange,
+    counts,
+    setCounts,
+    destinations,
+    categories,
+  } = useContext(FiltersContext);
 
   const toggle = (section) => {
     setOpenSection(openSection === section ? null : section);
   };
+
+  console.log("MobileSearchBar filters:", filters);
 
   useEffect(() => {
     toggle("where");
   }, []);
 
   return (
-    <div className="fixed inset-0 bg-opacity-50 flex justify-center items-end z-50 w-full h-full md:hidden">
+    <div className="fixed inset-0 bg-opacity-50 flex justify-center items-end z-50 w-full h-full md:hidden overflow-y-scroll bg-gray-100 pb-2">
       <div className="bg-gray-100 w-full rounded-t-xl p-5 h-full z-50 flex flex-col justify-between">
         <div>
           <div className="flex justify-end items-center mb-6">
@@ -134,6 +59,7 @@ export default function MobileSearchBar({ setIsOpen }) {
                 ""
               ) : (
                 <input
+                  value={filters.destination}
                   type="text"
                   readOnly
                   placeholder="Add location"
@@ -143,23 +69,23 @@ export default function MobileSearchBar({ setIsOpen }) {
             </button>
 
             {openSection === "where" && (
-              <div className=" h-[300px] rounded-4xl overflow-hidden py-5 overflow-y-auto overflow-x-hidden">
-                <h2 className="text-sm font-light px-4 pb-1 ">
+              <div className=" h-[350px] rounded-4xl overflow-hidden py-5 overflow-y-auto overflow-x-hidden">
+                <h2 className="text-sm font-light px-2 pb-1 text-gray-500">
                   Suggested destinations
                 </h2>
                 <ul>
                   {destinations.map((dest, index) => (
                     <li
-                      // onClick={() =>
-                      //   setFilters({
-                      //     ...filters,
-                      //     destination: dest.city.split(",")[0],
-                      //   })
-                      // }
+                      onClick={() =>
+                        setFilters({
+                          ...filters,
+                          destination: dest.city.split(",")[0],
+                        })
+                      }
                       key={index}
-                      className="flex items-center gap-4 px-4 py-3 hover:bg-gray-100 cursor-pointer rounded-xl "
+                      className="flex items-center gap-4 px-2 py-3 hover:bg-gray-100 cursor-pointer rounded-xl "
                     >
-                      <div className={`rounded-full p-2 ${dest.color}`}>
+                      <div className={`rounded-lg p-2 ${dest.color}`}>
                         <span className="text-xl">{dest.icon}</span>
                       </div>
                       <div>
@@ -195,6 +121,11 @@ export default function MobileSearchBar({ setIsOpen }) {
                 ""
               ) : (
                 <input
+                  value={
+                    filters.checkIn && filters.checkOut
+                      ? `${filters.checkIn} - ${filters.checkOut}`
+                      : ""
+                  }
                   readOnly
                   type="text"
                   placeholder="Add dates"
@@ -203,7 +134,9 @@ export default function MobileSearchBar({ setIsOpen }) {
               )}
             </button>
             {openSection === "when" && (
-              <div className="mt-2">{/* Replace with your date-picker */}</div>
+              <div className="mt-2">
+                <AirbnbDatePicker setFilters={setFilters} filters={filters} />
+              </div>
             )}
           </div>
 
@@ -228,6 +161,20 @@ export default function MobileSearchBar({ setIsOpen }) {
                 ""
               ) : (
                 <input
+                  value={Object.entries(filters.guests)
+                    .map(([key, value]) =>
+                      value
+                        ? value +
+                          " " +
+                          (key !== "children" && value == 1
+                            ? key.slice(0, -1)
+                            : key) +
+                          ","
+                        : ""
+                    )
+                    .join(" ")
+                    .trim()
+                    .slice(0, -1)}
                   type="text"
                   readOnly
                   placeholder="Add guests"
@@ -236,17 +183,43 @@ export default function MobileSearchBar({ setIsOpen }) {
               )}
             </button>
             {openSection === "who" && (
-              <div className="mt-2">
-                <div className="flex items-center justify-between">
-                  <span>Guests</span>
-                  <input
-                    type="number"
-                    min="1"
-                    max="10"
-                    defaultValue="1"
-                    className="w-16 text-center border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
-                  />
-                </div>
+              <div className="bg-white p-2 w-full ">
+                {categories.map(({ key, label, sub }, idx) => (
+                  <React.Fragment key={key}>
+                    {idx !== 0 && <hr className="my-2 border-gray-200" />}
+                    <div className="flex items-center justify-between min-h-[60px]">
+                      <div>
+                        <div className="font-semibold text-md">{label}</div>
+                        <div className="text-gray-500 text-sm mt-1">
+                          {typeof sub === "string" ? sub : sub}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => handleChange(key, -1)}
+                          disabled={counts[key] === 0}
+                          className={`w-7 h-7 p-1 rounded-full border border-gray-300 bg-white text-2xl flex items-center justify-center transition
+                  ${
+                    counts[key] === 0
+                      ? "text-gray-300 cursor-not-allowed"
+                      : "text-gray-800 hover:border-gray-400 active:bg-gray-100"
+                  }`}
+                        >
+                          <Minus size={14} />
+                        </button>
+                        <span className="w-6 text-center text-base">
+                          {counts[key]}
+                        </span>
+                        <button
+                          onClick={() => handleChange(key, 1)}
+                          className="w-7 h-7 rounded-full border border-gray-300 bg-white text-2xl flex items-center justify-center text-gray-800 hover:border-gray-400 active:bg-gray-100 transition"
+                        >
+                          <Plus size={14} />
+                        </button>
+                      </div>
+                    </div>
+                  </React.Fragment>
+                ))}
               </div>
             )}
           </div>

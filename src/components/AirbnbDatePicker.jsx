@@ -4,7 +4,7 @@ import { addDays } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
-const AirbnbDatePicker = ({ setFilters, filters }) => {
+const AirbnbDatePicker = ({ setFilters, filters, months }) => {
   const [range, setRange] = useState([
     {
       startDate:
@@ -44,14 +44,18 @@ const AirbnbDatePicker = ({ setFilters, filters }) => {
   }, [range]);
 
   return (
-    <div className="bg-white rounded-3xl p-6 shadow-xl w-[870px] ml-18">
+    <div
+      className={`bg-white  ${
+        months ? "w-[870px] ml-18 rounded-3xl p-6 shadow-xl" : ""
+      }`}
+    >
       <div className="flex justify-center">
         <DateRange
           ranges={range}
           onChange={(item) => {
             setRange([item.selection]);
           }}
-          months={2}
+          months={months || 1}
           direction="horizontal"
           minDate={new Date()}
           showDateDisplay={false}

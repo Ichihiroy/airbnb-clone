@@ -1,11 +1,21 @@
-import { AnimatePresence, motion } from "framer-motion";
-import { Search, X } from "lucide-react";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import AirbnbDatePicker from "./AirbnbDatePicker";
+import { AnimatePresence, motion } from "framer-motion";
 import { PropertyContext } from "../context/PropertyContext";
+import { FiltersContext } from "../context/FiltersContext";
+import { Minus, Plus, Search, X } from "lucide-react";
+import AirbnbDatePicker from "./AirbnbDatePicker";
 
 const SearchBar = () => {
   const { data } = useContext(PropertyContext);
+  const {
+    filters,
+    setFilters,
+    setCounts,
+    counts,
+    handleChange,
+    destinations,
+    categories,
+  } = useContext(FiltersContext);
 
   const [active, setActive] = useState({
     where: false,
@@ -14,27 +24,6 @@ const SearchBar = () => {
     guests: false,
     bar: false,
   });
-
-  const [counts, setCounts] = useState({
-    adults: 0,
-    children: 0,
-    infants: 0,
-    pets: 0,
-  });
-
-  const [filters, setFilters] = useState({
-    destination: "",
-    checkIn: "",
-    checkOut: "",
-    guests: {
-      adults: 0,
-      children: 0,
-      infants: 0,
-      pets: 0,
-    },
-  });
-
-  // console.log("Filters:", filters);
 
   const [filteredData, setFilteredData] = useState([]);
 
@@ -95,114 +84,6 @@ const SearchBar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [setActive]);
-
-  const destinations = [
-    {
-      city: "Paris, France",
-      desc: "For sights like the Eiffel Tower",
-      icon: "🗼",
-      color: "bg-pink-100 text-pink-600",
-    },
-    {
-      city: "Amsterdam, Netherlands",
-      desc: "For its scenic canals and bikes",
-      icon: "🚲",
-      color: "bg-blue-100 text-blue-600",
-    },
-    {
-      city: "Berlin, Germany",
-      desc: "For its rich history and museums",
-      icon: "🏛️",
-      color: "bg-gray-100 text-gray-600",
-    },
-    {
-      city: "Lisbon, Portugal",
-      desc: "For its vibrant culture and hills",
-      icon: "🌉",
-      color: "bg-red-100 text-red-600",
-    },
-    {
-      city: "Barcelona, Spain",
-      desc: "For Gaudí architecture and beaches",
-      icon: "🏖️",
-      color: "bg-yellow-100 text-yellow-600",
-    },
-    {
-      city: "London, United Kingdom",
-      desc: "For sights like Buckingham Palace",
-      icon: "🏰",
-      color: "bg-yellow-100 text-yellow-700",
-    },
-    {
-      city: "Rome, Italy",
-      desc: "For its ancient ruins and pasta",
-      icon: "🏺",
-      color: "bg-green-100 text-green-700",
-    },
-    {
-      city: "Dublin, Ireland",
-      desc: "For cozy pubs and folklore",
-      icon: "🍀",
-      color: "bg-emerald-100 text-emerald-700",
-    },
-    {
-      city: "Ljubljana, Slovenia",
-      desc: "For a peaceful green escape",
-      icon: "🌿",
-      color: "bg-green-100 text-green-600",
-    },
-    {
-      city: "Baku, Azerbaijan",
-      desc: "For its bustling nightlife",
-      icon: "🌆",
-      color: "bg-amber-100 text-amber-600",
-    },
-    {
-      city: "Athens, Greece",
-      desc: "For ancient ruins and history",
-      icon: "🏛️",
-      color: "bg-indigo-100 text-indigo-700",
-    },
-    {
-      city: "Prague, Czech Republic",
-      desc: "For fairy tale castles",
-      icon: "🏰",
-      color: "bg-purple-100 text-purple-700",
-    },
-    {
-      city: "Vienna, Austria",
-      desc: "For music and elegant cafés",
-      icon: "🎻",
-      color: "bg-red-100 text-red-700",
-    },
-  ];
-
-  const categories = [
-    { key: "adults", label: "Adults", sub: "Ages 13 or above" },
-    { key: "children", label: "Children", sub: "Ages 2 – 12" },
-    { key: "infants", label: "Infants", sub: "Under 2" },
-    {
-      key: "pets",
-      label: "Pets",
-      sub: (
-        <a href="#" className="underline text-zinc-500 text-sm">
-          Bringing a service animal?
-        </a>
-      ),
-    },
-  ];
-
-  const handleChange = (key, delta) => {
-    setCounts((prev) => ({
-      ...prev,
-      [key]: Math.max(0, prev[key] + delta),
-    }));
-
-    setFilters({
-      ...filters,
-      guests: { ...filters.guests, [key]: Math.max(0, counts[key] + delta) },
-    });
-  };
 
   useEffect(() => {
     filters.checkIn && filters.checkOut === "" && handleClick("checkIn");
@@ -281,7 +162,7 @@ const SearchBar = () => {
                   key={index}
                   className="flex items-center gap-4 px-4 py-3 hover:bg-gray-100 cursor-pointer rounded-xl "
                 >
-                  <div className={`rounded-full p-2 ${dest.color}`}>
+                  <div className={`rounded-lg p-2 ${dest.color}`}>
                     <span className="text-xl">{dest.icon}</span>
                   </div>
                   <div>
@@ -338,6 +219,7 @@ const SearchBar = () => {
           >
             <div className="absolute z-50 top-7">
               <AirbnbDatePicker
+                months={2}
                 setFilters={setFilters}
                 filters={filters}
                 handleClick={handleClick}
@@ -474,7 +356,7 @@ const SearchBar = () => {
                       : "text-gray-800 hover:border-gray-400 active:bg-gray-100"
                   }`}
                     >
-                      –
+                      <Minus size={16} />
                     </button>
                     <span className="w-6 text-center text-base">
                       {counts[key]}
@@ -483,7 +365,7 @@ const SearchBar = () => {
                       onClick={() => handleChange(key, 1)}
                       className="w-9 h-9 rounded-full border border-gray-300 bg-white text-2xl flex items-center justify-center text-gray-800 hover:border-gray-400 active:bg-gray-100 transition"
                     >
-                      +
+                      <Plus size={16} />
                     </button>
                   </div>
                 </div>
