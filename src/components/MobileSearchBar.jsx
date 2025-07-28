@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Calendar,
   Users,
@@ -96,8 +96,12 @@ export default function MobileSearchBar({ setIsOpen }) {
     setOpenSection(openSection === section ? null : section);
   };
 
+  useEffect(() => {
+    toggle("where");
+  }, []);
+
   return (
-    <div className="fixed inset-0 bg-opacity-50 flex justify-center items-end z-50 w-full h-full">
+    <div className="fixed inset-0 bg-opacity-50 flex justify-center items-end z-50 w-full h-full md:hidden">
       <div className="bg-gray-100 w-full rounded-t-xl p-5 h-full z-50 flex flex-col justify-between">
         <div>
           <div className="flex justify-end items-center mb-6">
@@ -110,23 +114,36 @@ export default function MobileSearchBar({ setIsOpen }) {
             </button>
           </div>
 
-          <div className="mb-4 bg-white rounded-2xl shadow-md px-3 py-1">
+          <div
+            className={`mb-4 bg-white ${
+              openSection === "where" ? "rounded-3xl" : "rounded-2xl"
+            } shadow-md px-3 py-1`}
+          >
             <button
               className="w-full flex items-center justify-between py-3 px-2 rounded-lg "
               onClick={() => toggle("where")}
             >
               <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-500">Where</span>
+                {openSection === "where" ? (
+                  <span className="text-xl font-bold text-black">Where?</span>
+                ) : (
+                  <span className="text-sm text-gray-500">Where</span>
+                )}
               </div>
               {openSection === "where" ? (
-                <ChevronUp className="w-5 h-5" />
+                ""
               ) : (
-                <ChevronDown className="w-5 h-5" />
+                <input
+                  type="text"
+                  readOnly
+                  placeholder="Add location"
+                  className=" rounded-lg  py-2 text-right placeholder-black text-sm"
+                />
               )}
             </button>
 
             {openSection === "where" && (
-              <div className=" max-w-md h-[300px] mx-auto rounded-4xl overflow-hidden py-5 overflow-y-auto overflow-x-hidden">
+              <div className=" h-[300px] rounded-4xl overflow-hidden py-5 overflow-y-auto overflow-x-hidden">
                 <h2 className="text-sm font-light px-4 pb-1 ">
                   Suggested destinations
                 </h2>
@@ -158,45 +175,64 @@ export default function MobileSearchBar({ setIsOpen }) {
             )}
           </div>
 
-          {/* When Section */}
-          <div className="mb-4 bg-white rounded-2xl shadow-md px-3 py-1">
+          <div
+            className={`mb-4 bg-white ${
+              openSection === "when" ? "rounded-3xl" : "rounded-2xl"
+            } shadow-md px-3 py-1`}
+          >
             <button
               className="w-full flex items-center justify-between py-3 px-2 rounded-lg "
               onClick={() => toggle("when")}
             >
               <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-500">When</span>
+                {openSection === "when" ? (
+                  <span className="text-xl font-bold text-black">When?</span>
+                ) : (
+                  <span className="text-sm text-gray-500">When</span>
+                )}
               </div>
               {openSection === "when" ? (
-                <ChevronUp className="w-5 h-5" />
+                ""
               ) : (
-                <ChevronDown className="w-5 h-5" />
+                <input
+                  readOnly
+                  type="text"
+                  placeholder="Add dates"
+                  className=" rounded-lg  py-2 text-right placeholder-black text-sm"
+                />
               )}
             </button>
             {openSection === "when" && (
-              <div className="mt-2">
-                {/* Replace with your date-picker */}
-                <input
-                  type="date"
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
-                />
-              </div>
+              <div className="mt-2">{/* Replace with your date-picker */}</div>
             )}
           </div>
 
           {/* Who Section */}
-          <div className="mb-6 bg-white rounded-2xl shadow-md px-3 py-1">
+          <div
+            className={`mb-6 bg-white ${
+              openSection === "who" ? "rounded-3xl" : "rounded-2xl"
+            } shadow-md px-3 py-1`}
+          >
             <button
               className="w-full flex items-center justify-between py-3 px-2 rounded-lg "
               onClick={() => toggle("who")}
             >
               <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-500">Who</span>
+                {openSection === "who" ? (
+                  <span className="text-xl font-bold text-black">Who?</span>
+                ) : (
+                  <span className="text-sm text-gray-500">Who</span>
+                )}
               </div>
               {openSection === "who" ? (
-                <ChevronUp className="w-5 h-5" />
+                ""
               ) : (
-                <ChevronDown className="w-5 h-5" />
+                <input
+                  type="text"
+                  readOnly
+                  placeholder="Add guests"
+                  className=" rounded-lg  py-2 text-right placeholder-black text-sm"
+                />
               )}
             </button>
             {openSection === "who" && (
