@@ -133,7 +133,7 @@ export default function MobileSearchBar({ setIsOpen }) {
               )}
             </button>
             {openSection === "when" && (
-              <div className="mt-2">
+              <div className="mt-2 ">
                 <AirbnbDatePicker setFilters={setFilters} filters={filters} />
               </div>
             )}
