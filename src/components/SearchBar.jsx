@@ -10,7 +10,6 @@ const SearchBar = () => {
   const {
     filters,
     setFilters,
-    setCounts,
     counts,
     handleChange,
     destinations,

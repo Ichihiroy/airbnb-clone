@@ -10,7 +10,6 @@ export default function MobileSearchBar({ setIsOpen }) {
     setFilters,
     handleChange,
     counts,
-    setCounts,
     destinations,
     categories,
   } = useContext(FiltersContext);
@@ -19,11 +18,11 @@ export default function MobileSearchBar({ setIsOpen }) {
     setOpenSection(openSection === section ? null : section);
   };
 
-  console.log("MobileSearchBar filters:", filters);
-
   useEffect(() => {
     toggle("where");
   }, []);
+
+  console.log("MobileSearchBar filters:", filters);
 
   return (
     <div className="fixed inset-0 bg-opacity-50 flex justify-center items-end z-50 w-full h-full md:hidden overflow-y-scroll bg-gray-100 pb-2">
@@ -140,7 +139,6 @@ export default function MobileSearchBar({ setIsOpen }) {
             )}
           </div>
 
-          {/* Who Section */}
           <div
             className={`mb-6 bg-white ${
               openSection === "who" ? "rounded-3xl" : "rounded-2xl"
