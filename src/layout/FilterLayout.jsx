@@ -1,9 +1,8 @@
-import React from "react";
 import { Outlet } from "react-router";
 import DetailsHeader from "../components/DetailsHeader";
 import Footer from "../components/Footer";
 
-const DetailsLayout = () => {
+const FilterLayout = () => {
   return (
     <>
       <DetailsHeader />
@@ -13,4 +12,4 @@ const DetailsLayout = () => {
   );
 };
 
-export default DetailsLayout;
+export default FilterLayout;

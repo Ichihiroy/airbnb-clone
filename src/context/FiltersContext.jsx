@@ -14,6 +14,7 @@ export const FiltersProvider = ({ children }) => {
       pets: 0,
     },
   });
+  const [filteredData, setFilteredData] = useState([]);
 
   const handleChange = (key, delta) => {
     setCounts((prev) => ({
@@ -140,6 +141,8 @@ export const FiltersProvider = ({ children }) => {
         setCounts,
         destinations,
         categories,
+        filteredData,
+        setFilteredData,
       }}
     >
       {children}

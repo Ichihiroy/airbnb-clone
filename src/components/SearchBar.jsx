@@ -4,6 +4,7 @@ import { PropertyContext } from "../context/PropertyContext";
 import { FiltersContext } from "../context/FiltersContext";
 import { Minus, Plus, Search, X } from "lucide-react";
 import AirbnbDatePicker from "./AirbnbDatePicker";
+import { Navigate, useNavigate } from "react-router";
 
 const SearchBar = () => {
   const { data } = useContext(PropertyContext);
@@ -14,7 +15,11 @@ const SearchBar = () => {
     handleChange,
     destinations,
     categories,
+    filteredData,
+    setFilteredData,
   } = useContext(FiltersContext);
+
+  const navigate = useNavigate();
 
   const [active, setActive] = useState({
     where: false,
@@ -23,8 +28,6 @@ const SearchBar = () => {
     guests: false,
     bar: false,
   });
-
-  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     setFilteredData(data);
@@ -57,7 +60,8 @@ const SearchBar = () => {
     // });
 
     setFilteredData(filtered);
-    console.log("Filtered Data:", filtered);
+    console.log("Filtered Data:", filteredData);
+    navigate("/filters");
   }
 
   const containerRef = useRef(null);
@@ -308,7 +312,6 @@ const SearchBar = () => {
             } m-2 bg-[#FF385C] hover:bg-[#a1233a] transition-colors flex items-center justify-center gap-2 cursor-pointer`}
           >
             <Search size={16} />
-
             <AnimatePresence>
               {active.bar && (
                 <motion.span
