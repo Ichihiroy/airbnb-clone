@@ -7,7 +7,7 @@ const FilterLayout = () => {
     <>
       <DetailsHeader filters={"filters"} />
       <Outlet />
-      <Footer />
+      <Footer filters={"filters"} />
     </>
   );
 };

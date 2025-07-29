@@ -1,8 +1,12 @@
 import { Globe } from "lucide-react";
 
-const Footer = () => (
+const Footer = ({ filters }) => (
   <footer className="bg-gray-100 border-t border-gray-200 pb-15 lg:pb-0">
-    <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 py-8 container ">
+    <div
+      className={`max-w-9xl mx-auto px-4 sm:px-6 lg:px-8 py-8   ${
+        filters ? "" : "container"
+      }`}
+    >
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
           <h3 className="font-semibold text-gray-900 mb-4">Support</h3>
