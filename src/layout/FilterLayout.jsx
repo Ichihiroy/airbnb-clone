@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 const FilterLayout = () => {
   return (
     <>
-      <DetailsHeader />
+      <DetailsHeader filters={"filters"} />
       <Outlet />
       <Footer />
     </>

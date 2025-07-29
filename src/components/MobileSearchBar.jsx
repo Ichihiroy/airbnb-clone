@@ -128,12 +128,12 @@ export default function MobileSearchBar({ setIsOpen }) {
                   readOnly
                   type="text"
                   placeholder="Add dates"
-                  className=" rounded-lg  py-2 text-right placeholder-black text-sm"
+                  className="rounded-lg  py-2 text-right placeholder-black text-sm "
                 />
               )}
             </button>
             {openSection === "when" && (
-              <div className="mt-2 ">
+              <div className="mt-2 overflow-scroll">
                 <AirbnbDatePicker setFilters={setFilters} filters={filters} />
               </div>
             )}

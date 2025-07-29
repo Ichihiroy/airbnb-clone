@@ -8,10 +8,10 @@ export default function FilterResults() {
   console.log("Filtered Data:", filteredData);
 
   return (
-    <div className="flex flex-col lg:flex-row h-full min-h-screen max-w-screen-xl mx-auto py-4 px-4 sm:px-5 lg:px-14 lg:py-8">
-      <div className="w-full lg:w-2/3 overflow-y-auto">
+    <div className="flex flex-col lg:flex-row h-full min-h-screen mx-auto py-4 px-4 sm:px-5 lg:px-10 lg:py-8">
+      <div className="w-full lg:w-1/2 overflow-y-auto md:py-20 lg:py-18">
         <div className="flex justify-between items-center mb-4 sm:mb-6">
-          <h2 className="text-lg sm:text-xl font-semibold">
+          <h2 className="text-lg sm:text-xl font-semibold  ">
             {filteredData.length} homes
           </h2>
         </div>
@@ -66,7 +66,7 @@ export default function FilterResults() {
         </div>
       </div>
 
-      <div className="w-full h-[500px] lg:w-1/3 mt-6 lg:mt-0 lg:ps-6 hidden lg:block sticky top-10">
+      <div className="w-full h-[80vh] lg:w-1/2 mt-6 lg:mt-0 lg:ps-6 hidden lg:block sticky top-25">
         <iframe
           title="Map"
           src="https://www.google.com/maps/embed?1m12!1m3!1d3030.12345!2d49.8671!3d40.4093!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1"
