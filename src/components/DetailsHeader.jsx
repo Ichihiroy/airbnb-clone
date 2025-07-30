@@ -22,7 +22,9 @@ const DetailsHeader = ({ filters, setShowModal }) => {
             </Link>
 
             <div className="flex items-center gap-4 lg:gap-6">
-              <div className="bg-white shadow-md rounded-full flex items-center justify-between gap-5 px-4 lg:ml-30 py-3  border border-gray-300 relative cursor-pointer">
+              <div
+                className={`bg-white shadow-md rounded-full flex items-center justify-between gap-5 px-4 lg:ml-30  py-3  border border-gray-300 relative cursor-pointer`}
+              >
                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-2xl">
                   🏠
                 </div>
@@ -52,9 +54,11 @@ const DetailsHeader = ({ filters, setShowModal }) => {
             </div>
 
             <div className="flex items-center space-x-4">
-              <span className="hidden lg:block font-normal cursor-pointer">
-                Become a host
-              </span>
+              {!filters && (
+                <span className="hidden lg:block font-normal cursor-pointer">
+                  Become a host
+                </span>
+              )}
 
               <div className="flex items-center space-x-2 cursor-pointer bg-zinc-200 rounded-full p-2 hover:shadow-md transition-shadow">
                 <Globe size={18} />

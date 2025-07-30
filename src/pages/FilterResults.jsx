@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { FiltersContext } from "../context/FiltersContext";
 import { X, Heart, Star, SlidersHorizontal, Minus, Plus } from "lucide-react";
 import { Link, useOutletContext } from "react-router";
@@ -6,6 +6,28 @@ import { Link, useOutletContext } from "react-router";
 export default function FilterResults() {
   const { filteredData } = useContext(FiltersContext);
   const { showModal, setShowModal } = useOutletContext();
+
+  const [filters, setFilters] = useState({
+    bedrooms: null,
+    beds: null,
+    bathrooms: null,
+  });
+
+  const [price, setPrice] = useState({ min: "", max: "" });
+
+  const handleChange = (key, value) => {
+    setPrice((prev) => ({
+      ...prev,
+      [key]: value.replace(/\D/, ""), // only digits allowed
+    }));
+  };
+
+  const updateCount = (key, step) => {
+    setFilters((prev) => {
+      const value = (prev[key] || 0) + step;
+      return { ...prev, [key]: value <= 0 ? null : value };
+    });
+  };
 
   return (
     <div className="flex flex-col lg:flex-row h-full min-h-screen mx-auto py-4 px-4 sm:px-5 lg:px-10 lg:py-8">
@@ -77,8 +99,8 @@ export default function FilterResults() {
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 ">
-          <div className="max-w-xl mx-auto  bg-white rounded-4xl shadow relative">
+        <div className="fixed inset-0 z-50 flex items-end md:items-center justify-center bg-black/30 ">
+          <div className="w-full md:max-w-xl mx-auto rounded-t-4xl bg-white md:rounded-4xl shadow relative overflow-hidden">
             <h2 className="text-md font-semibold mb-4 text-center border-b border-gray-300 py-5">
               Filters
             </h2>
@@ -87,16 +109,70 @@ export default function FilterResults() {
             </button>
 
             <div className="px-6 space-y-4 h-[70vh] overflow-scroll">
+              <div className="w-full ">
+                <h3 className="text-lg font-medium mb-3">Type of place</h3>
+                <div className="flex items-center overflow-hidden border border-gray-300 rounded-xl divide-x divide-gray-100">
+                  <div className="px-6 py-2 bg-gray-100 rounded-xl m-1 border-2 border-black w-1/3 text-center">
+                    <span className="font-medium text-black">Any type</span>
+                  </div>
+                  <div className="px-6 py-2 hover:bg-gray-100 cursor-pointer m-1 text-center w-1/3 hover:rounded-xl">
+                    <span className="text-black">Room</span>
+                  </div>
+                  <div className="px-6 py-2 hover:bg-gray-100  rounded-xl cursor-pointer text-center w-1/3">
+                    <span className="text-black">Entire home</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h2 className="text-lg font-medium mb-1">Price range</h2>
+                <p className="mb-4 text-xs text-zinc-800">
+                  Trip price, includes all fees
+                </p>
+                <div className="flex justify-between gap-4">
+                  <div className="flex-1">
+                    <label className="text-xs text-zinc-600 block mb-1 ml-5.5">
+                      Minimum
+                    </label>
+                    <input
+                      type="text"
+                      value={price.min}
+                      onChange={(e) => handleChange("min", e.target.value)}
+                      placeholder="$50"
+                      className="w-[100px] px-3 py-2 border rounded-full border-gray-300  placeholder:text-black placeholder:text-sm placeholder:text-center"
+                    />
+                  </div>
+                  <div className="flex-1 flex items-end flex-col">
+                    <label className="text-xs mr-5.5 text-zinc-600 block mb-1">
+                      Maximum
+                    </label>
+                    <input
+                      type="text"
+                      value={price.max}
+                      onChange={(e) => handleChange("max", e.target.value)}
+                      placeholder="$1100+"
+                      className="w-[100px] px-3 py-2 border rounded-full border-gray-300 placeholder:text-black placeholder:text-sm placeholder:text-center"
+                    />
+                  </div>
+                </div>
+              </div>
+
               <div className="mb-6">
                 <h3 className="text-lg font-medium mb-2">Amenities</h3>
                 <div className="flex flex-wrap gap-3">
                   {[
+                    "Kitchen",
                     "Wifi",
+                    "Dedicated workspace",
+                    "Free washer – In unit",
+                    "Free dryer – In unit",
+                    "Bathtub",
+                    "Indoor fireplace: wood-burning",
+                    "Luggage dropoff allowed",
+                    "Heating",
+                    "Balcony",
+                    "Air conditioning",
                     "TV",
-                    "Beachfront",
-                    "Pool",
-                    "Waterfront",
-                    "Hot tub",
                   ].map((item) => (
                     <button
                       key={item}
@@ -106,26 +182,55 @@ export default function FilterResults() {
                     </button>
                   ))}
                 </div>
-                <button className="text-sm text-gray-700 mt-2 hover:underline">
-                  Show more
-                </button>
               </div>
 
               {/* Booking options */}
               <div className="mb-6">
-                <h3 className="text-lg font-medium mb-2">Booking options</h3>
+                <h3 className="text-lg font-medium mb-2">Property type</h3>
                 <div className="flex flex-wrap gap-3">
-                  {["Instant Book", "Self check-in", "Allows pets"].map(
-                    (item) => (
-                      <button
-                        key={item}
-                        className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-full text-sm hover:bg-gray-100"
-                      >
-                        <span>{item}</span>
-                      </button>
-                    )
-                  )}
+                  {["House", "Apartment", "Hotel"].map((item) => (
+                    <button
+                      key={item}
+                      className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-full text-sm hover:bg-gray-100"
+                    >
+                      <span>{item}</span>
+                    </button>
+                  ))}
                 </div>
+              </div>
+
+              <div className="">
+                <h2 className="text-lg font-medium mb-4">Rooms and beds</h2>
+
+                {["bedrooms", "beds", "bathrooms"].map((key) => (
+                  <div
+                    key={key}
+                    className="flex justify-between items-center py-2"
+                  >
+                    <span className="capitalize">{key}</span>
+                    <div className="flex items-center gap-4">
+                      <button
+                        onClick={() => updateCount(key, -1)}
+                        className={`p-2 rounded-full border text-gray-500 border-gray-300 ${
+                          filters[key] === null
+                            ? "opacity-50 cursor-not-allowed"
+                            : ""
+                        }`}
+                      >
+                        <Minus size={14} />
+                      </button>
+                      <span className="w-10 text-center">
+                        {filters[key] ?? "Any"}
+                      </span>
+                      <button
+                        onClick={() => updateCount(key, 1)}
+                        className=" p-2 rounded-full border text-gray-500 border-gray-300"
+                      >
+                        <Plus size={14} />
+                      </button>
+                    </div>
+                  </div>
+                ))}
               </div>
 
               {/* Standout stays */}
@@ -146,37 +251,79 @@ export default function FilterResults() {
                   </div>
                 </div>
               </div>
-              <div className="mb-6">
-                <h3 className="text-lg font-medium mb-2">Standout stays</h3>
-                <div className="flex gap-4">
-                  <div className="flex-1 border border-gray-300 rounded-lg p-4 hover:bg-gray-50">
-                    <h4 className="font-semibold mb-1">Guest favorite</h4>
-                    <p className="text-sm text-gray-600">
-                      The most loved homes on Airbnb
-                    </p>
-                  </div>
-                  <div className="flex-1 border border-gray-300 rounded-lg p-4 hover:bg-gray-50">
-                    <h4 className="font-semibold mb-1">Luxe</h4>
-                    <p className="text-sm text-gray-600">
-                      Luxury homes with elevated design
-                    </p>
+
+              <div className="space-y-6 pb-6">
+                <h2 className="text-lg font-medium">Accessibility features</h2>
+
+                {/* Guest entrance and parking */}
+                <div>
+                  <h3 className="font-medium mb-2">
+                    Guest entrance and parking
+                  </h3>
+                  <div className="space-y-2 text-sm ml-1">
+                    <label className="flex items-center gap-4">
+                      <input
+                        type="checkbox"
+                        className="accent-black scale-150"
+                      />
+                      Step-free access
+                    </label>
+                    <label className="flex items-center gap-4">
+                      <input
+                        type="checkbox"
+                        className="accent-black scale-150"
+                      />
+                      Disabled parking spot
+                    </label>
+                    <label className="flex items-center gap-4">
+                      <input
+                        type="checkbox"
+                        className="accent-black scale-150"
+                      />
+                      Guest entrance wider than 32 inches
+                    </label>
                   </div>
                 </div>
-              </div>
-              <div className="mb-6">
-                <h3 className="text-lg font-medium mb-2">Standout stays</h3>
-                <div className="flex gap-4">
-                  <div className="flex-1 border border-gray-300 rounded-lg p-4 hover:bg-gray-50">
-                    <h4 className="font-semibold mb-1">Guest favorite</h4>
-                    <p className="text-sm text-gray-600">
-                      The most loved homes on Airbnb
-                    </p>
+
+                {/* Bedroom */}
+                <div>
+                  <h3 className="font-medium mb-2">Bedroom</h3>
+                  <div className="space-y-2 text-sm ml-1">
+                    <label className="flex items-center gap-4 ">
+                      <input
+                        type="checkbox"
+                        className="accent-black scale-150"
+                      />
+                      Step-free bedroom access
+                    </label>
+                    <label className="flex items-center gap-4">
+                      <input
+                        type="checkbox"
+                        className="accent-black scale-150 "
+                      />
+                      Bedroom entrance wider than 32 inches
+                    </label>
                   </div>
-                  <div className="flex-1 border border-gray-300 rounded-lg p-4 hover:bg-gray-50">
-                    <h4 className="font-semibold mb-1">Luxe</h4>
-                    <p className="text-sm text-gray-600">
-                      Luxury homes with elevated design
-                    </p>
+                </div>
+
+                {/* Bathroom */}
+                <div>
+                  <h3 className="font-medium mb-2">Bathroom</h3>
+                  <div className="space-y-2 text-sm ml-1">
+                    <label className="flex items-center gap-4 ">
+                      <input
+                        type="checkbox"
+                        className="accent-black scale-150"
+                      />
+                      Step-free bathroom access
+                    </label>
+                    <label className="flex items-center gap-4">
+                      <input
+                        type="checkbox"
+                        className="accent-black scale-150"
+                      />
+                      Bathroom entrance wider than 32 inches
+                    </label>
                   </div>
                 </div>
               </div>
