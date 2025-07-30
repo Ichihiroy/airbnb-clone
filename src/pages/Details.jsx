@@ -117,13 +117,13 @@ const Details = () => {
           alt="Main room"
           className="w-[550px] h-101 object-cover rounded-tl-xl rounded-bl-xl col-span-2"
         />
-        <div className="grid grid-cols-2 gap-1">
+        <div className="grid grid-cols-2 gap-1 w-full">
           {[2, 3].map((id) => (
             <img
               key={id}
               src={property.images[id - 1]}
               alt={`Room ${id}`}
-              className={`w-[300px] h-50 object-cover ${
+              className={`w-full h-50 object-cover ${
                 id == 3 ? "rounded-tr-xl " : " "
               }`}
             />

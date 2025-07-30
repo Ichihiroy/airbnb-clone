@@ -1,3 +1,4 @@
+import { filter } from "framer-motion/client";
 import React, { createContext, useState } from "react";
 
 const FiltersContext = createContext();
@@ -13,8 +14,86 @@ export const FiltersProvider = ({ children }) => {
       infants: 0,
       pets: 0,
     },
+    priceRange: [],
+    propertyTypes: [],
+    amenities: [],
+    bedrooms: 0,
+    bathrooms: 0,
+    instantBook: false,
   });
   const [filteredData, setFilteredData] = useState([]);
+  const [originalData, setOriginalData] = useState([]);
+
+  const applyFilters = (data, filterCriteria) => {
+    if (!data || data.length === 0) return [];
+
+    let filtered = data;
+
+    if (filterCriteria.destination) {
+      filtered = filtered.filter(
+        (property) =>
+          property.location.city
+            .toLowerCase()
+            .includes(filterCriteria.destination.toLowerCase()) ||
+          property.location.country
+            .toLowerCase()
+            .includes(filterCriteria.destination.toLowerCase())
+      );
+    }
+
+    if (filterCriteria.priceRange && filterCriteria.priceRange.length === 2) {
+      filterCriteria.priceRange[0] = filterCriteria.priceRange[0] || 0;
+      filterCriteria.priceRange[1] = filterCriteria.priceRange[1] || Infinity;
+      filtered = filtered.filter((property) => {
+        const price = parseInt(property.price.total);
+        return (
+          price >= filterCriteria.priceRange[0] &&
+          price <= filterCriteria.priceRange[1]
+        );
+      });
+    }
+
+    if (
+      filterCriteria.propertyTypes &&
+      filterCriteria.propertyTypes.length > 0
+    ) {
+      filtered = filtered.filter((property) =>
+        filterCriteria.propertyTypes.some((type) =>
+          property.propertyType.toLowerCase().includes(type.toLowerCase())
+        )
+      );
+    }
+
+    if (filterCriteria.amenities && filterCriteria.amenities.length > 0) {
+      filtered = filtered.filter((property) => {
+        const allAmenities = [
+          ...property.amenities.available,
+          ...property.amenities.unavailable,
+        ];
+        return filterCriteria.amenities.every((amenity) =>
+          allAmenities.some((propertyAmenity) =>
+            propertyAmenity.toLowerCase().includes(amenity.toLowerCase())
+          )
+        );
+      });
+    }
+
+    if (filterCriteria.bedrooms > 0) {
+      filtered = filtered.filter((property) => {
+        const bedCount = property.roomDetails.roomsAndBeds.bedrooms;
+        return bedCount ? bedCount >= filterCriteria.bedrooms : false;
+      });
+    }
+
+    if (filterCriteria.bathrooms > 0) {
+      filtered = filtered.filter((property) => {
+        const bathCount = property.roomDetails.roomsAndBeds.bathrooms;
+        return bathCount ? bathCount >= filterCriteria.bathrooms : false;
+      });
+    }
+
+    return filtered;
+  };
 
   const handleChange = (key, delta) => {
     setCounts((prev) => ({
@@ -143,6 +222,9 @@ export const FiltersProvider = ({ children }) => {
         categories,
         filteredData,
         setFilteredData,
+        originalData,
+        setOriginalData,
+        applyFilters,
       }}
     >
       {children}

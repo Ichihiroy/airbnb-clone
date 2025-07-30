@@ -1,32 +1,136 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { FiltersContext } from "../context/FiltersContext";
-import { X, Heart, Star, SlidersHorizontal, Minus, Plus } from "lucide-react";
+import { PropertyContext } from "../context/PropertyContext";
+import { X, Heart, Star, Minus, Plus } from "lucide-react";
 import { Link, useOutletContext } from "react-router";
 
 export default function FilterResults() {
-  const { filteredData } = useContext(FiltersContext);
+  const { data } = useContext(PropertyContext);
+  const {
+    filteredData,
+    setFilteredData,
+    originalData,
+    setOriginalData,
+    applyFilters,
+    filters,
+    setFilters,
+  } = useContext(FiltersContext);
+
   const { showModal, setShowModal } = useOutletContext();
 
-  const [filters, setFilters] = useState({
-    bedrooms: null,
-    beds: null,
-    bathrooms: null,
+  const [tempFilters, setTempFilters] = useState({
+    priceRange: [],
+    propertyTypes: [],
+    amenities: [],
+    bedrooms: 0,
+    bathrooms: 0,
+    instantBook: false,
   });
 
-  const [price, setPrice] = useState({ min: "", max: "" });
+  useEffect(() => {
+    if (data && data.length > 0 && originalData.length === 0) {
+      setOriginalData(data);
+      setFilteredData(data);
+    }
+  }, [data, originalData, setOriginalData, setFilteredData]);
 
-  const handleChange = (key, value) => {
-    setPrice((prev) => ({
+  useEffect(() => {
+    if (showModal) {
+      setTempFilters({
+        priceRange: filters.priceRange || [],
+        propertyTypes: filters.propertyTypes || [],
+        amenities: filters.amenities || [],
+        bedrooms: filters.bedrooms || 0,
+        bathrooms: filters.bathrooms || 0,
+        instantBook: filters.instantBook || false,
+      });
+    }
+  }, [showModal, filters]);
+
+  const propertyTypes = [
+    "Condo",
+    "Loft",
+    "Apartment",
+    "Cabin",
+    "House",
+    "Villa",
+  ];
+
+  const amenities = [
+    "Kitchen",
+    "Wifi",
+    "Dedicated workspace",
+    "Free washer – In unit",
+    "Free dryer – In unit",
+    "Bathtub",
+    "Indoor fireplace: wood-burning",
+    "Luggage dropoff allowed",
+    "Heating",
+    "Balcony",
+    "Air conditioning",
+    "TV",
+    "Lock on bedroom door",
+    "Carbon monoxide alarm",
+  ];
+
+  const handleFilterChange = (category, value) => {
+    setTempFilters((prev) => ({
       ...prev,
-      [key]: value.replace(/\D/, ""), // only digits allowed
+      [category]: value,
     }));
   };
 
-  const updateCount = (key, step) => {
-    setFilters((prev) => {
-      const value = (prev[key] || 0) + step;
-      return { ...prev, [key]: value <= 0 ? null : value };
+  const handlePropertyTypeToggle = (type) => {
+    setTempFilters((prev) => ({
+      ...prev,
+      propertyTypes: prev.propertyTypes.includes(type)
+        ? prev.propertyTypes.filter((t) => t !== type)
+        : [...prev.propertyTypes, type],
+    }));
+  };
+
+  const handleAmenityToggle = (amenity) => {
+    setTempFilters((prev) => ({
+      ...prev,
+      amenities: prev.amenities.includes(amenity)
+        ? prev.amenities.filter((a) => a !== amenity)
+        : [...prev.amenities, amenity],
+    }));
+  };
+
+  const clearAllFilters = () => {
+    setTempFilters({
+      priceRange: [],
+      propertyTypes: [],
+      amenities: [],
+      bedrooms: 0,
+      bathrooms: 0,
+      instantBook: false,
     });
+  };
+
+  const applyFiltersToData = () => {
+    const newFilters = {
+      ...filters,
+      ...tempFilters,
+    };
+    setFilters(newFilters);
+
+    const filtered = applyFilters(originalData, newFilters);
+    setFilteredData(filtered);
+    setShowModal(false);
+  };
+
+  const getFilteredCount = () => {
+    if (!originalData || originalData.length === 0) return 0;
+
+    const combinedFilters = {
+      ...filters,
+      ...tempFilters,
+    };
+
+    const tempFiltered = applyFilters(originalData, combinedFilters);
+    return tempFiltered.length;
   };
 
   return (
@@ -135,10 +239,15 @@ export default function FilterResults() {
                       Minimum
                     </label>
                     <input
-                      type="text"
-                      value={price.min}
-                      onChange={(e) => handleChange("min", e.target.value)}
-                      placeholder="$50"
+                      type="number"
+                      value={tempFilters.priceRange[0]}
+                      onChange={(e) =>
+                        handleFilterChange("priceRange", [
+                          parseInt(e.target.value),
+                          tempFilters.priceRange[1],
+                        ])
+                      }
+                      placeholder="50$"
                       className="w-[100px] px-3 py-2 border rounded-full border-gray-300  placeholder:text-black placeholder:text-sm placeholder:text-center"
                     />
                   </div>
@@ -147,10 +256,15 @@ export default function FilterResults() {
                       Maximum
                     </label>
                     <input
-                      type="text"
-                      value={price.max}
-                      onChange={(e) => handleChange("max", e.target.value)}
-                      placeholder="$1100+"
+                      type="number"
+                      value={tempFilters.priceRange[1]}
+                      onChange={(e) =>
+                        handleFilterChange("priceRange", [
+                          tempFilters.priceRange[0],
+                          parseInt(e.target.value),
+                        ])
+                      }
+                      placeholder="1000$+"
                       className="w-[100px] px-3 py-2 border rounded-full border-gray-300 placeholder:text-black placeholder:text-sm placeholder:text-center"
                     />
                   </div>
@@ -160,23 +274,15 @@ export default function FilterResults() {
               <div className="mb-6">
                 <h3 className="text-lg font-medium mb-2">Amenities</h3>
                 <div className="flex flex-wrap gap-3">
-                  {[
-                    "Kitchen",
-                    "Wifi",
-                    "Dedicated workspace",
-                    "Free washer – In unit",
-                    "Free dryer – In unit",
-                    "Bathtub",
-                    "Indoor fireplace: wood-burning",
-                    "Luggage dropoff allowed",
-                    "Heating",
-                    "Balcony",
-                    "Air conditioning",
-                    "TV",
-                  ].map((item) => (
+                  {amenities.map((item) => (
                     <button
                       key={item}
-                      className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-full text-sm hover:bg-gray-100"
+                      onClick={() => handleAmenityToggle(item)}
+                      className={`flex items-center gap-2 px-4 py-2 border rounded-full text-sm transition-colors ${
+                        tempFilters.amenities.includes(item)
+                          ? "border-black bg-black text-white"
+                          : "border-gray-300 hover:bg-gray-100"
+                      }`}
                     >
                       <span>{item}</span>
                     </button>
@@ -184,14 +290,19 @@ export default function FilterResults() {
                 </div>
               </div>
 
-              {/* Booking options */}
+              {/* Property type */}
               <div className="mb-6">
                 <h3 className="text-lg font-medium mb-2">Property type</h3>
                 <div className="flex flex-wrap gap-3">
-                  {["House", "Apartment", "Hotel"].map((item) => (
+                  {propertyTypes.map((item) => (
                     <button
                       key={item}
-                      className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-full text-sm hover:bg-gray-100"
+                      onClick={() => handlePropertyTypeToggle(item)}
+                      className={`flex items-center gap-2 px-4 py-2 border rounded-full text-sm transition-colors ${
+                        tempFilters.propertyTypes.includes(item)
+                          ? "border-black bg-black text-white"
+                          : "border-gray-300 hover:bg-gray-100"
+                      }`}
                     >
                       <span>{item}</span>
                     </button>
@@ -199,38 +310,92 @@ export default function FilterResults() {
                 </div>
               </div>
 
-              <div className="">
+              <div className="mb-6">
                 <h2 className="text-lg font-medium mb-4">Rooms and beds</h2>
 
-                {["bedrooms", "beds", "bathrooms"].map((key) => (
-                  <div
-                    key={key}
-                    className="flex justify-between items-center py-2"
-                  >
-                    <span className="capitalize">{key}</span>
-                    <div className="flex items-center gap-4">
-                      <button
-                        onClick={() => updateCount(key, -1)}
-                        className={`p-2 rounded-full border text-gray-500 border-gray-300 ${
-                          filters[key] === null
-                            ? "opacity-50 cursor-not-allowed"
-                            : ""
-                        }`}
-                      >
-                        <Minus size={14} />
-                      </button>
-                      <span className="w-10 text-center">
-                        {filters[key] ?? "Any"}
-                      </span>
-                      <button
-                        onClick={() => updateCount(key, 1)}
-                        className=" p-2 rounded-full border text-gray-500 border-gray-300"
-                      >
-                        <Plus size={14} />
-                      </button>
-                    </div>
+                <div className="flex justify-between items-center py-2">
+                  <span>Bedrooms</span>
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={() =>
+                        handleFilterChange(
+                          "bedrooms",
+                          Math.max(0, tempFilters.bedrooms - 1)
+                        )
+                      }
+                      className="p-2 rounded-full border text-gray-500 border-gray-300"
+                    >
+                      <Minus size={14} />
+                    </button>
+                    <span className="w-10 text-center">
+                      {tempFilters.bedrooms === 0
+                        ? "Any"
+                        : tempFilters.bedrooms}
+                    </span>
+                    <button
+                      onClick={() =>
+                        handleFilterChange("bedrooms", tempFilters.bedrooms + 1)
+                      }
+                      className="p-2 rounded-full border text-gray-500 border-gray-300"
+                    >
+                      <Plus size={14} />
+                    </button>
                   </div>
-                ))}
+                </div>
+
+                <div className="flex justify-between items-center py-2">
+                  <span>Bathrooms</span>
+                  <div className="flex items-center gap-4">
+                    <button
+                      onClick={() =>
+                        handleFilterChange(
+                          "bathrooms",
+                          Math.max(0, tempFilters.bathrooms - 1)
+                        )
+                      }
+                      className="p-2 rounded-full border text-gray-500 border-gray-300"
+                    >
+                      <Minus size={14} />
+                    </button>
+                    <span className="w-10 text-center">
+                      {tempFilters.bathrooms === 0
+                        ? "Any"
+                        : tempFilters.bathrooms}
+                    </span>
+                    <button
+                      onClick={() =>
+                        handleFilterChange(
+                          "bathrooms",
+                          tempFilters.bathrooms + 1
+                        )
+                      }
+                      className="p-2 rounded-full border text-gray-500 border-gray-300"
+                    >
+                      <Plus size={14} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Instant Book */}
+              <div className="mb-6">
+                <h3 className="text-lg font-medium mb-2">Booking options</h3>
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={tempFilters.instantBook}
+                    onChange={(e) =>
+                      handleFilterChange("instantBook", e.target.checked)
+                    }
+                    className="w-5 h-5 text-black border-gray-300 rounded focus:ring-black"
+                  />
+                  <div>
+                    <span className="text-sm font-medium">Instant Book</span>
+                    <p className="text-xs text-gray-500">
+                      Listings you can book without waiting for Host approval
+                    </p>
+                  </div>
+                </label>
               </div>
 
               {/* Standout stays */}
@@ -331,11 +496,17 @@ export default function FilterResults() {
 
             {/* Footer */}
             <div className="flex justify-between items-center border-t border-gray-300 shadow-2xl px-6 py-4">
-              <button className="text-lg text-gray-black/90 hover:text-black">
+              <button
+                onClick={clearAllFilters}
+                className="text-lg text-gray-black/90 hover:text-black"
+              >
                 Clear all
               </button>
-              <button className="bg-black/90 hover:bg-black text-white px-5 py-2 rounded-md text-lg font-medium">
-                Show 1,000+ places
+              <button
+                onClick={applyFiltersToData}
+                className="bg-black/90 hover:bg-black text-white px-5 py-2 rounded-md text-lg font-medium"
+              >
+                Show {getFilteredCount()} places
               </button>
             </div>
           </div>
