@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { FiltersContext } from "../context/FiltersContext";
-import { X, Heart, Star } from "lucide-react";
+import { X, Heart, Star, SlidersHorizontal, Minus, Plus } from "lucide-react";
 import { Link } from "react-router";
 
 export default function FilterResults() {
   const { filteredData } = useContext(FiltersContext);
-  console.log("Filtered Data:", filteredData);
+  // const { showModal, setShowModal } = useState(false);
 
   return (
     <div className="flex flex-col lg:flex-row h-full min-h-screen mx-auto py-4 px-4 sm:px-5 lg:px-10 lg:py-8">
@@ -16,7 +16,7 @@ export default function FilterResults() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
           {filteredData.map((listing) => (
             <Link to={`/details/${listing.id}`} key={listing.id}>
               <div className="w-full flex-shrink-0 relative group">
@@ -75,6 +75,10 @@ export default function FilterResults() {
           loading="lazy"
         ></iframe>
       </div>
+
+      {/* <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 sm:p-6 ">
+        <h2>Filters</h2>
+      </div> */}
     </div>
   );
 }
