@@ -1,11 +1,11 @@
 import { useContext } from "react";
 import { FiltersContext } from "../context/FiltersContext";
 import { X, Heart, Star, SlidersHorizontal, Minus, Plus } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useOutletContext } from "react-router";
 
 export default function FilterResults() {
   const { filteredData } = useContext(FiltersContext);
-  // const { showModal, setShowModal } = useState(false);
+  const { showModal, setShowModal } = useOutletContext();
 
   return (
     <div className="flex flex-col lg:flex-row h-full min-h-screen mx-auto py-4 px-4 sm:px-5 lg:px-10 lg:py-8">
@@ -76,9 +76,124 @@ export default function FilterResults() {
         ></iframe>
       </div>
 
-      {/* <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 sm:p-6 ">
-        <h2>Filters</h2>
-      </div> */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 ">
+          <div className="max-w-xl mx-auto  bg-white rounded-4xl shadow relative">
+            <h2 className="text-md font-semibold mb-4 text-center border-b border-gray-300 py-5">
+              Filters
+            </h2>
+            <button className="absolute top-4.5 right-4 text-black hover:bg-gray-100 p-1 rounded-full transition-colors">
+              <X size={20} onClick={() => setShowModal(false)} />
+            </button>
+
+            <div className="px-6 space-y-4 h-[70vh] overflow-scroll">
+              <div className="mb-6">
+                <h3 className="text-lg font-medium mb-2">Amenities</h3>
+                <div className="flex flex-wrap gap-3">
+                  {[
+                    "Wifi",
+                    "TV",
+                    "Beachfront",
+                    "Pool",
+                    "Waterfront",
+                    "Hot tub",
+                  ].map((item) => (
+                    <button
+                      key={item}
+                      className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-full text-sm hover:bg-gray-100"
+                    >
+                      <span>{item}</span>
+                    </button>
+                  ))}
+                </div>
+                <button className="text-sm text-gray-700 mt-2 hover:underline">
+                  Show more
+                </button>
+              </div>
+
+              {/* Booking options */}
+              <div className="mb-6">
+                <h3 className="text-lg font-medium mb-2">Booking options</h3>
+                <div className="flex flex-wrap gap-3">
+                  {["Instant Book", "Self check-in", "Allows pets"].map(
+                    (item) => (
+                      <button
+                        key={item}
+                        className="flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-full text-sm hover:bg-gray-100"
+                      >
+                        <span>{item}</span>
+                      </button>
+                    )
+                  )}
+                </div>
+              </div>
+
+              {/* Standout stays */}
+              <div className="mb-6">
+                <h3 className="text-lg font-medium mb-2">Standout stays</h3>
+                <div className="flex gap-4">
+                  <div className="flex-1 border border-gray-300 rounded-lg p-4 hover:bg-gray-50">
+                    <h4 className="font-semibold mb-1">Guest favorite</h4>
+                    <p className="text-sm text-gray-600">
+                      The most loved homes on Airbnb
+                    </p>
+                  </div>
+                  <div className="flex-1 border border-gray-300 rounded-lg p-4 hover:bg-gray-50">
+                    <h4 className="font-semibold mb-1">Luxe</h4>
+                    <p className="text-sm text-gray-600">
+                      Luxury homes with elevated design
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="mb-6">
+                <h3 className="text-lg font-medium mb-2">Standout stays</h3>
+                <div className="flex gap-4">
+                  <div className="flex-1 border border-gray-300 rounded-lg p-4 hover:bg-gray-50">
+                    <h4 className="font-semibold mb-1">Guest favorite</h4>
+                    <p className="text-sm text-gray-600">
+                      The most loved homes on Airbnb
+                    </p>
+                  </div>
+                  <div className="flex-1 border border-gray-300 rounded-lg p-4 hover:bg-gray-50">
+                    <h4 className="font-semibold mb-1">Luxe</h4>
+                    <p className="text-sm text-gray-600">
+                      Luxury homes with elevated design
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="mb-6">
+                <h3 className="text-lg font-medium mb-2">Standout stays</h3>
+                <div className="flex gap-4">
+                  <div className="flex-1 border border-gray-300 rounded-lg p-4 hover:bg-gray-50">
+                    <h4 className="font-semibold mb-1">Guest favorite</h4>
+                    <p className="text-sm text-gray-600">
+                      The most loved homes on Airbnb
+                    </p>
+                  </div>
+                  <div className="flex-1 border border-gray-300 rounded-lg p-4 hover:bg-gray-50">
+                    <h4 className="font-semibold mb-1">Luxe</h4>
+                    <p className="text-sm text-gray-600">
+                      Luxury homes with elevated design
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="flex justify-between items-center border-t border-gray-300 shadow-2xl px-6 py-4">
+              <button className="text-lg text-gray-black/90 hover:text-black">
+                Clear all
+              </button>
+              <button className="bg-black/90 hover:bg-black text-white px-5 py-2 rounded-md text-lg font-medium">
+                Show 1,000+ places
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

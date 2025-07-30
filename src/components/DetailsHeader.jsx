@@ -1,8 +1,7 @@
-import { button } from "framer-motion/client";
 import { Globe, Menu, Search, Settings2 } from "lucide-react";
 import { Link } from "react-router";
 
-const DetailsHeader = ({ filters }) => {
+const DetailsHeader = ({ filters, setShowModal }) => {
   return (
     <header
       className={`bg-white  md:border-b border-gray-200  mx-auto  ${
@@ -40,7 +39,10 @@ const DetailsHeader = ({ filters }) => {
               </div>
 
               {filters ? (
-                <button className="rounded-full px-4 py-2 border  border-gray-300 text-sm flex items-center gap-2 hover:bg-gray-100 transition-colors">
+                <button
+                  className="rounded-full px-4 py-2 border  border-gray-300 text-sm flex items-center gap-2 hover:bg-gray-100 transition-colors"
+                  onClick={() => setShowModal(true)}
+                >
                   <Settings2 size={15} />
                   Filters
                 </button>
