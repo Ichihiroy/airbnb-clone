@@ -75,18 +75,7 @@ The app will run at `http://localhost:5173`.
 ---
 
 
-<table>
-<tr>
 
-<td align="center">
-<a href="https://github.com/Ichihiroy">
-<img src="https://avatars.githubusercontent.com/Ichihiroy?v=4" width="100px;" alt="Ichihiroy Profile Picture"/><br>
-<sub><b>Ichihiroy</b></sub>
-</a>
-</td>
-
-</tr>
-</table>
 
 ---
 
