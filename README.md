@@ -74,9 +74,6 @@ The app will run at `http://localhost:5173`.
 
 ---
 
-<h2 id="collaborators">🤝 Collaborators</h2>
-
-<p>Special thanks to everyone who contributed to this project.</p>
 
 <table>
 <tr>
