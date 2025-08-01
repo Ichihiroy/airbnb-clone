@@ -55,10 +55,7 @@ const LoginPage = () => {
           </p>
           <p>
             Don't have an account?{" "}
-            <Link
-              href="/auth/register"
-              className="text-pink-600 hover:underline"
-            >
+            <Link to="/auth/register" className="text-pink-600 hover:underline">
               Sign up
             </Link>
           </p>

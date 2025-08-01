@@ -97,7 +97,7 @@ const RegPage = () => {
 
           <p>
             Already have an account?{" "}
-            <Link href="/auth/login" className="text-pink-600 hover:underline">
+            <Link to="/auth/login" className="text-pink-600 hover:underline">
               Sign in
             </Link>
           </p>
