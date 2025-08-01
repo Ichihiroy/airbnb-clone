@@ -17,6 +17,8 @@ const SearchBar = () => {
     categories,
     filteredData,
     setFilteredData,
+    setCounts,
+    range,
   } = useContext(FiltersContext);
 
   const navigate = useNavigate();
@@ -43,21 +45,29 @@ const SearchBar = () => {
       )
       .filter(
         (property) =>
-          filters.checkIn == "" || property.checkIn === filters.checkIn
+          filters.checkIn == "" ||
+          isSameDateOnly(
+            new Date(range[0].startDate),
+            new Date(property.stayDates.check_in)
+          )
       )
       .filter(
         (property) =>
-          filters.checkOut == "" || property.checkOut === filters.checkOut
-      );
-    // .filter((property) => {
-    //   const { adults, children, infants, pets } = filters.guests;
-    //   return (
-    //     property.guests.adults === adults &&
-    //     property.guests.children === children &&
-    //     property.guests.infants === infants &&
-    //     property.guests.pets === pets
-    //   );
-    // });
+          filters.checkOut == "" ||
+          isSameDateOnly(
+            new Date(range[0].endDate),
+            new Date(property.stayDates.check_out)
+          )
+      )
+      .filter((property) => {
+        const { adults, children, infants, pets } = filters.guests;
+        return (
+          property.maxGuests.adults >= adults &&
+          property.maxGuests.children >= children &&
+          property.maxGuests.infants >= infants &&
+          property.maxGuests.pets >= pets
+        );
+      });
 
     setFilteredData(filtered);
     console.log("Filtered Data:", filteredData);
@@ -88,10 +98,6 @@ const SearchBar = () => {
     };
   }, [setActive]);
 
-  useEffect(() => {
-    filters.checkIn && filters.checkOut === "" && handleClick("checkIn");
-  }, [filters]);
-
   function handleClick(type) {
     setActive({
       bar: true,
@@ -100,6 +106,14 @@ const SearchBar = () => {
       checkOut: type === "checkOut" ? true : false,
       guests: type === "guests" ? true : false,
     });
+  }
+
+  function isSameDateOnly(a, b) {
+    return (
+      a.getFullYear() === b.getFullYear() &&
+      a.getMonth() === b.getMonth() &&
+      a.getDate() === b.getDate()
+    );
   }
 
   function handleClear(type) {
@@ -297,7 +311,15 @@ const SearchBar = () => {
         {active.guests && (
           <div className="absolute top-0 right-26 h-full flex items-center pr-4">
             <button
-              onClick={() => handleClear("guests")}
+              onClick={() => {
+                handleClear("guests");
+                setCounts({
+                  adults: 0,
+                  children: 0,
+                  infants: 0,
+                  pets: 0,
+                });
+              }}
               className="text-gray-500 hover:bg-gray-100 rounded-full p-1 transition-colors duration-200 cursor-pointer"
             >
               <X size={14} strokeWidth={3} />

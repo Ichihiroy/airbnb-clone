@@ -1,5 +1,5 @@
-import { filter } from "framer-motion/client";
 import React, { createContext, useState } from "react";
+import { addDays } from "date-fns";
 
 const FiltersContext = createContext();
 
@@ -23,6 +23,20 @@ export const FiltersProvider = ({ children }) => {
   });
   const [filteredData, setFilteredData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
+
+  const [range, setRange] = useState([
+    {
+      startDate:
+        filters?.checkIn && !isNaN(new Date(filters.checkIn))
+          ? new Date(filters.checkIn)
+          : new Date(),
+      endDate:
+        filters?.checkOut && !isNaN(new Date(filters.checkOut))
+          ? new Date(filters.checkOut)
+          : addDays(new Date(), 1),
+      key: "selection",
+    },
+  ]);
 
   const applyFilters = (data, filterCriteria) => {
     if (!data || data.length === 0) return [];
@@ -225,6 +239,8 @@ export const FiltersProvider = ({ children }) => {
         originalData,
         setOriginalData,
         applyFilters,
+        setRange,
+        range,
       }}
     >
       {children}

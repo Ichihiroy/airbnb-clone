@@ -1,23 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { DateRange } from "react-date-range";
-import { addDays } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import { FiltersContext } from "../context/FiltersContext";
 
 const AirbnbDatePicker = ({ setFilters, filters, months }) => {
-  const [range, setRange] = useState([
-    {
-      startDate:
-        filters?.checkIn && !isNaN(new Date(filters.checkIn))
-          ? new Date(filters.checkIn)
-          : new Date(),
-      endDate:
-        filters?.checkOut && !isNaN(new Date(filters.checkOut))
-          ? new Date(filters.checkOut)
-          : addDays(new Date(), 1),
-      key: "selection",
-    },
-  ]);
+  const { range, setRange } = useContext(FiltersContext);
 
   useEffect(() => {
     const formatDate = (dateObj) => {

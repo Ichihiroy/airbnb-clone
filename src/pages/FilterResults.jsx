@@ -30,9 +30,8 @@ export default function FilterResults() {
   useEffect(() => {
     if (data && data.length > 0 && originalData.length === 0) {
       setOriginalData(data);
-      setFilteredData(data);
     }
-  }, [data, originalData, setOriginalData, setFilteredData]);
+  }, [data, originalData, setOriginalData]);
 
   useEffect(() => {
     if (showModal) {
