@@ -4,11 +4,14 @@ import Main from "./pages/Main.jsx";
 import Details from "./pages/Details.jsx";
 import HomepageLayout from "./layout/HomepageLayout.jsx";
 import DetailsLayout from "./layout/DetailsLayout.jsx";
-import "./index.css";
 import FilterLayout from "./layout/FilterLayout.jsx";
 import FilterResults from "./pages/FilterResults.jsx";
 import { FiltersProvider } from "./context/FiltersContext.jsx";
 import { PropertyProvider } from "./context/PropertyContext.jsx";
+import "./index.css";
+import LoginPage from "./pages/LoginPage.jsx";
+import RegPage from "./pages/RegPage.jsx";
+import AuthLayout from "./layout/AuthLayout.jsx";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +42,20 @@ const router = createBrowserRouter([
       {
         path: "/filters",
         element: <FilterResults />,
+      },
+    ],
+  },
+  {
+    path: "/auth",
+    element: <AuthLayout />,
+    children: [
+      {
+        path: "login",
+        element: <LoginPage />,
+      },
+      {
+        path: "register",
+        element: <RegPage />,
       },
     ],
   },

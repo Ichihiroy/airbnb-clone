@@ -1,7 +1,29 @@
 import { Globe, Menu, Search, Settings2 } from "lucide-react";
 import { Link } from "react-router";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 const DetailsHeader = ({ filters, setShowModal }) => {
+  const [showCenter, setShowCenter] = useState(false);
+
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setShowCenter(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [setShowCenter]);
+
   return (
     <header
       className={`bg-white  md:border-b border-gray-200  mx-auto  ${
@@ -64,11 +86,49 @@ const DetailsHeader = ({ filters, setShowModal }) => {
                 <Globe size={18} />
               </div>
 
-              <div className="flex items-center bg-zinc-200 space-x-2 cursor-pointer rounded-full p-2 hover:shadow-md transition-shadow">
+              <div
+                onClick={() => setShowCenter(true)}
+                className="flex items-center bg-zinc-200 space-x-2 cursor-pointer rounded-full p-2 hover:shadow-md transition-shadow"
+              >
                 <Menu size={18} />
               </div>
             </div>
           </div>
+
+          {showCenter && (
+            <motion.div
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+              className="lg:right-14 md:right-5 top-18 z-50 absolute w-[250px]"
+              ref={containerRef}
+            >
+              <div className="bg-white p-6 rounded-xl shadow-2xl w-full flex flex-col items-start">
+                <h2 className="text-sm mb-4 border-b font-medium border-gray-300 pb-3 w-full hover:underline cursor-pointer">
+                  Help Center
+                </h2>
+                <div className="border-b border-gray-300 pb-3 w-full mb-4">
+                  <h4 className="font-medium text-sm hover:underline cursor-pointer pb-1">
+                    Become a host
+                  </h4>
+                  <p className="text-xs text-gray-500">
+                    It's easy to start hosting and earn extra income.
+                  </p>
+                </div>
+                <ul className="border-b border-gray-300 pb-3 w-full mb-4 text-sm space-y-2 cursor-pointer ">
+                  <li className="hover:underline">Refer a host</li>
+                  <li className="hover:underline">Find a co-host</li>
+                  <li className="hover:underline">Gift cards</li>
+                </ul>
+                <Link to="auth/login">
+                  <button className="text-sm hover:underline cursor-pointer">
+                    Log in or sign up
+                  </button>
+                </Link>
+              </div>
+            </motion.div>
+          )}
         </div>
       </div>
     </header>
