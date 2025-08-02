@@ -9,7 +9,7 @@ const App = () => {
       <Header />
       <Outlet />
       <Footer />
-      <MobileBottomNav />
+      <MobileBottomNav explore={true} />
     </div>
   );
 };
