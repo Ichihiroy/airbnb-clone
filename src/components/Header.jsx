@@ -12,6 +12,8 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
+  const userData = JSON.parse(localStorage.getItem("userData"));
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 150) {
@@ -156,11 +158,20 @@ const Header = () => {
                 <li className="hover:underline">Find a co-host</li>
                 <li className="hover:underline">Gift cards</li>
               </ul>
-              <Link to="auth/login">
-                <button className="text-sm hover:underline cursor-pointer">
-                  Log in or sign up
-                </button>
-              </Link>
+
+              {userData ? (
+                <Link to={`/profile`}>
+                  <button className="text-sm hover:underline cursor-pointer">
+                    {userData.fullname}
+                  </button>
+                </Link>
+              ) : (
+                <Link to="auth/login">
+                  <button className="text-sm hover:underline cursor-pointer">
+                    Log in or sign up
+                  </button>
+                </Link>
+              )}
             </div>
           </motion.div>
         )}

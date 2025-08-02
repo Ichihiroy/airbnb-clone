@@ -12,6 +12,9 @@ import "./index.css";
 import LoginPage from "./pages/LoginPage.jsx";
 import RegPage from "./pages/RegPage.jsx";
 import AuthLayout from "./layout/AuthLayout.jsx";
+import { Toaster } from "react-hot-toast";
+import ProfileLayout from "./layout/ProfileLayout.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -59,11 +62,22 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/profile",
+    element: <ProfileLayout />,
+    children: [
+      {
+        path: "/profile",
+        element: <ProfilePage />,
+      },
+    ],
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
   <FiltersProvider>
     <PropertyProvider>
+      <Toaster position="top-right" />
       <RouterProvider router={router} />
     </PropertyProvider>
   </FiltersProvider>

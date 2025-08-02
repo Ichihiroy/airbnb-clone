@@ -1,7 +1,51 @@
-import React from "react";
-import { Link } from "react-router";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router";
+import { getUserByUsernameAndPassword } from "../services/authServices";
 
 const LoginPage = () => {
+  const [userData, setUserData] = useState({
+    username: "",
+    password: "",
+  });
+  const navigate = useNavigate();
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+
+  async function handleSubmit() {
+    if (!userData.username || !userData.password) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    try {
+      // Here you would typically call an API to authenticate the user
+      // For now, we will just simulate a successful login
+      const response = await getUserByUsernameAndPassword(
+        userData.username,
+        userData.password
+      );
+
+      if (response.data.length === 0) {
+        toast.error("Invalid username or password");
+        return;
+      }
+
+      localStorage.setItem("userData", JSON.stringify(response.data[0]));
+      toast.success("Login successful");
+      navigate("/");
+    } catch (error) {
+      console.error("Login failed:", error);
+      toast.error("Login failed. Please try again.");
+    }
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4">
       <div className="w-full max-w-md">
@@ -9,7 +53,7 @@ const LoginPage = () => {
           Welcome to Airbnb
         </h1>
 
-        <form className="space-y-6">
+        <div className="space-y-6">
           <div>
             <label
               htmlFor="username"
@@ -18,6 +62,7 @@ const LoginPage = () => {
               Username
             </label>
             <input
+              onChange={(e) => handleChange(e)}
               id="username"
               name="username"
               type="text"
@@ -36,6 +81,7 @@ const LoginPage = () => {
               Password
             </label>
             <input
+              onChange={(e) => handleChange(e)}
               id="password"
               name="password"
               type="password"
@@ -61,12 +107,14 @@ const LoginPage = () => {
           </p>
 
           <button
-            type="submit"
+            onClick={() => {
+              handleSubmit();
+            }}
             className="w-full py-3 mt-4 bg-gradient-to-r from-pink-600 to-red-500 text-white text-lg font-medium rounded-lg hover:opacity-90 transition cursor-pointer"
           >
             Continue
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );

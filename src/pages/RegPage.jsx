@@ -1,7 +1,72 @@
-import React from "react";
-import { Link } from "react-router";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router";
+import {
+  registerUser,
+  getUserByUsername,
+  getUserByEmail,
+} from "../services/authServices";
 
 const RegPage = () => {
+  const [userData, setUserData] = useState({
+    fullname: "",
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
+
+  function handleConfirmPasswordChange(event) {
+    setConfirmPassword(event.target.value);
+  }
+
+  async function handleSubmit() {
+    if (
+      !userData.fullname ||
+      !userData.username ||
+      !userData.email ||
+      !userData.password
+    ) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    if (userData.password !== confirmPassword) {
+      toast.error("Passwords do not match");
+      return;
+    }
+
+    try {
+      const usernameResponse = await getUserByUsername(userData.username);
+      if (usernameResponse.data.length > 0) {
+        toast.error("Username is already taken");
+        return;
+      }
+
+      const emailResponse = await getUserByEmail(userData.email);
+      if (emailResponse.data.length > 0) {
+        toast.error("Email is already taken");
+        return;
+      }
+
+      await registerUser(userData);
+      toast.success("Registration successful");
+      navigate("/auth/login");
+    } catch (error) {
+      console.error("Registration error:", error);
+      toast.error("Registration failed");
+    }
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white px-4">
       <div className="w-full max-w-md">
@@ -9,7 +74,7 @@ const RegPage = () => {
           Create an Account
         </h1>
 
-        <form className="space-y-6">
+        <div className="space-y-6">
           <div>
             <label
               htmlFor="fullname"
@@ -18,10 +83,10 @@ const RegPage = () => {
               Full Name
             </label>
             <input
+              onChange={(e) => handleChange(e)}
               id="fullname"
               name="fullname"
               type="text"
-              required
               placeholder="Enter your full name"
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
             />
@@ -35,10 +100,10 @@ const RegPage = () => {
               Username
             </label>
             <input
+              onChange={(e) => handleChange(e)}
               id="username"
               name="username"
               type="text"
-              required
               placeholder="Choose a username"
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
             />
@@ -52,10 +117,10 @@ const RegPage = () => {
               Email
             </label>
             <input
+              onChange={(e) => handleChange(e)}
               id="email"
               name="email"
               type="email"
-              required
               placeholder="Enter your email"
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
             />
@@ -69,10 +134,10 @@ const RegPage = () => {
               Password
             </label>
             <input
+              onChange={(e) => handleChange(e)}
               id="password"
               name="password"
               type="password"
-              required
               placeholder="Create a password"
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
             />
@@ -86,10 +151,10 @@ const RegPage = () => {
               Confirm Password
             </label>
             <input
+              onChange={(e) => handleConfirmPasswordChange(e)}
               id="confirmPassword"
               name="confirmPassword"
               type="password"
-              required
               placeholder="Re-enter password"
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
             />
@@ -115,12 +180,12 @@ const RegPage = () => {
           </p>
 
           <button
-            type="submit"
-            className="w-full py-3 mt-4 bg-gradient-to-r from-pink-600 to-red-500 text-white text-lg font-medium rounded-lg hover:opacity-90 transition"
+            onClick={() => handleSubmit()}
+            className="w-full py-3 mt-4 bg-gradient-to-r from-pink-600 to-red-500 text-white text-lg font-medium rounded-lg hover:opacity-90 transitio cursor-pointer"
           >
             Sign Up
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );
