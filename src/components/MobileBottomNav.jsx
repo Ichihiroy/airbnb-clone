@@ -21,8 +21,13 @@ const MobileBottomNav = ({ profile, explore, wishlist }) => (
           wishlist ? "text-red-500" : "text-gray-600"
         }`}
       >
-        <Heart size={20} />
-        <span className="text-xs mt-1">Wishlists</span>
+        <Link
+          to={userData ? "/wishlist" : "auth/login"}
+          className="flex flex-col items-center"
+        >
+          <Heart size={20} />
+          <span className="text-xs mt-1">Wishlists</span>
+        </Link>
       </button>
       <button
         className={`flex flex-col items-center py-2 ${

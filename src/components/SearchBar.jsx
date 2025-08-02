@@ -46,7 +46,7 @@ const SearchBar = () => {
       .filter(
         (property) =>
           filters.checkIn == "" ||
-          isSameDateOnly(
+          isSameDateOnlyFirst(
             new Date(range[0].startDate),
             new Date(property.stayDates.check_in)
           )
@@ -54,7 +54,7 @@ const SearchBar = () => {
       .filter(
         (property) =>
           filters.checkOut == "" ||
-          isSameDateOnly(
+          isSameDateOnlySecond(
             new Date(range[0].endDate),
             new Date(property.stayDates.check_out)
           )
@@ -108,11 +108,18 @@ const SearchBar = () => {
     });
   }
 
-  function isSameDateOnly(a, b) {
+  function isSameDateOnlyFirst(a, b) {
     return (
-      a.getFullYear() === b.getFullYear() &&
-      a.getMonth() === b.getMonth() &&
-      a.getDate() === b.getDate()
+      a.getFullYear() <= b.getFullYear() &&
+      a.getMonth() <= b.getMonth() &&
+      a.getDate() <= b.getDate()
+    );
+  }
+  function isSameDateOnlySecond(a, b) {
+    return (
+      a.getFullYear() >= b.getFullYear() &&
+      a.getMonth() >= b.getMonth() &&
+      a.getDate() >= b.getDate()
     );
   }
 

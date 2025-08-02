@@ -45,6 +45,30 @@ const RegPage = () => {
       return;
     }
 
+    if (userData.password.length < 6) {
+      toast.error("Password must be at least 6 characters long");
+      return;
+    }
+
+    if (userData.password.length > 16) {
+      toast.error("Password must be at most 16 characters long");
+      return;
+    }
+    if (!/^[a-zA-Z0-9]+$/.test(userData.username)) {
+      toast.error("Username can only contain letters and numbers");
+      return;
+    }
+    if (
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(userData.email)
+    ) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+    if (userData.fullname.length < 2) {
+      toast.error("Full name must be at least 2 characters long");
+      return;
+    }
+
     try {
       const usernameResponse = await getUserByUsername(userData.username);
       if (usernameResponse.data.length > 0) {

@@ -15,6 +15,9 @@ import AuthLayout from "./layout/AuthLayout.jsx";
 import { Toaster } from "react-hot-toast";
 import ProfileLayout from "./layout/ProfileLayout.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
+import WishlistLayout from "./layout/WishlistLayout.jsx";
+import WishlistPage from "./pages/WishlistPage.jsx";
+import ProtectedRoute from "./pages/ProtectedRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +38,20 @@ const router = createBrowserRouter([
       {
         path: ":id",
         element: <Details />,
+      },
+    ],
+  },
+  {
+    path: "wishlist",
+    element: <WishlistLayout />,
+    children: [
+      {
+        path: "/wishlist",
+        element: (
+          <ProtectedRoute>
+            <WishlistPage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
@@ -68,7 +85,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/profile",
-        element: <ProfilePage />,
+        element: (
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
