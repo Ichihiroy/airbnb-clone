@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Minus, Plus, X } from "lucide-react";
 import { FiltersContext } from "../context/FiltersContext";
 import AirbnbDatePicker from "./AirbnbDatePicker";
+import { useNavigate } from "react-router";
 
 export default function MobileSearchBar({ setIsOpen }) {
   const [openSection, setOpenSection] = useState(null);
@@ -12,7 +13,10 @@ export default function MobileSearchBar({ setIsOpen }) {
     counts,
     destinations,
     categories,
+    filterData,
+    setCounts,
   } = useContext(FiltersContext);
+  const navigate = useNavigate();
 
   const toggle = (section) => {
     setOpenSection(openSection === section ? null : section);
@@ -22,7 +26,31 @@ export default function MobileSearchBar({ setIsOpen }) {
     toggle("where");
   }, []);
 
-  console.log("MobileSearchBar filters:", filters);
+  function handleClear() {
+    setFilters({
+      destination: "",
+      checkIn: "",
+      checkOut: "",
+      guests: {
+        adults: 0,
+        children: 0,
+        infants: 0,
+        pets: 0,
+      },
+    });
+
+    setCounts({
+      adults: 0,
+      children: 0,
+      infants: 0,
+      pets: 0,
+    });
+  }
+
+  function handleSearch() {
+    filterData();
+    navigate("/filters");
+  }
 
   return (
     <div className="fixed inset-0 bg-opacity-50 flex justify-center items-end z-50 w-full h-full md:hidden overflow-y-scroll bg-gray-100 pb-2">
@@ -224,8 +252,13 @@ export default function MobileSearchBar({ setIsOpen }) {
         </div>
 
         <div className="flex justify-between items-center">
-          <button className="underline">Clear all</button>
-          <button className="px-6 flex items-center justify-center space-x-2 bg-black text-white font-semibold py-3 rounded-lg hover:opacity-90">
+          <button onClick={() => handleClear()} className="underline">
+            Clear all
+          </button>
+          <button
+            onClick={() => handleSearch()}
+            className="px-6 flex items-center justify-center space-x-2 bg-black text-white font-semibold py-3 rounded-lg hover:opacity-90"
+          >
             <span>Next</span>
           </button>
         </div>

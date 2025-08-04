@@ -1,7 +1,15 @@
 import { useContext, useState, useEffect } from "react";
 import { FiltersContext } from "../context/FiltersContext";
 import { PropertyContext } from "../context/PropertyContext";
-import { X, Heart, Star, Minus, Plus } from "lucide-react";
+import {
+  X,
+  Heart,
+  Star,
+  Minus,
+  Plus,
+  ArrowLeft,
+  Settings2,
+} from "lucide-react";
 import { Link, useOutletContext } from "react-router";
 
 export default function FilterResults() {
@@ -133,15 +141,24 @@ export default function FilterResults() {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row h-full min-h-screen mx-auto py-4 px-4 sm:px-5 lg:px-10 lg:py-8">
+    <div className="flex flex-col lg:flex-row h-full min-h-screen mx-auto py-4 px-4 sm:px-5 lg:px-10 lg:py-8 relative">
       <div className="w-full lg:w-1/2 overflow-y-auto md:py-20 lg:py-18">
-        <div className="flex justify-between items-center mb-4 sm:mb-6">
+        <div className="justify-between items-center mb-4 sm:mb-6 hidden md:block">
           <h2 className="text-lg sm:text-xl font-semibold  ">
             {filteredData.length} homes
           </h2>
         </div>
+        <div className="justify-between items-center mb-4 sm:mb-6 flex md:hidden shadow-lg absolute top-0 left-0 right-0 bg-gray-50 z-10 px-6 py-3 rounded-b-lg ">
+          <Link to="/">
+            <ArrowLeft size={18} />
+          </Link>
+          <div className="bg-white w-[70%] text-center text-sm shadow-lg rounded-full flex items-center justify-center px-4 py-3  ">
+            Homes Nearby
+          </div>
+          <Settings2 onClick={() => setShowModal(true)} size={18} />
+        </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 pt-20 md:pt-0">
           {filteredData.map((listing) => (
             <Link to={`/details/${listing.id}`} key={listing.id}>
               <div className="w-full flex-shrink-0 relative group">

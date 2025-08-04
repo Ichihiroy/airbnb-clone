@@ -22,7 +22,7 @@ const MobileBottomNav = ({ profile, explore, wishlist }) => (
         }`}
       >
         <Link
-          to={userData ? "/wishlist" : "auth/login"}
+          to={userData ? "/wishlist" : "/auth/login"}
           className="flex flex-col items-center"
         >
           <Heart size={20} />
@@ -40,7 +40,7 @@ const MobileBottomNav = ({ profile, explore, wishlist }) => (
             <span className="text-xs mt-1">{userData.fullname}</span>
           </Link>
         ) : (
-          <Link to="auth/login" className="flex flex-col items-center">
+          <Link to="/auth/login" className="flex flex-col items-center">
             <User size={20} />
             <span className="text-xs mt-1">Log in</span>
           </Link>

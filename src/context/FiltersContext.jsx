@@ -224,6 +224,59 @@ export const FiltersProvider = ({ children }) => {
     },
   ];
 
+  function filterData() {
+    const filtered = filteredData
+      .filter(
+        (property) =>
+          filters.destination === "" ||
+          property.location.city === filters.destination
+      )
+      .filter(
+        (property) =>
+          filters.checkIn == "" ||
+          isSameDateOnlyFirst(
+            new Date(range[0].startDate),
+            new Date(property.stayDates.check_in)
+          )
+      )
+      .filter(
+        (property) =>
+          filters.checkOut == "" ||
+          isSameDateOnlySecond(
+            new Date(range[0].endDate),
+            new Date(property.stayDates.check_out)
+          )
+      )
+      .filter((property) => {
+        const { adults, children, infants, pets } = filters.guests;
+        return (
+          property.maxGuests.adults >= adults &&
+          property.maxGuests.children >= children &&
+          property.maxGuests.infants >= infants &&
+          property.maxGuests.pets >= pets
+        );
+      });
+
+    setFilteredData(filtered);
+    console.log("Filtered Data:", filteredData);
+    // navigate("/filters");
+  }
+
+  function isSameDateOnlyFirst(a, b) {
+    return (
+      a.getFullYear() <= b.getFullYear() &&
+      a.getMonth() <= b.getMonth() &&
+      a.getDate() <= b.getDate()
+    );
+  }
+  function isSameDateOnlySecond(a, b) {
+    return (
+      a.getFullYear() >= b.getFullYear() &&
+      a.getMonth() >= b.getMonth() &&
+      a.getDate() >= b.getDate()
+    );
+  }
+
   return (
     <FiltersContext.Provider
       value={{
@@ -241,6 +294,9 @@ export const FiltersProvider = ({ children }) => {
         applyFilters,
         setRange,
         range,
+        filterData,
+        isSameDateOnlyFirst,
+        isSameDateOnlySecond,
       }}
     >
       {children}

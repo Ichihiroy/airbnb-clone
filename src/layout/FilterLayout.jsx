@@ -12,7 +12,7 @@ const FilterLayout = () => {
       <DetailsHeader filters={"filters"} setShowModal={setShowModal} />
       <Outlet context={{ showModal, setShowModal }} />
       <Footer filters={"filters"} />
-      <MobileBottomNav />
+      <MobileBottomNav explore={true} />
     </>
   );
 };

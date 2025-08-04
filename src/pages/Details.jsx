@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router";
 import { getPropertyById } from "../services/propertyServices";
 import Loading from "./Loading";
 import UserRatings from "../components/UserRatings";
 import {
+  ArrowLeft,
   CalendarFold,
   ChevronRight,
   Heart,
@@ -48,7 +49,7 @@ const Details = () => {
   }
 
   return (
-    <div className={`max-w-screen-xl mx-auto py-4 px-5 lg:px-14 lg:py-8 `}>
+    <div className={`max-w-screen-xl mx-auto py-4 md:px-5 lg:px-14 lg:py-8 `}>
       {showHeader && (
         <div className="hidden md:flex justify-between fixed top-0 left-0 w-full p-4 shadow-lg border-b  lg:px-34 mx-auto border-gray-300 z-50 bg-white ">
           <div className="flex items-center gap-5 py-5">
@@ -60,9 +61,6 @@ const Details = () => {
             </p>
             <p className="text-sm">
               <a href="#reviews">Reviews</a>
-            </p>
-            <p className="text-sm">
-              <a href="#location">Location</a>
             </p>
           </div>
 
@@ -95,18 +93,21 @@ const Details = () => {
         </div>
       )}
 
-      <div className="flex justify-between items-center mb-4 ">
-        <h1 className="text-2xl font-semibold ">
+      <div className="flex justify-between items-center mb-4 px-5 md:px-0">
+        <h1 className="text-2xl font-semibold hidden md:block">
           {property.title} in {property.location.city}
         </h1>
+        <Link to="/" className="md:hidden">
+          <ArrowLeft size={24} />
+        </Link>
         <div className="flex gap-4 ">
           <p className="text-sm flex items-center gap-2 cursor-pointer">
-            <Share size={15} />
-            <span className="underline">Share</span>
+            <Share size={20} />
+            <span className="underline hidden md:block">Share</span>
           </p>
           <p className="text-sm flex items-center gap-2 cursor-pointer">
-            <Heart size={15} />
-            <span className="underline">Save</span>
+            <Heart size={20} />
+            <span className="underline hidden md:block">Save</span>
           </p>
         </div>
       </div>
@@ -115,9 +116,9 @@ const Details = () => {
         <img
           src={property.images[0]}
           alt="Main room"
-          className="w-[550px] h-101 object-cover rounded-tl-xl rounded-bl-xl col-span-2"
+          className="w-full md:w-[550px] h-101 object-cover md:rounded-tl-xl md:rounded-bl-xl col-span-2"
         />
-        <div className="grid grid-cols-2 gap-1 w-full">
+        <div className=" grid-cols-2 gap-1 w-full hidden md:grid">
           {[2, 3].map((id) => (
             <img
               key={id}
@@ -141,7 +142,7 @@ const Details = () => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-35">
+      <div className="flex flex-col md:flex-row gap-35 px-5 md:px-0">
         <div className="flex-1 ">
           <p className="text-xl font-medium">
             {property.typeOfPlace} in {property.location.city},{" "}
@@ -273,7 +274,7 @@ const Details = () => {
 
       {property.rating.score > 4.9 ? (
         <div
-          className="w-full px-6 py-12 flex flex-col items-center text-center space-y-2 border-t border-b border-gray-300 mt-10"
+          className="w-full px-6 py-12 flex flex-col items-center text-center space-y-2 border-t border-b border-gray-300 mt-10 "
           id="reviews"
         >
           <div className="flex items-center justify-center space-x-4 text-6xl font-semibold mt-4">
@@ -321,7 +322,7 @@ const Details = () => {
         </div>
       )}
 
-      <div className="w-full max-w-6xl mx-auto px-4 py-10 ">
+      <div className="w-full max-w-6xl mx-auto md:px-4 py-10 px-5 ">
         <h2 className="text-2xl font-semibold mb-8">Things to know</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

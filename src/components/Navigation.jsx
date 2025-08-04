@@ -1,10 +1,11 @@
 const Navigation = () => (
   <nav className="flex items-center justify-center  gap-10 sm:gap-18 md:gap-10 lg:ms-32">
-    <div className="flex flex-col sm:flex-row items-center justify-center cursor-pointer gap-2 border-b-3 py-2  border-gray-800 ">
+    <div className="flex flex-col sm:flex-row items-center justify-center cursor-pointer gap-2 relative py-2  border-gray-800 ">
       <span className="text-3xl">🏠</span>
       <span className="font-medium md:text-md text-sm md:text-black text-zinc-500">
         Homes
       </span>
+      <div className="bg-black w-[50px] sm:w-[100px] h-[3px] rounded-full absolute bottom-0 left-0"></div>
     </div>
     <div className="flex flex-col sm:flex-row items-center gap-2 cursor-pointer">
       <span className="text-3xl">🎈</span>

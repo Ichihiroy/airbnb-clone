@@ -4,7 +4,7 @@ import { PropertyContext } from "../context/PropertyContext";
 import { FiltersContext } from "../context/FiltersContext";
 import { Minus, Plus, Search, X } from "lucide-react";
 import AirbnbDatePicker from "./AirbnbDatePicker";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 
 const SearchBar = () => {
   const { data } = useContext(PropertyContext);
@@ -15,10 +15,9 @@ const SearchBar = () => {
     handleChange,
     destinations,
     categories,
-    filteredData,
     setFilteredData,
     setCounts,
-    range,
+    filterData,
   } = useContext(FiltersContext);
 
   const navigate = useNavigate();
@@ -35,42 +34,8 @@ const SearchBar = () => {
     setFilteredData(data);
   }, [data]);
 
-  function filterData() {
-    console.log(filteredData);
-    const filtered = filteredData
-      .filter(
-        (property) =>
-          filters.destination === "" ||
-          property.location.city === filters.destination
-      )
-      .filter(
-        (property) =>
-          filters.checkIn == "" ||
-          isSameDateOnlyFirst(
-            new Date(range[0].startDate),
-            new Date(property.stayDates.check_in)
-          )
-      )
-      .filter(
-        (property) =>
-          filters.checkOut == "" ||
-          isSameDateOnlySecond(
-            new Date(range[0].endDate),
-            new Date(property.stayDates.check_out)
-          )
-      )
-      .filter((property) => {
-        const { adults, children, infants, pets } = filters.guests;
-        return (
-          property.maxGuests.adults >= adults &&
-          property.maxGuests.children >= children &&
-          property.maxGuests.infants >= infants &&
-          property.maxGuests.pets >= pets
-        );
-      });
-
-    setFilteredData(filtered);
-    console.log("Filtered Data:", filteredData);
+  function handleSearch() {
+    filterData();
     navigate("/filters");
   }
 
@@ -106,21 +71,6 @@ const SearchBar = () => {
       checkOut: type === "checkOut" ? true : false,
       guests: type === "guests" ? true : false,
     });
-  }
-
-  function isSameDateOnlyFirst(a, b) {
-    return (
-      a.getFullYear() <= b.getFullYear() &&
-      a.getMonth() <= b.getMonth() &&
-      a.getDate() <= b.getDate()
-    );
-  }
-  function isSameDateOnlySecond(a, b) {
-    return (
-      a.getFullYear() >= b.getFullYear() &&
-      a.getMonth() >= b.getMonth() &&
-      a.getDate() >= b.getDate()
-    );
   }
 
   function handleClear(type) {
@@ -335,7 +285,7 @@ const SearchBar = () => {
         )}
         <div>
           <button
-            onClick={() => filterData("guests")}
+            onClick={() => handleSearch()}
             className={` text-white rounded-full ${
               active.bar ? "p-3" : "p-4"
             } m-2 bg-[#FF385C] hover:bg-[#a1233a] transition-colors flex items-center justify-center gap-2 cursor-pointer`}
