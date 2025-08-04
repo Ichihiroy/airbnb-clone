@@ -103,12 +103,13 @@ export default function MobileSearchBar({ setIsOpen }) {
                 <ul>
                   {destinations.map((dest, index) => (
                     <li
-                      onClick={() =>
+                      onClick={() => {
                         setFilters({
                           ...filters,
                           destination: dest.city.split(",")[0],
-                        })
-                      }
+                        });
+                        setOpenSection(null);
+                      }}
                       key={index}
                       className="flex items-center gap-4 px-2 py-3 hover:bg-gray-100 cursor-pointer rounded-xl "
                     >

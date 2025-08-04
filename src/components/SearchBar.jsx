@@ -133,12 +133,22 @@ const SearchBar = () => {
             <ul>
               {destinations.map((dest, index) => (
                 <li
-                  onClick={() =>
+                  onClick={(e) => {
+                    e.stopPropagation();
                     setFilters({
                       ...filters,
                       destination: dest.city.split(",")[0],
-                    })
-                  }
+                    });
+                    setTimeout(() => {
+                      setActive({
+                        where: false,
+                        checkIn: false,
+                        checkOut: false,
+                        guests: false,
+                        bar: false,
+                      });
+                    }, 50);
+                  }}
                   key={index}
                   className="flex items-center gap-4 px-4 py-3 hover:bg-gray-100 cursor-pointer rounded-xl "
                 >
