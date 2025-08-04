@@ -6,7 +6,7 @@ import { FiltersContext } from "../context/FiltersContext";
 
 const DetailsHeader = ({ filters, setShowModal }) => {
   const [showCenter, setShowCenter] = useState(false);
-  const { filterResults } = useContext(FiltersContext);
+  const { filterResults, filters: contextFilters } = useContext(FiltersContext);
 
   const containerRef = useRef(null);
 
@@ -52,12 +52,40 @@ const DetailsHeader = ({ filters, setShowModal }) => {
                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-2xl">
                   🏠
                 </div>
-                <div className="ps-9 text-sm">Anywhere</div>
+                <div className="ps-9 text-sm">
+                  {contextFilters.destination || "Anywhere"}
+                </div>
                 <div className=" px-3 border-r border-l text-sm border-gray-300 ">
-                  Any week
+                  {contextFilters.checkIn
+                    ? contextFilters.checkIn.slice(0, 3) +
+                      " " +
+                      contextFilters.checkIn.slice(-2) +
+                      " -" +
+                      contextFilters.checkOut.slice(-2)
+                    : "Any week"}
                 </div>
                 <div className="pe-9 text-sm ">
-                  <p>Add guests </p>
+                  <p>
+                    {contextFilters.guests.adults ||
+                    contextFilters.guests.children ||
+                    contextFilters.guests.infants ||
+                    contextFilters.guests.pets
+                      ? Object.entries(contextFilters.guests)
+                          .map(([key, value]) =>
+                            value
+                              ? value +
+                                " " +
+                                (key !== "children" && value == 1
+                                  ? key.slice(0, -1)
+                                  : key) +
+                                ","
+                              : ""
+                          )
+                          .join(" ")
+                          .trim()
+                          .slice(0, -1)
+                      : "Add guests"}
+                  </p>
                 </div>
                 <div className="bg-[#FF385C] rounded-full p-2 absolute right-2 top-1/2 -translate-y-1/2">
                   <Search size={14} className="text-white" />

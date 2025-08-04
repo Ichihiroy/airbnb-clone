@@ -166,12 +166,50 @@ export default function FilterResults() {
             <ArrowLeft size={18} />
           </Link>
           <div className="bg-white w-[70%] text-center text-sm shadow-lg rounded-full flex items-center justify-center px-4 py-3  ">
-            Homes Nearby
+            <div className="flex flex-col items-center justify-center">
+              <p className="text-sm ">
+                {filters.destination || "Homes Nearby"}
+              </p>
+              <p className="text-xs text-gray-500">
+                <span>
+                  {filters.checkIn
+                    ? filters.checkIn.slice(0, 3) +
+                      " " +
+                      filters.checkIn.slice(-2) +
+                      " - " +
+                      filters.checkOut.slice(-2)
+                    : "Any week"}
+                </span>
+                {" •"}
+                <span>
+                  {" "}
+                  {filters.guests.adults ||
+                  filters.guests.children ||
+                  filters.guests.infants ||
+                  filters.guests.pets
+                    ? Object.entries(filters.guests)
+                        .map(([key, value]) =>
+                          value
+                            ? value +
+                              " " +
+                              (key !== "children" && value == 1
+                                ? key.slice(0, -1)
+                                : key) +
+                              ","
+                            : ""
+                        )
+                        .join(" ")
+                        .trim()
+                        .slice(0, -1)
+                    : "Add guests"}
+                </span>
+              </p>
+            </div>
           </div>
           <Settings2 onClick={() => setShowModal(true)} size={18} />
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 pt-20 md:pt-0">
+        <div className="grid grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6 pt-24 md:pt-0">
           {filteredData.map((listing) => (
             <Link to={`/details/${listing.id}`} key={listing.id}>
               <div className="w-full flex-shrink-0 relative group">
