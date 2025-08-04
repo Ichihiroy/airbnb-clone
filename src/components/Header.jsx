@@ -46,8 +46,8 @@ const Header = () => {
   }, [setShowModal]);
 
   return (
-    <header className="bg-zinc-100 w-full md:border-b border-gray-200 fixed top-0 z-50">
-      <div className="bg-zinc-100 sticky top-0 z-50 hidden md:block container mx-auto">
+    <header className="bg-gradient-to-b from-zinc-50 to-zinc-100 w-full md:border-b border-gray-200 fixed top-0 z-50">
+      <div className="bg-gradient-to-b from-zinc-50 to-zinc-100 sticky top-0 z-50 hidden md:block container mx-auto">
         <div className="max-w-9xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20 relative">
             <Link to="/" className="flex items-center">

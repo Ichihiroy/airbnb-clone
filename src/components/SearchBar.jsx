@@ -74,7 +74,13 @@ const SearchBar = () => {
   }
 
   function handleClear(type) {
-    setFilters({ ...filters, [type]: "" });
+    setFilters({
+      ...filters,
+      [type]:
+        type === "guests"
+          ? { adults: 0, children: 0, infants: 0, pets: 0 }
+          : "",
+    });
   }
 
   return (

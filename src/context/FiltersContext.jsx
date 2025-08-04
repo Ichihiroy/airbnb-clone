@@ -277,6 +277,8 @@ export const FiltersProvider = ({ children }) => {
     );
   }
 
+  const [filterResults, setFilterResults] = useState(true);
+
   return (
     <FiltersContext.Provider
       value={{
@@ -297,6 +299,8 @@ export const FiltersProvider = ({ children }) => {
         filterData,
         isSameDateOnlyFirst,
         isSameDateOnlySecond,
+        filterResults,
+        setFilterResults,
       }}
     >
       {children}

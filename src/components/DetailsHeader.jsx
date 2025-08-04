@@ -1,10 +1,12 @@
 import { Globe, Menu, Search, Settings2 } from "lucide-react";
 import { Link } from "react-router";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { FiltersContext } from "../context/FiltersContext";
 
 const DetailsHeader = ({ filters, setShowModal }) => {
   const [showCenter, setShowCenter] = useState(false);
+  const { filterResults } = useContext(FiltersContext);
 
   const containerRef = useRef(null);
 
@@ -64,7 +66,9 @@ const DetailsHeader = ({ filters, setShowModal }) => {
 
               {filters ? (
                 <button
-                  className="rounded-full px-4 py-2 border  border-gray-300 text-sm flex items-center gap-2 hover:bg-gray-100 transition-colors"
+                  className={`rounded-full px-4 py-2 border  border-gray-300 text-sm flex items-center gap-2 hover:bg-gray-100 transition-colors ${
+                    filterResults ? "" : "disabled cursor-not-allowed"
+                  }`}
                   onClick={() => setShowModal(true)}
                 >
                   <Settings2 size={15} />

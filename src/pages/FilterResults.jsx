@@ -22,6 +22,7 @@ export default function FilterResults() {
     applyFilters,
     filters,
     setFilters,
+    setFilterResults,
   } = useContext(FiltersContext);
 
   const { showModal, setShowModal } = useOutletContext();
@@ -139,6 +140,18 @@ export default function FilterResults() {
     const tempFiltered = applyFilters(originalData, combinedFilters);
     return tempFiltered.length;
   };
+
+  if (!filteredData || filteredData.length === 0) {
+    setFilterResults(false);
+
+    return (
+      <div className="flex items-center justify-center h-screen bg-zinc-50">
+        <h2 className="text-2xl font-semibold">No results were found</h2>
+      </div>
+    );
+  }
+
+  setFilterResults(true);
 
   return (
     <div className="flex flex-col lg:flex-row h-full min-h-screen mx-auto py-4 px-4 sm:px-5 lg:px-10 lg:py-8 relative">
