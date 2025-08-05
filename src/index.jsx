@@ -18,6 +18,7 @@ import ProfilePage from "./pages/ProfilePage.jsx";
 import WishlistLayout from "./layout/WishlistLayout.jsx";
 import WishlistPage from "./pages/WishlistPage.jsx";
 import ProtectedRoute from "./pages/ProtectedRoute.jsx";
+import ProtectedAuthRoute from "./pages/ProtectedAuthRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -71,11 +72,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "login",
-        element: <LoginPage />,
+        element: (
+          <ProtectedAuthRoute>
+            <LoginPage />
+          </ProtectedAuthRoute>
+        ),
       },
       {
         path: "register",
-        element: <RegPage />,
+        element: (
+          <ProtectedAuthRoute>
+            <RegPage />
+          </ProtectedAuthRoute>
+        ),
       },
     ],
   },
