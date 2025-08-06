@@ -8,6 +8,8 @@ const DetailsHeader = ({ filters, setShowModal }) => {
   const [showCenter, setShowCenter] = useState(false);
   const { filterResults, filters: contextFilters } = useContext(FiltersContext);
 
+  const userData = JSON.parse(localStorage.getItem("userData"));
+
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -153,11 +155,19 @@ const DetailsHeader = ({ filters, setShowModal }) => {
                   <li className="hover:underline">Find a co-host</li>
                   <li className="hover:underline">Gift cards</li>
                 </ul>
-                <Link to="auth/login">
-                  <button className="text-sm hover:underline cursor-pointer">
-                    Log in or sign up
-                  </button>
-                </Link>
+                {userData ? (
+                  <Link to={`/profile`}>
+                    <button className="text-sm hover:underline cursor-pointer">
+                      {userData.fullname}
+                    </button>
+                  </Link>
+                ) : (
+                  <Link to="auth/login">
+                    <button className="text-sm hover:underline cursor-pointer">
+                      Log in or sign up
+                    </button>
+                  </Link>
+                )}
               </div>
             </motion.div>
           )}

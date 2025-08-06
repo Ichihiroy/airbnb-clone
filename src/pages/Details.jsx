@@ -51,7 +51,7 @@ const Details = () => {
   return (
     <div className={`max-w-screen-xl mx-auto py-4 md:px-5 lg:px-14 lg:py-8 `}>
       {showHeader && (
-        <div className="hidden md:flex justify-between fixed top-0 left-0 w-full p-4 shadow-lg border-b  lg:px-34 mx-auto border-gray-300 z-50 bg-white ">
+        <div className="hidden md:flex justify-between fixed top-0 left-0 w-full p-4 shadow-lg border-b lg:px-34 mx-auto border-gray-300 z-50 bg-white ">
           <div className="flex items-center gap-5 py-5">
             <p className="text-sm">
               <a href="#photos">Photos</a>
