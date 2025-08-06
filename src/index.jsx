@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from "react-router";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  ScrollRestoration,
+} from "react-router";
 import { createRoot } from "react-dom/client";
 import Main from "./pages/Main.jsx";
 import Details from "./pages/Details.jsx";

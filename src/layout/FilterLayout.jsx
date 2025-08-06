@@ -3,12 +3,13 @@ import DetailsHeader from "../components/DetailsHeader";
 import Footer from "../components/Footer";
 import { useState } from "react";
 import MobileBottomNav from "../components/MobileBottomNav";
-
+import { ScrollRestoration } from "react-router";
 const FilterLayout = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
+      <ScrollRestoration />
       <DetailsHeader filters={"filters"} setShowModal={setShowModal} />
       <Outlet context={{ showModal, setShowModal }} />
       <Footer filters={"filters"} />

@@ -283,7 +283,7 @@ export default function FilterResults() {
               <div className="w-full ">
                 <h3 className="text-lg font-medium mb-3">Type of place</h3>
                 <div className="flex items-center overflow-hidden border border-gray-300 rounded-xl divide-x divide-gray-100">
-                  <div className="px-6 py-2 bg-gray-100 rounded-xl m-1 border-2 border-black w-1/3 text-center">
+                  <div className="px-6 py-2  rounded-xl m-1 w-1/3 text-center border-black border-2 bg-gray-100">
                     <span className="font-medium text-black">Any type</span>
                   </div>
                   <div className="px-6 py-2 hover:bg-gray-100 cursor-pointer m-1 text-center w-1/3 hover:rounded-xl">
@@ -357,7 +357,6 @@ export default function FilterResults() {
                 </div>
               </div>
 
-              {/* Property type */}
               <div className="mb-6">
                 <h3 className="text-lg font-medium mb-2">Property type</h3>
                 <div className="flex flex-wrap gap-3">
@@ -444,27 +443,6 @@ export default function FilterResults() {
                 </div>
               </div>
 
-              {/* Instant Book */}
-              <div className="mb-6">
-                <h3 className="text-lg font-medium mb-2">Booking options</h3>
-                <label className="flex items-center space-x-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={tempFilters.instantBook}
-                    onChange={(e) =>
-                      handleFilterChange("instantBook", e.target.checked)
-                    }
-                    className="w-5 h-5 text-black border-gray-300 rounded focus:ring-black"
-                  />
-                  <div>
-                    <span className="text-sm font-medium">Instant Book</span>
-                    <p className="text-xs text-gray-500">
-                      Listings you can book without waiting for Host approval
-                    </p>
-                  </div>
-                </label>
-              </div>
-
               {/* Standout stays */}
               <div className="mb-6">
                 <h3 className="text-lg font-medium mb-2">Standout stays</h3>
@@ -473,12 +451,6 @@ export default function FilterResults() {
                     <h4 className="font-semibold mb-1">Guest favorite</h4>
                     <p className="text-sm text-gray-600">
                       The most loved homes on Airbnb
-                    </p>
-                  </div>
-                  <div className="flex-1 border border-gray-300 rounded-lg p-4 hover:bg-gray-50">
-                    <h4 className="font-semibold mb-1">Luxe</h4>
-                    <p className="text-sm text-gray-600">
-                      Luxury homes with elevated design
                     </p>
                   </div>
                 </div>
