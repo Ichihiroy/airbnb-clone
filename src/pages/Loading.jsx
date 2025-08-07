@@ -1,6 +1,6 @@
 import React from "react";
 
-const Loading = () => {
+const Loading = ({ details }) => {
   return (
     <div
       style={{
@@ -11,7 +11,7 @@ const Loading = () => {
         justifyContent: "center",
         background: "#fff",
       }}
-      className="mt-45"
+      className={`${!details ? "mt-45" : "mt-0"}`}
     >
       <svg
         width="64"

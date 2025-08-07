@@ -304,7 +304,7 @@ const SearchBar = () => {
             onClick={() => handleSearch()}
             className={` text-white rounded-full ${
               active.bar ? "p-3" : "p-4"
-            } m-2 bg-[#FF385C] hover:bg-[#a1233a] transition-colors flex items-center justify-center gap-2 cursor-pointer`}
+            } m-2  bg-gradient-to-r from-[#FF385C] to-[#FF385C] hover:from-rose-600 hover:to-pink-700 transition-colors flex items-center justify-center gap-2 cursor-pointer`}
           >
             <Search size={16} />
             <AnimatePresence>

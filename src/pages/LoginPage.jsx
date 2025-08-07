@@ -1,11 +1,14 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router";
-import { getUserByUsernameAndPassword } from "../services/authServices";
+import {
+  getUserByEmailAndPassword,
+  getUserByUsernameAndPassword,
+} from "../services/authServices";
 
 const LoginPage = () => {
   const [userData, setUserData] = useState({
-    username: "",
+    usernameOrEmail: "",
     password: "",
   });
   const navigate = useNavigate();
@@ -19,25 +22,31 @@ const LoginPage = () => {
   }
 
   async function handleSubmit() {
-    if (!userData.username || !userData.password) {
+    if (!userData.usernameOrEmail || !userData.password) {
       toast.error("Please fill in all fields");
       return;
     }
 
     try {
-      // Here you would typically call an API to authenticate the user
-      // For now, we will just simulate a successful login
       const response = await getUserByUsernameAndPassword(
-        userData.username,
+        userData.usernameOrEmail,
         userData.password
       );
 
-      if (response.data.length === 0) {
-        toast.error("Invalid username or password");
+      const responseEmail = await getUserByEmailAndPassword(
+        userData.usernameOrEmail,
+        userData.password
+      );
+
+      if (response.data.length === 0 && responseEmail.data.length === 0) {
+        toast.error("Invalid credentials");
         return;
       }
 
-      localStorage.setItem("userData", JSON.stringify(response.data[0]));
+      const responseData =
+        response.data.length > 0 ? response.data : responseEmail.data;
+
+      localStorage.setItem("userData", JSON.stringify(responseData[0]));
       toast.success("Login successful");
       navigate("/");
     } catch (error) {
@@ -59,17 +68,17 @@ const LoginPage = () => {
               htmlFor="username"
               className="block text-sm font-medium text-gray-700"
             >
-              Username
+              Username or Email
             </label>
             <input
               onChange={(e) => handleChange(e)}
-              id="username"
-              name="username"
+              id="usernameOrEmail"
+              name="usernameOrEmail"
               type="text"
               autoComplete="username"
               required
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-3 px-4 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
-              placeholder="Enter your username"
+              placeholder="Enter your username or email"
             />
           </div>
 

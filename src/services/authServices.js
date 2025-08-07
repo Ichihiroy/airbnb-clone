@@ -12,6 +12,10 @@ export function getUserByUsernameAndPassword(username, password) {
   );
 }
 
+export function getUserByEmailAndPassword(email, password) {
+  return axios.get(`${API_URL}/users?email=${email}&password=${password}`);
+}
+
 export function getUserByUsername(username) {
   return axios.get(`${API_URL}/users?username=${username}`);
 }

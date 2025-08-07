@@ -1,7 +1,13 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const ProfilePage = () => {
   const user = JSON.parse(localStorage.getItem("userData"));
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("userData");
+    navigate("/");
+  };
 
   return (
     <div className="flex flex-col items-center mt-4 h-[100vh] px-4">
@@ -17,13 +23,10 @@ const ProfilePage = () => {
           <p>
             Logged in as {user.fullname} ({user.email})
           </p>
-          <button>
-            <Link
-              to="/"
-              className="bg-[#FF385C] rounded-full text-md px-8 py-3 text-white w-full hover:bg-[#d03d58] transition duration-300"
-            >
+          <button onClick={handleLogout}>
+            <div className="bg-[#FF385C] rounded-full text-md px-8 py-3 text-white w-full hover:bg-[#d03d58] transition duration-300">
               Logout
-            </Link>
+            </div>
           </button>
         </div>
       </div>

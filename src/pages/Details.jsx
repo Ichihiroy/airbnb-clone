@@ -14,6 +14,7 @@ import {
   Star,
   StarIcon,
 } from "lucide-react";
+import BookingComponent from "../components/BookingComponents";
 
 const Details = () => {
   const { id } = useParams();
@@ -45,7 +46,7 @@ const Details = () => {
   }, []);
 
   if (!property) {
-    return <Loading />;
+    return <Loading details={true} />;
   }
 
   return (
@@ -85,7 +86,7 @@ const Details = () => {
                   </span>
                 </div>
               </div>
-              <button className="w-full bg-[#FF385C] hover:bg-[#a1233a] text-white py-3 rounded-full font-semibold transition-colors px-10 cursor-pointer">
+              <button className="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white py-3 rounded-full font-semibold transition-colors px-10 cursor-pointer">
                 Reserve
               </button>
             </div>
@@ -238,37 +239,9 @@ const Details = () => {
         </div>
 
         <div
-          className={`w-[300px] lg:w-[400px]  border hidden md:block border-gray-200 rounded-xl py-5 px-6 shadow-md sticky top-25 h-[300px] self-start `}
+          className={` lg:w-[400px]  border hidden md:block border-gray-200 rounded-xl py-5 px-6 shadow-md sticky top-25  self-start `}
         >
-          <div className="text-lg font-semibold">
-            {property.price.total} {property.price.currency} for{" "}
-            {property.price.nights} nights
-          </div>
-          <div className="text-sm text-gray-500 mb-2">
-            Prices include all fees
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 text-sm border border-gray-400 rounded-md overflow-hidden mb-4">
-            <div className="p-2 border-r border-gray-400">
-              <p className="font-medium">CHECK-IN</p>
-              <p className="text-gray-600 text-xs">12/12/2025</p>
-            </div>
-            <div className="p-2">
-              <p className="font-medium">CHECKOUT</p>
-              <p className="text-gray-600 text-xs">12/14/2025</p>
-            </div>
-            <div className="col-span-2 p-2 border-t border-gray-400">
-              <p className="font-medium">GUESTS</p>
-              <p className="text-gray-600 text-xs">1 guest</p>
-            </div>
-          </div>
-
-          <button className="w-full bg-[#FF385C] hover:bg-[#a1233a] text-white py-2 rounded-full font-semibold transition-colors cursor-pointer">
-            Reserve
-          </button>
-          <p className="text-xs text-center text-gray-500 mt-2">
-            You won’t be charged yet
-          </p>
+          <BookingComponent {...property} />
         </div>
       </div>
 
