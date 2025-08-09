@@ -10,7 +10,8 @@ import {
   ArrowLeft,
   Settings2,
 } from "lucide-react";
-import { Link, useOutletContext } from "react-router";
+import { Link, useNavigate, useOutletContext } from "react-router";
+import toast from "react-hot-toast";
 
 export default function FilterResults() {
   const { data } = useContext(PropertyContext);
@@ -54,6 +55,38 @@ export default function FilterResults() {
       });
     }
   }, [showModal, filters]);
+
+  const [likedProperties, setLikedProperties] = useState([]);
+  const user = JSON.parse(localStorage.getItem("userData"));
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("likedProperties")) || [];
+    setLikedProperties(stored);
+  }, []);
+
+  function handleLikes(id) {
+    if (!user) {
+      localStorage.setItem("likedProperties", JSON.stringify([]));
+      setLikedProperties([]);
+      navigate("/auth/login");
+      toast.error("Please log in to like properties");
+      return;
+    }
+
+    const currentLiked =
+      JSON.parse(localStorage.getItem("likedProperties")) || [];
+    let updatedLiked;
+
+    if (currentLiked.includes(id)) {
+      updatedLiked = currentLiked.filter((propertyId) => propertyId !== id);
+    } else {
+      updatedLiked = [...currentLiked, id];
+    }
+
+    localStorage.setItem("likedProperties", JSON.stringify(updatedLiked));
+    setLikedProperties(updatedLiked);
+  }
 
   const propertyTypes = [
     "Condo",
@@ -219,10 +252,24 @@ export default function FilterResults() {
                     alt={listing.title}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <button className="absolute top-2 right-2 sm:right-3 p-1 cursor-pointer">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleLikes(listing.id);
+                    }}
+                    className="absolute top-2 right-2 sm:right-3 p-1 cursor-pointer"
+                  >
                     <Heart
                       size={20}
-                      className="sm:w-6 sm:h-6 text-white fill-gray-500/50 hover:scale-110 transition-transform duration-300"
+                      fill={
+                        likedProperties.includes(listing.id) ? "red" : "gray"
+                      }
+                      strokeWidth={likedProperties.includes(listing.id) ? 0 : 2}
+                      className={`sm:w-6 sm:h-6 text-white  hover:scale-110 transition-transform duration-300 ${
+                        likedProperties.includes(listing.id)
+                          ? "opacity-100"
+                          : "opacity-75"
+                      }`}
                     />
                   </button>
                   {listing.rating.score > 4.9 ? (
