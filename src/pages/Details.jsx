@@ -52,45 +52,46 @@ const Details = () => {
   return (
     <div className={`max-w-screen-xl mx-auto py-4 md:px-5 lg:px-14 lg:py-8 `}>
       {showHeader && (
-        <div className="hidden md:flex justify-between fixed top-0 left-0 w-full p-4 shadow-lg border-b lg:px-34 mx-auto border-gray-300 z-50 bg-white ">
-          <div className="flex items-center gap-5 py-5">
-            <p className="text-sm">
-              <a href="#photos">Photos</a>
-            </p>
-            <p className="text-sm">
-              <a href="#amenities">Amenities</a>
-            </p>
-            <p className="text-sm">
-              <a href="#reviews">Reviews</a>
-            </p>
-          </div>
-
-          {showButton && (
-            <div className="flex items-center gap-4 ">
-              <div className="flex-col justify-center items-center">
-                <div className="text-sm flex flex-col ">
-                  <span className="underline">
-                    {property.price.total} {property.price.currency}
-                  </span>{" "}
-                  <span>for {property.price.nights} nights</span>
-                </div>
-                <div className="text-xs flex items-center gap-1">
-                  <span className="flex items-center gap-1">
-                    {" "}
-                    <Star size={7} fill="currentColor" />{" "}
-                    {property.rating.score}
-                  </span>
-                  <span>·</span>
-                  <span className="text-gray-400 w-20">
-                    {property.rating.reviewsCount} reviews
-                  </span>
-                </div>
-              </div>
-              <button className="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white py-3 rounded-full font-semibold transition-colors px-10 cursor-pointer">
-                Reserve
-              </button>
+        <div className="hidden md:flex fixed top-0 left-0 w-full shadow-lg border-b border-gray-300 z-50 bg-white">
+          <div className="max-w-screen-xl mx-auto w-full flex justify-between py-4 md:px-5 lg:px-14">
+            <div className="flex items-center gap-5 py-5">
+              <p className="text-sm">
+                <a href="#photos">Photos</a>
+              </p>
+              <p className="text-sm">
+                <a href="#amenities">Amenities</a>
+              </p>
+              <p className="text-sm">
+                <a href="#reviews">Reviews</a>
+              </p>
             </div>
-          )}
+            {showButton && (
+              <div className="flex items-center gap-4">
+                <div className="flex-col justify-center items-center">
+                  <div className="text-sm flex flex-col">
+                    <span className="underline">
+                      {property.price.total} {property.price.currency}
+                    </span>{" "}
+                    <span>for {property.price.nights} nights</span>
+                  </div>
+                  <div className="text-xs flex items-center gap-1">
+                    <span className="flex items-center gap-1">
+                      {" "}
+                      <Star size={7} fill="currentColor" />{" "}
+                      {property.rating.score}
+                    </span>
+                    <span>·</span>
+                    <span className="text-gray-400 w-20">
+                      {property.rating.reviewsCount} reviews
+                    </span>
+                  </div>
+                </div>
+                <button className="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white py-3 rounded-full font-semibold transition-colors px-10 cursor-pointer">
+                  Reserve
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       )}
 

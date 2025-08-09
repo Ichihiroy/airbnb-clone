@@ -8,7 +8,7 @@ const DetailsLayout = () => {
       <ScrollRestoration />
       <DetailsHeader />
       <Outlet />
-      <Footer />
+      <Footer filters={true} />
     </>
   );
 };
