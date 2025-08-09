@@ -47,6 +47,13 @@ const LoginPage = () => {
         response.data.length > 0 ? response.data : responseEmail.data;
 
       localStorage.setItem("userData", JSON.stringify(responseData[0]));
+
+      window.dispatchEvent(
+        new CustomEvent("userLogin", {
+          detail: responseData[0],
+        })
+      );
+
       toast.success("Login successful");
       navigate("/");
     } catch (error) {

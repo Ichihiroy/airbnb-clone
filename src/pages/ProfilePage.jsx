@@ -6,6 +6,7 @@ const ProfilePage = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("userData");
+    window.dispatchEvent(new CustomEvent("userLogout"));
     navigate("/");
   };
 
