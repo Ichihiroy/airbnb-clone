@@ -10,24 +10,35 @@ const AirbnbDatePicker = ({ setFilters, filters, months }) => {
   useEffect(() => {
     const formatDate = (dateObj) => {
       if (!(dateObj instanceof Date) || isNaN(dateObj.getTime())) return null;
-
       return dateObj.toLocaleDateString("en-US", {
         month: "long",
         day: "numeric",
       });
     };
 
-    const formattedStart = formatDate(range[0].startDate);
-    const formattedEnd = formatDate(range[0].endDate);
+    const startDate = range[0].startDate;
+    const endDate = range[0].endDate;
 
-    if (formattedStart && formattedEnd) {
-      setFilters({
-        ...filters,
-        checkIn: formattedStart,
-        checkOut: formattedEnd === formattedStart ? "" : formattedEnd,
-      });
+    // Only update filters when dates are DIFFERENT (actual selection made)
+    if (
+      startDate &&
+      endDate &&
+      startDate instanceof Date &&
+      endDate instanceof Date &&
+      !isNaN(startDate.getTime()) &&
+      !isNaN(endDate.getTime()) &&
+      startDate.getTime() !== endDate.getTime()
+    ) {
+      const formattedStart = formatDate(startDate);
+      const formattedEnd = formatDate(endDate);
 
-      console.log([formattedStart, formattedEnd]);
+      if (formattedStart && formattedEnd) {
+        setFilters({
+          ...filters,
+          checkIn: formattedStart,
+          checkOut: formattedEnd,
+        });
+      }
     }
   }, [range]);
 
@@ -48,6 +59,9 @@ const AirbnbDatePicker = ({ setFilters, filters, months }) => {
           minDate={new Date()}
           showDateDisplay={false}
           rangeColors={["#000000"]}
+          showSelectionPreview={false}
+          moveRangeOnFirstSelection={false}
+          retainEndDateOnFirstSelection={false}
         />
       </div>
     </div>
