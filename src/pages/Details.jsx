@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router";
+import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router";
 import { getPropertyById } from "../services/propertyServices";
 import Loading from "./Loading";
 import UserRatings from "../components/UserRatings";
@@ -15,12 +15,15 @@ import {
   StarIcon,
 } from "lucide-react";
 import BookingComponent from "../components/BookingComponents";
+import { BookingContext } from "../context/BookingsContext";
+import toast from "react-hot-toast";
 
 const Details = () => {
   const { id } = useParams();
   const [property, setProperty] = useState(null);
   const [showHeader, setShowHeader] = useState(false);
   const [showButton, setShowButton] = useState(false);
+  const { reserveDetails } = useContext(BookingContext);
 
   useEffect(() => {
     getPropertyById(id).then((data) => {
@@ -44,6 +47,38 @@ const Details = () => {
       window.removeEventListener("scroll", handleButtonVisibility);
     };
   }, []);
+
+  const [likedProperties, setLikedProperties] = useState([]);
+  const user = JSON.parse(localStorage.getItem("userData"));
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("likedProperties")) || [];
+    setLikedProperties(stored);
+  }, []);
+
+  function handleLikes(id) {
+    if (!user) {
+      localStorage.setItem("likedProperties", JSON.stringify([]));
+      setLikedProperties([]);
+      navigate("/auth/login");
+      toast.error("Please log in to like properties");
+      return;
+    }
+
+    const currentLiked =
+      JSON.parse(localStorage.getItem("likedProperties")) || [];
+    let updatedLiked;
+
+    if (currentLiked.includes(id)) {
+      updatedLiked = currentLiked.filter((propertyId) => propertyId !== id);
+    } else {
+      updatedLiked = [...currentLiked, id];
+    }
+
+    localStorage.setItem("likedProperties", JSON.stringify(updatedLiked));
+    setLikedProperties(updatedLiked);
+  }
 
   if (!property) {
     return <Loading details={true} />;
@@ -70,9 +105,13 @@ const Details = () => {
                 <div className="flex-col justify-center items-center">
                   <div className="text-sm flex flex-col">
                     <span className="underline">
-                      {property.price.total} {property.price.currency}
+                      {reserveDetails.total || property.price.total}{" "}
+                      {reserveDetails.currency || property.price.currency}
                     </span>{" "}
-                    <span>for {property.price.nights} nights</span>
+                    <span>
+                      for {reserveDetails.nights || property.price.nights}{" "}
+                      nights
+                    </span>
                   </div>
                   <div className="text-xs flex items-center gap-1">
                     <span className="flex items-center gap-1">
@@ -107,8 +146,15 @@ const Details = () => {
             <Share size={20} />
             <span className="underline hidden md:block">Share</span>
           </p>
-          <p className="text-sm flex items-center gap-2 cursor-pointer">
-            <Heart size={20} />
+          <p
+            onClick={() => handleLikes(property.id)}
+            className="text-sm flex items-center gap-2 cursor-pointer"
+          >
+            <Heart
+              size={20}
+              fill={likedProperties.includes(property.id) ? "red" : "none"}
+              strokeWidth={likedProperties.includes(property.id) ? 0 : 2}
+            />
             <span className="underline hidden md:block">Save</span>
           </p>
         </div>

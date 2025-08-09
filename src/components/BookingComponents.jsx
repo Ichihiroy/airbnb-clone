@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Minus, Plus, ChevronDown } from "lucide-react";
+import { BookingContext } from "../context/BookingsContext";
 
 const BookingComponent = (property) => {
-  // Fixed: destructure properly
-
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState({
@@ -13,6 +12,7 @@ const BookingComponent = (property) => {
     pets: 0,
   });
   const [showGuestPicker, setShowGuestPicker] = useState(false);
+  const { setReserveDetails } = useContext(BookingContext);
 
   // Calculate number of nights and total price
   const calculateStay = () => {
@@ -46,6 +46,14 @@ const BookingComponent = (property) => {
       return { ...prev, [type]: newCount };
     });
   };
+
+  useEffect(() => {
+    setReserveDetails({
+      nights,
+      total,
+      currency: property.price.currency,
+    });
+  }, [nights, total, property.price.currency]);
 
   const getTotalGuests = () => {
     return guests.adults + guests.children + guests.infants + guests.pets;
@@ -97,7 +105,7 @@ const BookingComponent = (property) => {
   function addDaysToDate(dateString, daysToAdd) {
     const date = new Date(dateString);
     date.setDate(date.getDate() + daysToAdd);
-    return date.toISOString().split("T")[0]; // returns in 'YYYY-MM-DD' format
+    return date.toISOString().split("T")[0];
   }
 
   const guestTypeLabels = {

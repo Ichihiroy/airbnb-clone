@@ -1,8 +1,4 @@
-import {
-  createBrowserRouter,
-  RouterProvider,
-  ScrollRestoration,
-} from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import { createRoot } from "react-dom/client";
 import Main from "./pages/Main.jsx";
 import Details from "./pages/Details.jsx";
@@ -23,6 +19,7 @@ import WishlistLayout from "./layout/WishlistLayout.jsx";
 import WishlistPage from "./pages/WishlistPage.jsx";
 import ProtectedRoute from "./pages/ProtectedRoute.jsx";
 import ProtectedAuthRoute from "./pages/ProtectedAuthRoute.jsx";
+import { BookingProvider } from "./context/BookingsContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -110,9 +107,11 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <FiltersProvider>
-    <PropertyProvider>
-      <Toaster position="top-right" />
-      <RouterProvider router={router} />
-    </PropertyProvider>
+    <BookingProvider>
+      <PropertyProvider>
+        <Toaster position="top-right" />
+        <RouterProvider router={router} />
+      </PropertyProvider>
+    </BookingProvider>
   </FiltersProvider>
 );
