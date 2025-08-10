@@ -110,7 +110,7 @@ const router = createBrowserRouter([
     element: <BookingLayout />,
     children: [
       {
-        path: "/booking",
+        path: ":id",
         element: <BookingPage />,
       },
     ],

@@ -75,6 +75,7 @@ const BookingComponent = (property) => {
       guests,
       nights,
       totalPrice: total,
+      guestCount: getTotalGuests(),
       nightlyRate: property?.price?.nightlyRate,
       reservedAt: new Date().toISOString(),
     };
@@ -88,7 +89,9 @@ const BookingComponent = (property) => {
 
     console.log("Reservation saved to localStorage:", reservationData);
     // Navigation
-    navigate("/booking");
+    navigate(`/booking/${property.id}`, {
+      state: reservationData,
+    });
   };
 
   const getTomorrowDate = () => {
