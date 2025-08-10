@@ -134,6 +134,37 @@ const Details = () => {
         </div>
       )}
 
+      <div className=" md:hidden fixed bottom-0 w-full shadow-lg border-t border-gray-300 z-50 bg-white">
+        <div className="max-w-screen-xl mx-auto w-full flex justify-between py-4 px-5">
+          <div className="flex items-center  justify-between gap-4 w-full">
+            <div className="flex-col justify-center items-center">
+              <div className="text-sm flex flex-col">
+                <span className="underline">
+                  {reserveDetails.total || property.price.total}{" "}
+                  {reserveDetails.currency || property.price.currency}
+                </span>{" "}
+                <span>
+                  for {reserveDetails.nights || property.price.nights} nights
+                </span>
+              </div>
+              <div className="text-xs flex items-center gap-1">
+                <span className="flex items-center gap-1">
+                  {" "}
+                  <Star size={7} fill="currentColor" /> {property.rating.score}
+                </span>
+                <span>·</span>
+                <span className="text-gray-400 w-20">
+                  {property.rating.reviewsCount} reviews
+                </span>
+              </div>
+            </div>
+            <button className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white py-3 rounded-full font-semibold transition-colors px-10 cursor-pointer">
+              Reserve
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div className="flex justify-between items-center mb-4 px-5 md:px-0">
         <h1 className="text-2xl font-semibold hidden md:block">
           {property.title} in {property.location.city}

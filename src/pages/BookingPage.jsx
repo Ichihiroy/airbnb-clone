@@ -1,4 +1,4 @@
-import { ArrowLeft, Star } from "lucide-react";
+import { ArrowLeft, Star, X } from "lucide-react";
 import { Link, useLocation } from "react-router";
 import { getPropertyById } from "../services/propertyServices";
 import { useEffect, useState } from "react";
@@ -14,25 +14,29 @@ export default function BookingPage() {
     });
   }, [bookingData.propertyId]);
 
-  console.log("Booking Data:", bookingData);
-
   return (
     <div className="min-h-screen bg-white">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-4 relative">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 mb-4 md:mb-0">
           <Link to={-1}>
             <button
               type="button"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full hover:bg-gray-100 absolute right-320 top-4"
+              className="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full hover:bg-gray-100 absolute right-320 top-4"
               aria-label="Back"
             >
-              <ArrowLeft size={25} />
+              <ArrowLeft size={20} />
             </button>
           </Link>
 
           <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">
             Request to book
           </h1>
+          <Link
+            to={-1}
+            className="absolute right-4.5 top-3.5 md:hidden rounded-full bg-gray-100 p-2"
+          >
+            <X size={20} />
+          </Link>
         </div>
       </div>
 
@@ -103,11 +107,11 @@ export default function BookingPage() {
                 <div className="text-sm font-medium">Price details</div>
                 <div className="mt-2 flex flex-col gap-2"></div>
                 <div className="mt-4 flex items-center justify-between text-sm font-semibold">
+                  <div>Total </div>
                   <div>
-                    Total{" "}
-                    <span className="underline">{listing?.price.currency}</span>{" "}
+                    {bookingData.totalPrice}{" "}
+                    <span className="underline">{listing?.price.currency}</span>
                   </div>
-                  <div>{bookingData.totalPrice}</div>
                 </div>
                 <button
                   type="button"
