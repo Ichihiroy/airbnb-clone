@@ -20,6 +20,8 @@ import WishlistPage from "./pages/WishlistPage.jsx";
 import ProtectedRoute from "./pages/ProtectedRoute.jsx";
 import ProtectedAuthRoute from "./pages/ProtectedAuthRoute.jsx";
 import { BookingProvider } from "./context/BookingsContext.jsx";
+import BookingLayout from "./layout/BookingLayout.jsx";
+import BookingPage from "./pages/BookingPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -100,6 +102,16 @@ const router = createBrowserRouter([
             <ProfilePage />
           </ProtectedRoute>
         ),
+      },
+    ],
+  },
+  {
+    path: "/booking",
+    element: <BookingLayout />,
+    children: [
+      {
+        path: "/booking",
+        element: <BookingPage />,
       },
     ],
   },

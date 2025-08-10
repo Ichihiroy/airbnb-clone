@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { Minus, Plus, ChevronDown } from "lucide-react";
 import { BookingContext } from "../context/BookingsContext";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 const BookingComponent = (property) => {
   const [checkIn, setCheckIn] = useState("");
@@ -13,6 +15,7 @@ const BookingComponent = (property) => {
   });
   const [showGuestPicker, setShowGuestPicker] = useState(false);
   const { setReserveDetails } = useContext(BookingContext);
+  const navigate = useNavigate();
 
   // Calculate number of nights and total price
   const calculateStay = () => {
@@ -61,7 +64,7 @@ const BookingComponent = (property) => {
 
   const handleReserve = () => {
     if (!checkIn || !checkOut) {
-      alert("Please select check-in and check-out dates");
+      toast.error("Please select check-in and check-out dates");
       return;
     }
 
@@ -84,9 +87,8 @@ const BookingComponent = (property) => {
     localStorage.setItem("propertyBookings", JSON.stringify(existingBookings));
 
     console.log("Reservation saved to localStorage:", reservationData);
-    alert(
-      `Reservation saved! ${nights} nights for ${property?.price?.currency}${total}`
-    );
+    // Navigation
+    navigate("/booking");
   };
 
   const getTomorrowDate = () => {
