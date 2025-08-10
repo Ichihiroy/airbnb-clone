@@ -24,8 +24,6 @@ export const FiltersProvider = ({ children }) => {
   const [filteredData, setFilteredData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
 
-  // In your FiltersContext
-  // In your FiltersContext - set to today but same date (no visual selection)
   const [range, setRange] = useState([
     {
       startDate:
@@ -39,7 +37,7 @@ export const FiltersProvider = ({ children }) => {
         filters.checkOut !== "" &&
         !isNaN(new Date(filters.checkOut))
           ? new Date(filters.checkOut)
-          : new Date(), // Same as startDate = no visual selection
+          : new Date(),
       key: "selection",
     },
   ]);

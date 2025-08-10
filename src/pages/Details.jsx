@@ -13,6 +13,7 @@ import {
   Share,
   Star,
   StarIcon,
+  X,
 } from "lucide-react";
 import BookingComponent from "../components/BookingComponents";
 import { BookingContext } from "../context/BookingsContext";
@@ -23,6 +24,7 @@ const Details = () => {
   const [property, setProperty] = useState(null);
   const [showHeader, setShowHeader] = useState(false);
   const [showButton, setShowButton] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const { reserveDetails } = useContext(BookingContext);
 
   useEffect(() => {
@@ -125,16 +127,19 @@ const Details = () => {
                     </span>
                   </div>
                 </div>
-                <button className="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white py-3 rounded-full font-semibold transition-colors px-10 cursor-pointer">
+                <a
+                  href="#details"
+                  className="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white py-3 rounded-full font-semibold transition-colors px-10 cursor-pointer"
+                >
                   Reserve
-                </button>
+                </a>
               </div>
             )}
           </div>
         </div>
       )}
 
-      <div className=" md:hidden fixed bottom-0 w-full shadow-lg border-t border-gray-300 z-50 bg-white">
+      <div className="md:hidden fixed bottom-0 w-full shadow-lg border-t border-gray-300 z-50 bg-white">
         <div className="max-w-screen-xl mx-auto w-full flex justify-between py-4 px-5">
           <div className="flex items-center  justify-between gap-4 w-full">
             <div className="flex-col justify-center items-center">
@@ -158,13 +163,26 @@ const Details = () => {
                 </span>
               </div>
             </div>
-            <button className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white py-3 rounded-full font-semibold transition-colors px-10 cursor-pointer">
+            <button
+              onClick={() => setShowModal(true)}
+              className="bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white py-3 rounded-full font-semibold transition-colors px-10 cursor-pointer"
+            >
               Reserve
             </button>
           </div>
         </div>
       </div>
 
+      {showModal && (
+        <div className="fixed bg-white w-full shadow-md border-1 border-gray-200 h-[85vh] px-5 z-50 bottom-0 rounded-t-3xl">
+          <BookingComponent {...property} mobile={true} />
+          <X
+            className="absolute top-4 right-4 cursor-pointer bg-gray-100 rounded-full p-2"
+            size={30}
+            onClick={() => setShowModal(false)}
+          />
+        </div>
+      )}
       <div className="flex justify-between items-center mb-4 px-5 md:px-0">
         <h1 className="text-2xl font-semibold hidden md:block">
           {property.title} in {property.location.city}
@@ -221,7 +239,10 @@ const Details = () => {
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-35 px-5 md:px-0">
+      <div
+        className="flex flex-col md:flex-row gap-35 px-5 md:px-0"
+        id="details"
+      >
         <div className="flex-1 ">
           <p className="text-xl font-medium">
             {property.typeOfPlace} in {property.location.city},{" "}

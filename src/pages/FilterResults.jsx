@@ -37,11 +37,17 @@ export default function FilterResults() {
     instantBook: false,
   });
 
+  {
+    /*Bu hisseye diqqet!!!*/
+  }
+
   useEffect(() => {
-    if (data && data.length > 0 && originalData.length === 0) {
-      setOriginalData(data);
-    }
-  }, [data, originalData, setOriginalData]);
+    // if (data && data.length > 0 && originalData.length === 0) {
+    //   setOriginalData(data);
+    // }
+
+    setOriginalData(filteredData);
+  }, [filteredData]);
 
   useEffect(() => {
     if (showModal) {

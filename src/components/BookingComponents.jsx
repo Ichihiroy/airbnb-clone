@@ -4,7 +4,7 @@ import { BookingContext } from "../context/BookingsContext";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 
-const BookingComponent = (property) => {
+const BookingComponent = ({ mobile, ...property }) => {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState({
@@ -17,7 +17,6 @@ const BookingComponent = (property) => {
   const { setReserveDetails } = useContext(BookingContext);
   const navigate = useNavigate();
 
-  // Calculate number of nights and total price
   const calculateStay = () => {
     if (!checkIn || !checkOut) return { nights: 0, total: 0 };
 
@@ -54,9 +53,9 @@ const BookingComponent = (property) => {
     setReserveDetails({
       nights,
       total,
-      currency: property.price.currency,
+      currency: property?.price.currency,
     });
-  }, [nights, total, property.price.currency]);
+  }, [nights, total, property?.price.currency]);
 
   const getTotalGuests = () => {
     return guests.adults + guests.children + guests.infants + guests.pets;
@@ -122,7 +121,7 @@ const BookingComponent = (property) => {
 
   return (
     <div className="relative">
-      <div className="max-w-md mx-auto">
+      <div className={`max-w-md mx-auto ${mobile ? "mt-8" : "mt-0"}`}>
         {/* Header */}
         <div className="">
           <div className="flex items-baseline justify-between mb-2">
@@ -274,7 +273,7 @@ const BookingComponent = (property) => {
           </div>
         )}
 
-        <div className="pt-4">
+        <div className={`pt-4 ${mobile ? "absolute inset-x-0 top-125" : ""}`}>
           <button
             onClick={handleReserve}
             className="w-full bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-semibold py-3.5 px-4 rounded-full text-base transition-all duration-200 shadow-lg hover:shadow-xl"
