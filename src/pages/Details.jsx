@@ -325,14 +325,22 @@ const Details = () => {
               What this place offers
             </h3>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-md text-gray-800">
-              {property.amenities.available.map((amenity, i) => (
-                <li key={i}>{amenity}</li>
-              ))}
-              {property.amenities.unavailable.map((amenity, i) => (
-                <li key={i} className=" line-through">
-                  {amenity}
-                </li>
-              ))}
+              {property.amenities ? (
+                property?.amenities?.available.map((amenity, i) => (
+                  <li key={i}>{amenity}</li>
+                ))
+              ) : (
+                <li>No available amenities</li>
+              )}
+              {property.amenities ? (
+                property?.amenities?.unavailable.map((amenity, i) => (
+                  <li key={i} className=" line-through">
+                    {amenity}
+                  </li>
+                ))
+              ) : (
+                <li className="line-through">No unavailable amenities</li>
+              )}
             </ul>
           </div>
         </div>

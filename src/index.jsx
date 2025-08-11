@@ -24,6 +24,8 @@ import BookingLayout from "./layout/BookingLayout.jsx";
 import BookingPage from "./pages/BookingPage.jsx";
 import MyBookingsLayout from "./layout/MyBookingsLayout.jsx";
 import MyBookings from "./pages/MyBookings.jsx";
+import AdminLayout from "./layout/AdminLayout.jsx";
+import AdminPage from "./pages/AdminPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -128,6 +130,16 @@ const router = createBrowserRouter([
             <MyBookings />,
           </ProtectedRoute>
         ),
+      },
+    ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/admin",
+        element: <AdminPage />,
       },
     ],
   },
