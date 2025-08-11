@@ -77,7 +77,6 @@ export default function BookingPage() {
                 </div>
               </div>
 
-              {/* Policy / cancellation */}
               <div className="mt-4 text-sm">
                 <div className="font-medium">Free cancellation</div>
                 <div className="text-gray-600">
@@ -85,7 +84,6 @@ export default function BookingPage() {
                 </div>
               </div>
 
-              {/* Dates */}
               <div className="mt-4 flex items-center justify-between gap-2 border-t border-b border-gray-200 py-4">
                 <div className="text-sm">
                   <div className="font-medium">Dates</div>
@@ -102,7 +100,6 @@ export default function BookingPage() {
                 </div>
               </div>
 
-              {/* Price details */}
               <div className="mt-4 border-t border-gray-200 pt-4">
                 <div className="text-sm font-medium">Price details</div>
                 <div className="mt-2 flex flex-col gap-2"></div>

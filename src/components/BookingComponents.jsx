@@ -83,17 +83,11 @@ const BookingComponent = ({ mobile, ...property }) => {
       const newCheckIn = new Date(checkIn);
       const newCheckOut = new Date(checkOut);
 
-      // Check for any overlap scenarios:
       const hasOverlap =
-        // Case 1: New booking starts before existing and ends after existing starts
         (newCheckIn < existingCheckIn && newCheckOut > existingCheckIn) ||
-        // Case 2: New booking starts before existing ends and ends after existing ends
         (newCheckIn < existingCheckOut && newCheckOut > existingCheckOut) ||
-        // Case 3: New booking is completely within existing booking
         (newCheckIn >= existingCheckIn && newCheckOut <= existingCheckOut) ||
-        // Case 4: New booking completely encompasses existing booking
         (newCheckIn <= existingCheckIn && newCheckOut >= existingCheckOut) ||
-        // Case 5: Same check-in or check-out dates
         newCheckIn.getTime() === existingCheckIn.getTime() ||
         newCheckOut.getTime() === existingCheckOut.getTime();
 
@@ -120,7 +114,6 @@ const BookingComponent = ({ mobile, ...property }) => {
       reservedAt: new Date().toISOString(),
     };
 
-    // Save to localStorage
     const existingBookings = JSON.parse(
       localStorage.getItem("propertyBookings") || "{}"
     );
@@ -128,7 +121,6 @@ const BookingComponent = ({ mobile, ...property }) => {
     localStorage.setItem("propertyBookings", JSON.stringify(existingBookings));
 
     console.log("Reservation saved to localStorage:", reservationData);
-    // Navigation
     navigate(`/booking/${property.id}`, {
       state: reservationData,
     });
@@ -163,7 +155,6 @@ const BookingComponent = ({ mobile, ...property }) => {
   return (
     <div className="relative">
       <div className={`max-w-md mx-auto ${mobile ? "mt-8" : "mt-0"}`}>
-        {/* Header */}
         <div className="">
           <div className="flex items-baseline justify-between mb-2">
             {total > 0 ? (
@@ -188,11 +179,9 @@ const BookingComponent = ({ mobile, ...property }) => {
           </div>
         </div>
 
-        {/* Date Selection */}
         <div className="">
           <div className="border-1 border-gray-300 rounded-t-2xl overflow-hidden hover:border-gray-400 transition-colors duration-200">
             <div className="grid grid-cols-2">
-              {/* Check-in */}
               <div className="relative border-r border-gray-300">
                 <label className="absolute top-3 left-4 text-xs font-semibold text-gray-900 uppercase tracking-wide">
                   Check-in
@@ -210,7 +199,6 @@ const BookingComponent = ({ mobile, ...property }) => {
                 </div>
               </div>
 
-              {/* Check-out */}
               <div className="relative">
                 <label className="absolute top-3 left-4 text-xs font-semibold text-gray-900 uppercase tracking-wide">
                   Checkout
@@ -234,7 +222,6 @@ const BookingComponent = ({ mobile, ...property }) => {
           </div>
         </div>
 
-        {/* Guest Selector */}
         <div className="relative">
           <div className="border-1 rounded-b-2xl border-t-0 transition-all duration-200 border-gray-300">
             <label className="absolute top-3 left-4 text-xs font-semibold text-gray-900 uppercase tracking-wide z-10">

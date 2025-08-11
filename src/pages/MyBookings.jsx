@@ -33,7 +33,6 @@ const MyBookings = () => {
         localStorage.getItem("propertyBookings") || "{}"
       );
 
-      // Convert bookings object to array
       const bookingsArray = Object.values(allBookings);
       setBookings(bookingsArray);
     } catch (error) {
@@ -81,7 +80,6 @@ const MyBookings = () => {
       >
         <ArrowLeft /> Go Back
       </Link>
-      {/* Header */}
       <div className="border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-6 py-8">
           <h1 className="text-3xl font-semibold text-gray-900 mb-2">Trips</h1>
@@ -117,7 +115,6 @@ const MyBookings = () => {
               >
                 <div className="p-6">
                   <div className="flex flex-col lg:flex-row gap-6">
-                    {/* Property Image Placeholder */}
                     <div className="lg:w-64 lg:h-48 w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
                       {/* <div className="text-center text-gray-500">
                         <div className="w-16 h-16 mx-auto mb-2 bg-gray-300 rounded-lg flex items-center justify-center">
@@ -134,20 +131,20 @@ const MyBookings = () => {
                       />
                     </div>
 
-                    {/* Booking Details */}
                     <div className="flex-1">
                       <div className="flex justify-between items-start mb-4">
                         <div>
                           <h2 className="text-xl font-semibold text-gray-900 mb-1">
-                            {booking.propertyTitle ||
+                            {properties[booking.propertyId - 1]?.title ||
                               `Booking ${booking.propertyId}`}
                           </h2>
                           <p className="text-gray-600 mb-3">
-                            {booking.propertyLocation ||
-                              "Location not specified"}
+                            {properties[booking.propertyId - 1]?.location.city +
+                              ", " +
+                              properties[booking.propertyId - 1]?.location
+                                .country}
                           </p>
 
-                          {/* Date Range */}
                           <div className="flex items-center text-gray-700 mb-4">
                             <Calendar className="h-4 w-4 mr-2" />
                             <span className="font-medium">
@@ -159,7 +156,6 @@ const MyBookings = () => {
                           </div>
                         </div>
 
-                        {/* Price */}
                         <div className="text-right">
                           <div className="text-2xl font-semibold text-gray-900">
                             {booking.totalPrice || 0}
@@ -170,7 +166,6 @@ const MyBookings = () => {
                         </div>
                       </div>
 
-                      {/* Trip Info Grid */}
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-4 border-t border-gray-100">
                         <div>
                           <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
@@ -214,7 +209,6 @@ const MyBookings = () => {
                         </div>
                       </div>
 
-                      {/* Actions */}
                       <div className="flex flex-wrap gap-3 pt-4">
                         <Link
                           to={`/details/${booking.propertyId}`}
