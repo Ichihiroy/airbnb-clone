@@ -162,7 +162,7 @@ const DetailsHeader = ({ filters, setShowModal }) => {
                     </button>
                   </Link>
                 ) : (
-                  <Link to="auth/login">
+                  <Link to="/auth/login">
                     <button className="text-sm hover:underline cursor-pointer">
                       Log in or sign up
                     </button>

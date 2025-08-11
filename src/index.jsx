@@ -22,6 +22,8 @@ import ProtectedAuthRoute from "./pages/ProtectedAuthRoute.jsx";
 import { BookingProvider } from "./context/BookingsContext.jsx";
 import BookingLayout from "./layout/BookingLayout.jsx";
 import BookingPage from "./pages/BookingPage.jsx";
+import MyBookingsLayout from "./layout/MyBookingsLayout.jsx";
+import MyBookings from "./pages/MyBookings.jsx";
 
 const router = createBrowserRouter([
   {
@@ -112,6 +114,20 @@ const router = createBrowserRouter([
       {
         path: ":id",
         element: <BookingPage />,
+      },
+    ],
+  },
+  {
+    path: "/my_bookings",
+    element: <MyBookingsLayout />,
+    children: [
+      {
+        path: "/my_bookings",
+        element: (
+          <ProtectedRoute>
+            <MyBookings />,
+          </ProtectedRoute>
+        ),
       },
     ],
   },

@@ -187,7 +187,7 @@ const Details = () => {
         <h1 className="text-2xl font-semibold hidden md:block">
           {property.title} in {property.location.city}
         </h1>
-        <Link to="/" className="md:hidden">
+        <Link to={-1} className="md:hidden">
           <ArrowLeft size={24} />
         </Link>
         <div className="flex gap-4 ">

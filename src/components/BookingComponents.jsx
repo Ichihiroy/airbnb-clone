@@ -14,6 +14,7 @@ const BookingComponent = ({ mobile, ...property }) => {
     pets: 0,
   });
   const [showGuestPicker, setShowGuestPicker] = useState(false);
+  const userData = localStorage.getItem("userData");
   const { setReserveDetails } = useContext(BookingContext);
   const navigate = useNavigate();
 
@@ -57,6 +58,10 @@ const BookingComponent = ({ mobile, ...property }) => {
     });
   }, [nights, total, property?.price.currency]);
 
+  const bookedProperties = JSON.parse(
+    localStorage.getItem("propertyBookings") || "{}"
+  );
+
   const getTotalGuests = () => {
     return guests.adults + guests.children + guests.infants + guests.pets;
   };
@@ -65,6 +70,42 @@ const BookingComponent = ({ mobile, ...property }) => {
     if (!checkIn || !checkOut) {
       toast.error("Please select check-in and check-out dates");
       return;
+    }
+
+    if (!userData) {
+      toast.error("Please log in to make a reservation");
+      return;
+    }
+
+    if (bookedProperties[property.id]) {
+      const existingCheckIn = new Date(bookedProperties[property.id].checkIn);
+      const existingCheckOut = new Date(bookedProperties[property.id].checkOut);
+      const newCheckIn = new Date(checkIn);
+      const newCheckOut = new Date(checkOut);
+
+      // Check for any overlap scenarios:
+      const hasOverlap =
+        // Case 1: New booking starts before existing and ends after existing starts
+        (newCheckIn < existingCheckIn && newCheckOut > existingCheckIn) ||
+        // Case 2: New booking starts before existing ends and ends after existing ends
+        (newCheckIn < existingCheckOut && newCheckOut > existingCheckOut) ||
+        // Case 3: New booking is completely within existing booking
+        (newCheckIn >= existingCheckIn && newCheckOut <= existingCheckOut) ||
+        // Case 4: New booking completely encompasses existing booking
+        (newCheckIn <= existingCheckIn && newCheckOut >= existingCheckOut) ||
+        // Case 5: Same check-in or check-out dates
+        newCheckIn.getTime() === existingCheckIn.getTime() ||
+        newCheckOut.getTime() === existingCheckOut.getTime();
+
+      if (hasOverlap) {
+        const formatDate = (date) => date.toLocaleDateString();
+        toast.error(
+          `Property is already booked from ${formatDate(
+            existingCheckIn
+          )} to ${formatDate(existingCheckOut)}. Please select different dates.`
+        );
+        return;
+      }
     }
 
     const reservationData = {
