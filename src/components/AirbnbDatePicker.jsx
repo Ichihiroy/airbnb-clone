@@ -19,7 +19,6 @@ const AirbnbDatePicker = ({ setFilters, filters, months }) => {
     const startDate = range[0].startDate;
     const endDate = range[0].endDate;
 
-    // Only update filters when dates are DIFFERENT (actual selection made)
     if (
       startDate &&
       endDate &&

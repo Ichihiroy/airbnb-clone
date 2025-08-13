@@ -40,7 +40,6 @@ const MobileBottomNav = ({ profile, explore, wishlist }) => {
       }
     };
 
-    // Add event listeners
     window.addEventListener("userLogin", handleUserLogin);
     window.addEventListener("userLogout", handleUserLogout);
     window.addEventListener("storage", handleStorageChange);

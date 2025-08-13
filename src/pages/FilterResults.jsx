@@ -42,12 +42,14 @@ export default function FilterResults() {
   }
 
   useEffect(() => {
-    // if (data && data.length > 0 && originalData.length === 0) {
-    //   setOriginalData(data);
-    // }
+    if (originalData.length === 0) {
+      setOriginalData(data);
+    } else {
+      setOriginalData(filteredData);
+    }
 
-    setOriginalData(filteredData);
-  }, [filteredData]);
+    // setOriginalData(filteredData);
+  }, [originalData.length, setOriginalData]);
 
   useEffect(() => {
     if (showModal) {
@@ -502,7 +504,7 @@ export default function FilterResults() {
               </div>
 
               {/* Standout stays */}
-              <div className="mb-6">
+              {/* <div className="mb-6">
                 <h3 className="text-lg font-medium mb-2">Standout stays</h3>
                 <div className="flex gap-4">
                   <div className="flex-1 border border-gray-300 rounded-lg p-4 hover:bg-gray-50">
@@ -512,12 +514,11 @@ export default function FilterResults() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
-              <div className="space-y-6 pb-6">
+              {/* <div className="space-y-6 pb-6">
                 <h2 className="text-lg font-medium">Accessibility features</h2>
 
-                {/* Guest entrance and parking */}
                 <div>
                   <h3 className="font-medium mb-2">
                     Guest entrance and parking
@@ -547,7 +548,6 @@ export default function FilterResults() {
                   </div>
                 </div>
 
-                {/* Bedroom */}
                 <div>
                   <h3 className="font-medium mb-2">Bedroom</h3>
                   <div className="space-y-2 text-sm ml-1">
@@ -568,7 +568,6 @@ export default function FilterResults() {
                   </div>
                 </div>
 
-                {/* Bathroom */}
                 <div>
                   <h3 className="font-medium mb-2">Bathroom</h3>
                   <div className="space-y-2 text-sm ml-1">
@@ -588,7 +587,7 @@ export default function FilterResults() {
                     </label>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             {/* Footer */}

@@ -10,7 +10,6 @@ const ErrorPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center px-4">
       <div className="max-w-lg w-full text-center">
-        {/* Error Icon */}
         <div className="mb-8">
           <div className="relative">
             <div className="w-32 h-32 mx-auto bg-rose-100 rounded-full flex items-center justify-center">
@@ -19,7 +18,6 @@ const ErrorPage = () => {
           </div>
         </div>
 
-        {/* Error Content */}
         <div className="mb-8">
           <h1 className="text-6xl font-bold text-gray-900 mb-4">404</h1>
           <h2 className="text-2xl font-semibold text-gray-800 mb-4">
@@ -33,7 +31,6 @@ const ErrorPage = () => {
           </p>
         </div>
 
-        {/* Action Buttons */}
         <div className="space-y-4">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -62,7 +59,6 @@ const ErrorPage = () => {
           </button>
         </div>
 
-        {/* Additional Help */}
         <div className="mt-12 pt-8 border-t border-gray-200">
           <p className="text-sm text-gray-500 mb-4">
             Still having trouble? Here are some helpful links:

@@ -11,7 +11,6 @@ const UserRatings = () => {
   return (
     <>
       <div className="w-full px-4 pt-6 max-w-6xl mx-auto">
-        {/* Top section: Overall rating bar */}
         <div className="flex flex-col md:flex-row md:divide-x  pb-8 mb-8">
           <div className="w-full xs:w-1/6 lg:w-1/6 px-4 mb-6 sm:mb-0">
             <div className="text-sm font-semibold mb-2">Overall rating</div>

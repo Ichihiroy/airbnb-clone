@@ -233,10 +233,8 @@ const AdminPage = () => {
     }
   };
 
-  // Property Card Component
   const PropertyCard = ({ property }) => (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 group">
-      {/* Property Image */}
       <div className="relative h-48 bg-gray-100">
         {property.images?.[0] ? (
           <img
@@ -254,7 +252,6 @@ const AdminPage = () => {
           </div>
         )}
 
-        {/* Actions Overlay */}
         <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
           <div className="flex space-x-1">
             <button
@@ -397,7 +394,6 @@ const AdminPage = () => {
           </div>
         </div>
 
-        {/* Properties Grid/List */}
         {loading ? (
           <div className="flex items-center justify-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-rose-500"></div>
@@ -438,11 +434,9 @@ const AdminPage = () => {
         )}
       </div>
 
-      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black/30 bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
-            {/* Modal Header */}
             <div className="border-b border-gray-200 px-6 py-4 flex justify-between items-center">
               <h2 className="text-lg font-semibold text-gray-900">
                 {modalType === "add"
@@ -459,11 +453,9 @@ const AdminPage = () => {
               </button>
             </div>
 
-            {/* Modal Content */}
             <div className="overflow-y-auto max-h-[calc(90vh-80px)]">
               {modalType === "view" ? (
                 <div className="p-6 space-y-6">
-                  {/* Property Images */}
                   {selectedProperty?.images?.[0] && (
                     <div className="aspect-video rounded-lg overflow-hidden bg-gray-100">
                       <img
@@ -552,7 +544,6 @@ const AdminPage = () => {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="p-6 space-y-6">
-                  {/* Basic Information */}
                   <div>
                     <h3 className="text-lg font-medium text-gray-900 mb-4">
                       Basic information
@@ -595,7 +586,6 @@ const AdminPage = () => {
                     </div>
                   </div>
 
-                  {/* Location */}
                   <div>
                     <h3 className="text-lg font-medium text-gray-900 mb-4">
                       Location
@@ -645,7 +635,6 @@ const AdminPage = () => {
                     </div>
                   </div>
 
-                  {/* Pricing */}
                   <div>
                     <h3 className="text-lg font-medium text-gray-900 mb-4">
                       Pricing
@@ -696,7 +685,6 @@ const AdminPage = () => {
                     </div>
                   </div>
 
-                  {/* Images */}
                   <div>
                     <h3 className="text-lg font-medium text-gray-900 mb-4">
                       Photos
@@ -721,7 +709,6 @@ const AdminPage = () => {
                     </div>
                   </div>
 
-                  {/* Host Information */}
                   <div>
                     <h3 className="text-lg font-medium text-gray-900 mb-4">
                       Host information
@@ -769,7 +756,6 @@ const AdminPage = () => {
                     </div>
                   </div>
 
-                  {/* Description */}
                   <div>
                     <h3 className="text-lg font-medium text-gray-900 mb-4">
                       Description
@@ -784,7 +770,6 @@ const AdminPage = () => {
                     />
                   </div>
 
-                  {/* Form Actions */}
                   <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
                     <button
                       type="button"

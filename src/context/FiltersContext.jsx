@@ -31,7 +31,7 @@ export const FiltersProvider = ({ children }) => {
         filters.checkIn !== "" &&
         !isNaN(new Date(filters.checkIn))
           ? new Date(filters.checkIn)
-          : new Date(), // Today's date
+          : new Date(),
       endDate:
         filters?.checkOut &&
         filters.checkOut !== "" &&
@@ -246,14 +246,18 @@ export const FiltersProvider = ({ children }) => {
           return true;
         }
 
+        // Check if property is available during the selected date range
         const selectedCheckIn = new Date(range[0].startDate);
         const selectedCheckOut = new Date(range[0].endDate);
-        const propertyAvailableFrom = new Date(property.stayDates.check_in);
-        const propertyAvailableUntil = new Date(property.stayDates.check_out);
+        const propertyCheckIn = new Date(property.stayDates.check_in);
+        const propertyCheckOut = new Date(property.stayDates.check_out);
 
+        // Property is available if:
+        // 1. Property checkout is before or on our checkin (property booking ends before we start)
+        // 2. Property checkin is after or on our checkout (property booking starts after we end)
         return (
-          selectedCheckIn >= propertyAvailableFrom &&
-          selectedCheckOut <= propertyAvailableUntil
+          propertyCheckOut <= selectedCheckIn ||
+          propertyCheckIn >= selectedCheckOut
         );
       })
       .filter((property) => {
@@ -267,7 +271,7 @@ export const FiltersProvider = ({ children }) => {
       });
 
     setFilteredData(filtered);
-    console.log("Filtered Data:", filtered);
+    console.log("Filtered Data:", filteredData);
     // navigate("/filters");
   }
 
