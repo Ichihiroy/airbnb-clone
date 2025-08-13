@@ -1,5 +1,4 @@
 import React, { createContext, useState } from "react";
-import { addDays } from "date-fns";
 
 const FiltersContext = createContext();
 
@@ -193,12 +192,7 @@ export const FiltersProvider = ({ children }) => {
       icon: "🌆",
       color: "bg-amber-100 text-amber-600",
     },
-    {
-      city: "Athens, Greece",
-      desc: "For ancient ruins and history",
-      icon: "🏛️",
-      color: "bg-indigo-100 text-indigo-700",
-    },
+
     {
       city: "Prague, Czech Republic",
       desc: "For fairy tale castles",
@@ -236,29 +230,28 @@ export const FiltersProvider = ({ children }) => {
           property.location.city === filters.destination
       )
       .filter((property) => {
-        // If no dates selected, show all properties
         if (filters.checkIn === "" && filters.checkOut === "") {
           return true;
         }
 
-        // If only one date is selected, skip date filtering
         if (filters.checkIn === "" || filters.checkOut === "") {
           return true;
         }
 
-        // Check if property is available during the selected date range
         const selectedCheckIn = new Date(range[0].startDate);
         const selectedCheckOut = new Date(range[0].endDate);
         const propertyCheckIn = new Date(property.stayDates.check_in);
         const propertyCheckOut = new Date(property.stayDates.check_out);
 
-        // Property is available if:
-        // 1. Property checkout is before or on our checkin (property booking ends before we start)
-        // 2. Property checkin is after or on our checkout (property booking starts after we end)
         return (
           propertyCheckOut <= selectedCheckIn ||
           propertyCheckIn >= selectedCheckOut
         );
+
+        // return (
+        //   isSameDateOnlyFirst(propertyCheckIn, selectedCheckIn) &&
+        //   isSameDateOnlySecond(propertyCheckOut, selectedCheckOut)
+        // );
       })
       .filter((property) => {
         const { adults, children, infants, pets } = filters.guests;
@@ -277,16 +270,16 @@ export const FiltersProvider = ({ children }) => {
 
   function isSameDateOnlyFirst(a, b) {
     return (
-      a.getFullYear() >= b.getFullYear() &&
-      a.getMonth() >= b.getMonth() &&
-      a.getDate() >= b.getDate()
+      a.getFullYear() <= b.getFullYear() &&
+      a.getMonth() <= b.getMonth() &&
+      a.getDate() <= b.getDate()
     );
   }
   function isSameDateOnlySecond(a, b) {
     return (
-      a.getFullYear() <= b.getFullYear() &&
-      a.getMonth() <= b.getMonth() &&
-      a.getDate() <= b.getDate()
+      a.getFullYear() >= b.getFullYear() &&
+      a.getMonth() >= b.getMonth() &&
+      a.getDate() >= b.getDate()
     );
   }
 

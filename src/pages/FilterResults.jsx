@@ -44,6 +44,8 @@ export default function FilterResults() {
   useEffect(() => {
     if (originalData.length === 0) {
       setOriginalData(data);
+    } else if (!filteredData || filteredData.length === 0) {
+      setFilterResults(false);
     } else {
       setOriginalData(filteredData);
     }
@@ -183,8 +185,6 @@ export default function FilterResults() {
   };
 
   if (!filteredData || filteredData.length === 0) {
-    setFilterResults(false);
-
     return (
       <div className="flex items-center justify-center h-screen bg-zinc-50">
         <h2 className="text-2xl font-semibold">No results were found</h2>
@@ -199,7 +199,7 @@ export default function FilterResults() {
       <div className="w-full lg:w-1/2 overflow-y-auto md:py-20 lg:py-18">
         <div className="justify-between items-center mb-4 sm:mb-6 hidden md:block">
           <h2 className="text-lg sm:text-xl font-semibold  ">
-            {filteredData.length} homes
+            {filteredData.length} home{filteredData.length === 1 ? "" : "s"}
           </h2>
         </div>
         <div className="justify-between items-center mb-4 sm:mb-6 flex md:hidden shadow-lg absolute top-0 left-0 right-0 bg-gray-50 z-10 px-6 py-3 rounded-b-lg ">
@@ -340,7 +340,7 @@ export default function FilterResults() {
             </button>
 
             <div className="px-6 space-y-4 h-[70vh] overflow-scroll">
-              <div className="w-full ">
+              {/* <div className="w-full ">
                 <h3 className="text-lg font-medium mb-3">Type of place</h3>
                 <div className="flex items-center overflow-hidden border border-gray-300 rounded-xl divide-x divide-gray-100">
                   <div className="px-6 py-2  rounded-xl m-1 w-1/3 text-center border-black border-2 bg-gray-100">
@@ -353,7 +353,7 @@ export default function FilterResults() {
                     <span className="text-black">Entire home</span>
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <div>
                 <h2 className="text-lg font-medium mb-1">Price range</h2>
