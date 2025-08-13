@@ -3,7 +3,7 @@ import { Globe } from "lucide-react";
 const Footer = ({ filters }) => (
   <footer
     className={`bg-gray-100 border-t border-gray-200 pb-15 lg:pb-0 ${
-      filters ? "mt-0" : "mt-16"
+      filters ? "mt-0" : "mt-8"
     }`}
   >
     <div

@@ -30,9 +30,16 @@ const SearchBar = () => {
     bar: false,
   });
 
+  // Filter destinations based on destination input
+  const filteredDestinations = destinations.filter(
+    (dest) =>
+      dest.city.toLowerCase().includes(filters.destination.toLowerCase()) ||
+      dest.desc.toLowerCase().includes(filters.destination.toLowerCase())
+  );
+
   useEffect(() => {
     setFilteredData(data);
-  }, [data]);
+  }, [data, setFilteredData]);
 
   function handleSearch() {
     filterData();
@@ -102,7 +109,9 @@ const SearchBar = () => {
         <div className="text-xs font-medium text-gray-900">Where</div>
         <input
           value={filters.destination}
-          readOnly
+          onChange={(e) =>
+            setFilters({ ...filters, destination: e.target.value })
+          }
           type="text"
           placeholder="Search destinations"
           className="w-full text-sm text-gray-600 placeholder-gray-400 outline-none "
@@ -127,40 +136,48 @@ const SearchBar = () => {
             transition={{ duration: 0.4, ease: "easeInOut" }}
             className="w-[400px] max-w-md mx-auto mt-10 h-[400px] rounded-4xl overflow-hidden shadow-lg bg-white absolute left-0 top-10 p-5 overflow-y-auto overflow-x-hidden"
           >
-            <h2 className="text-sm font-light px-4 pb-1 ">
-              Suggested destinations
+            <h2 className="text-sm font-light px-4 pb-1">
+              {filters.destination
+                ? "Search results"
+                : "Suggested destinations"}
             </h2>
             <ul>
-              {destinations.map((dest, index) => (
-                <li
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setFilters({
-                      ...filters,
-                      destination: dest.city.split(",")[0],
-                    });
-                    setTimeout(() => {
-                      setActive({
-                        where: false,
-                        checkIn: false,
-                        checkOut: false,
-                        guests: false,
-                        bar: false,
+              {filteredDestinations.length > 0 ? (
+                filteredDestinations.map((dest, index) => (
+                  <li
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setFilters({
+                        ...filters,
+                        destination: dest.city.split(",")[0],
                       });
-                    }, 50);
-                  }}
-                  key={index}
-                  className="flex items-center gap-4 px-4 py-3 hover:bg-gray-100 cursor-pointer rounded-xl "
-                >
-                  <div className={`rounded-lg p-2 ${dest.color}`}>
-                    <span className="text-xl">{dest.icon}</span>
-                  </div>
-                  <div>
-                    <h3 className="font-medium text-gray-800">{dest.city}</h3>
-                    <p className="text-sm text-gray-500">{dest.desc}</p>
-                  </div>
+                      setTimeout(() => {
+                        setActive({
+                          where: false,
+                          checkIn: false,
+                          checkOut: false,
+                          guests: false,
+                          bar: false,
+                        });
+                      }, 50);
+                    }}
+                    key={index}
+                    className="flex items-center gap-4 px-4 py-3 hover:bg-gray-100 cursor-pointer rounded-xl"
+                  >
+                    <div className={`rounded-lg p-2 ${dest.color}`}>
+                      <span className="text-xl">{dest.icon}</span>
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-800">{dest.city}</h3>
+                      <p className="text-sm text-gray-500">{dest.desc}</p>
+                    </div>
+                  </li>
+                ))
+              ) : (
+                <li className="px-4 py-3 text-gray-500 text-sm">
+                  No destinations found matching "{filters.destination}"
                 </li>
-              ))}
+              )}
             </ul>
           </motion.div>
         ) : (

@@ -235,22 +235,27 @@ export const FiltersProvider = ({ children }) => {
           filters.destination === "" ||
           property.location.city === filters.destination
       )
-      .filter(
-        (property) =>
-          filters.checkIn == "" ||
-          isSameDateOnlyFirst(
-            new Date(range[0].startDate),
-            new Date(property.stayDates.check_in)
-          )
-      )
-      .filter(
-        (property) =>
-          filters.checkOut == "" ||
-          isSameDateOnlySecond(
-            new Date(range[0].endDate),
-            new Date(property.stayDates.check_out)
-          )
-      )
+      .filter((property) => {
+        // If no dates selected, show all properties
+        if (filters.checkIn === "" && filters.checkOut === "") {
+          return true;
+        }
+
+        // If only one date is selected, skip date filtering
+        if (filters.checkIn === "" || filters.checkOut === "") {
+          return true;
+        }
+
+        const selectedCheckIn = new Date(range[0].startDate);
+        const selectedCheckOut = new Date(range[0].endDate);
+        const propertyAvailableFrom = new Date(property.stayDates.check_in);
+        const propertyAvailableUntil = new Date(property.stayDates.check_out);
+
+        return (
+          selectedCheckIn >= propertyAvailableFrom &&
+          selectedCheckOut <= propertyAvailableUntil
+        );
+      })
       .filter((property) => {
         const { adults, children, infants, pets } = filters.guests;
         return (
@@ -262,22 +267,22 @@ export const FiltersProvider = ({ children }) => {
       });
 
     setFilteredData(filtered);
-    console.log("Filtered Data:", filteredData);
+    console.log("Filtered Data:", filtered);
     // navigate("/filters");
   }
 
   function isSameDateOnlyFirst(a, b) {
     return (
-      a.getFullYear() <= b.getFullYear() &&
-      a.getMonth() <= b.getMonth() &&
-      a.getDate() <= b.getDate()
+      a.getFullYear() >= b.getFullYear() &&
+      a.getMonth() >= b.getMonth() &&
+      a.getDate() >= b.getDate()
     );
   }
   function isSameDateOnlySecond(a, b) {
     return (
-      a.getFullYear() >= b.getFullYear() &&
-      a.getMonth() >= b.getMonth() &&
-      a.getDate() >= b.getDate()
+      a.getFullYear() <= b.getFullYear() &&
+      a.getMonth() <= b.getMonth() &&
+      a.getDate() <= b.getDate()
     );
   }
 

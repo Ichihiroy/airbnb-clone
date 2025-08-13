@@ -11,7 +11,7 @@ const Main = () => {
   }
 
   return (
-    <main className="bg-white  mx-auto mt-45">
+    <main className="bg-white mx-auto mt-45">
       <div className="max-w-9xl mx-auto  md:px-6 lg:px-8 py-8">
         <PropertySection title="Popular homes" properties={data} />
         <PropertySection
@@ -19,6 +19,10 @@ const Main = () => {
           properties={data.filter(
             (item) => item.location.country === "Azerbaijan"
           )}
+        />
+        <PropertySection
+          title="Guests favorite"
+          properties={data.filter((item) => item.rating.score > 4.9)}
         />
       </div>
     </main>

@@ -5,7 +5,7 @@ import { Outlet, ScrollRestoration } from "react-router";
 
 const App = () => {
   return (
-    <div className="min-h-screen  ">
+    <div className="min-h-screen">
       <ScrollRestoration />
       <Header />
       <Outlet />
