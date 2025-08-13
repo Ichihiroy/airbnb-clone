@@ -7,8 +7,6 @@ import {
   Eye,
   MapPin,
   Star,
-  Calendar,
-  DollarSign,
   Home,
   X,
   Save,
@@ -32,13 +30,7 @@ const AdminPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState("add");
   const [selectedProperty, setSelectedProperty] = useState(null);
-  const [viewMode, setViewMode] = useState("grid"); // grid or list
-  const [stats, setStats] = useState({
-    totalProperties: 0,
-    totalBookings: 0,
-    totalRevenue: 0,
-    averageRating: 0,
-  });
+  const [viewMode, setViewMode] = useState("grid");
 
   // Form state
   const [formData, setFormData] = useState({
@@ -50,9 +42,10 @@ const AdminPage = () => {
       address: "",
     },
     price: {
-      total: "",
+      total: 0,
       currency: "USD",
       nights: 1,
+      nightlyRate: 300,
     },
     images: ["", "", "", ""],
     roomDetails: {
@@ -75,6 +68,27 @@ const AdminPage = () => {
       infants: 1,
       pets: 0,
     },
+    amenities: {
+      available: [
+        "Kitchen",
+        "Wifi",
+        "Dedicated workspace",
+        "Free washer – In unit",
+        "Free dryer – In unit",
+        "Bathtub",
+        "Indoor fireplace: wood-burning",
+        "Luggage dropoff allowed",
+      ],
+      unavailable: [
+        "Smoke alarm",
+        "Carbon monoxide alarm",
+        "Fire extinguisher",
+      ],
+    },
+    stayDates: {
+      check_in: new Date(),
+      check_out: new Date(),
+    },
   });
 
   useEffect(() => {
@@ -83,7 +97,6 @@ const AdminPage = () => {
 
   useEffect(() => {
     filterProperties();
-    loadStats();
   }, [searchTerm, properties]);
 
   const loadProperties = async () => {
@@ -96,35 +109,6 @@ const AdminPage = () => {
       toast.error("Failed to load properties");
     } finally {
       setLoading(false);
-    }
-  };
-
-  const loadStats = () => {
-    try {
-      const bookings = JSON.parse(
-        localStorage.getItem("propertyBookings") || "{}"
-      );
-      const bookingsArray = Object.values(bookings);
-
-      setStats({
-        totalProperties: filteredProperties.length,
-        totalBookings: bookingsArray.length,
-        totalRevenue: bookingsArray.reduce(
-          (sum, booking) => sum + (booking.totalPrice || 0),
-          0
-        ),
-        averageRating:
-          filteredProperties.length > 0
-            ? (
-                filteredProperties.reduce(
-                  (sum, prop) => sum + (prop.rating?.score || 0),
-                  0
-                ) / filteredProperties.length
-              ).toFixed(1)
-            : 0,
-      });
-    } catch (error) {
-      console.error("Error loading stats:", error);
     }
   };
 
@@ -185,7 +169,12 @@ const AdminPage = () => {
         title: "",
         typeOfPlace: "",
         location: { city: "", country: "", address: "" },
-        price: { total: "", currency: "USD", nights: 1 },
+        price: {
+          total: "",
+          currency: "USD",
+          nights: 1,
+          nightlyRate: 200,
+        },
         images: ["", "", "", ""],
         roomDetails: { bedType: "", bathroomType: "" },
         description: "",

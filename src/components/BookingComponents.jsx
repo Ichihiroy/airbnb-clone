@@ -108,7 +108,7 @@ const BookingComponent = ({ mobile, ...property }) => {
       checkOut,
       guests,
       nights,
-      totalPrice: total,
+      totalPrice: Number(total),
       guestCount: getTotalGuests(),
       nightlyRate: property?.price?.nightlyRate,
       reservedAt: new Date().toISOString(),
@@ -138,12 +138,6 @@ const BookingComponent = ({ mobile, ...property }) => {
     checkInDate.setDate(checkInDate.getDate() + 1);
     return checkInDate.toISOString().split("T")[0];
   };
-
-  function addDaysToDate(dateString, daysToAdd) {
-    const date = new Date(dateString);
-    date.setDate(date.getDate() + daysToAdd);
-    return date.toISOString().split("T")[0];
-  }
 
   const guestTypeLabels = {
     adults: { label: "Adults", subtitle: "Age 13+" },
@@ -190,7 +184,7 @@ const BookingComponent = ({ mobile, ...property }) => {
                   <div className="flex items-center space-x-3">
                     <input
                       type="date"
-                      placeholder={property.stayDates.check_in}
+                      // placeholder={property?.stayDates?.check_in}
                       onChange={(e) => setCheckIn(e.target.value)}
                       min={getTomorrowDate()}
                       className="text-sm font-medium text-gray-900 bg-transparent border-none outline-none w-full cursor-pointer"
@@ -207,10 +201,10 @@ const BookingComponent = ({ mobile, ...property }) => {
                   <div className="flex items-center space-x-3">
                     <input
                       type="date"
-                      placeholder={addDaysToDate(
-                        property.stayDates.check_in,
-                        property?.price?.nights
-                      )}
+                      // placeholder={addDaysToDate(
+                      //   property?.stayDates?.check_in,
+                      //   property?.price?.nights
+                      // )}
                       onChange={(e) => setCheckOut(e.target.value)}
                       min={getMinCheckoutDate()}
                       className="text-sm font-medium text-gray-900 bg-transparent border-none outline-none w-full cursor-pointer"

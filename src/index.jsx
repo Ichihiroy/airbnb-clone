@@ -26,6 +26,7 @@ import MyBookingsLayout from "./layout/MyBookingsLayout.jsx";
 import MyBookings from "./pages/MyBookings.jsx";
 import AdminLayout from "./layout/AdminLayout.jsx";
 import AdminPage from "./pages/AdminPage.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -142,6 +143,10 @@ const router = createBrowserRouter([
         element: <AdminPage />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 

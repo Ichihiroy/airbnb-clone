@@ -106,7 +106,7 @@ export default function BookingPage() {
                 <div className="mt-4 flex items-center justify-between text-sm font-semibold">
                   <div>Total </div>
                   <div>
-                    {bookingData.totalPrice}{" "}
+                    {Number(bookingData.totalPrice)}{" "}
                     <span className="underline">{listing?.price.currency}</span>
                   </div>
                 </div>
