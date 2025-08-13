@@ -216,7 +216,12 @@ export default function FilterResults() {
                       " " +
                       filters.checkIn.slice(-2) +
                       " - " +
-                      filters.checkOut.slice(-2)
+                      (filters.checkIn.slice(0, 3) ==
+                      filters.checkOut.slice(0, 3)
+                        ? filters.checkOut.slice(-2)
+                        : filters.checkOut.slice(0, 3) +
+                          " " +
+                          filters.checkOut.slice(-2))
                     : "Any week"}
                 </span>
                 {" •"}

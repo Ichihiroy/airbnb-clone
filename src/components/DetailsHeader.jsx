@@ -62,8 +62,13 @@ const DetailsHeader = ({ filters, setShowModal }) => {
                     ? contextFilters.checkIn.slice(0, 3) +
                       " " +
                       contextFilters.checkIn.slice(-2) +
-                      " -" +
-                      contextFilters.checkOut.slice(-2)
+                      " - " +
+                      (contextFilters.checkIn.slice(0, 3) ==
+                      contextFilters.checkOut.slice(0, 3)
+                        ? contextFilters.checkOut.slice(-2)
+                        : contextFilters.checkOut.slice(0, 3) +
+                          " " +
+                          contextFilters.checkOut.slice(-2))
                     : "Any week"}
                 </div>
                 <div className="pe-9 text-sm ">
