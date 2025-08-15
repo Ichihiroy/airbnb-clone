@@ -18,6 +18,7 @@ import {
 import BookingComponent from "../components/BookingComponents";
 import { BookingContext } from "../context/BookingsContext";
 import toast from "react-hot-toast";
+import SwiperComponent from "../components/Swiper";
 
 const Details = () => {
   const { id } = useParams();
@@ -210,10 +211,11 @@ const Details = () => {
       </div>
 
       <div className="flex justify-center gap-2 mb-8" id="photos">
+        <SwiperComponent images={property.images} title={property.title} />
         <img
           src={property.images[0]}
           alt="Main room"
-          className="w-full md:w-[550px] h-101 object-cover md:rounded-tl-xl md:rounded-bl-xl col-span-2"
+          className="hidden md:block md:w-[550px] h-101 object-cover md:rounded-tl-xl md:rounded-bl-xl col-span-2"
         />
         <div className=" grid-cols-2 gap-1 w-full hidden md:grid">
           {[2, 3].map((id) => (

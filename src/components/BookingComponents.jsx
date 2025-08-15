@@ -77,6 +77,11 @@ const BookingComponent = ({ mobile, ...property }) => {
       return;
     }
 
+    if (new Date(checkOut) > new Date(checkIn)) {
+      toast.error("Check-out date must be after check-in date");
+      return;
+    }
+
     if (bookedProperties[property.id]) {
       const existingCheckIn = new Date(bookedProperties[property.id].checkIn);
       const existingCheckOut = new Date(bookedProperties[property.id].checkOut);
