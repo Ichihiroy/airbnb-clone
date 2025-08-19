@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import PropertyCalendar from "../components/PropertyCalendar";
 import { Link, useNavigate, useParams } from "react-router";
 import { getPropertyById } from "../services/propertyServices";
 import Loading from "./Loading";
@@ -40,7 +41,7 @@ const Details = () => {
     };
 
     const handleButtonVisibility = () => {
-      setShowButton(window.scrollY > 1500);
+      setShowButton(window.scrollY > 1900);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -344,6 +345,11 @@ const Details = () => {
                 <li className="line-through">No unavailable amenities</li>
               )}
             </ul>
+            {/* Airbnb-style Calendar Section */}
+            <section className="mt-8 border-t pt-8 border-gray-300">
+              <h2 className="text-xl font-semibold mb-4">Availability</h2>
+              <PropertyCalendar propertyId={property.id || []} />
+            </section>
           </div>
         </div>
 
