@@ -17,8 +17,9 @@ import ProfileLayout from "./layout/ProfileLayout.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import WishlistLayout from "./layout/WishlistLayout.jsx";
 import WishlistPage from "./pages/WishlistPage.jsx";
-import ProtectedRoute from "./pages/ProtectedRoute.jsx";
-import ProtectedAuthRoute from "./pages/ProtectedAuthRoute.jsx";
+import ProtectedAuthRoute from "./routes/ProtectedAuthRoute.jsx";
+import ProtectedRoute from "./routes/ProtectedRoute.jsx";
+import ProtectedAdminRoute from "./routes/ProtectedAdminRoute.jsx";
 import { BookingProvider } from "./context/BookingsContext.jsx";
 import BookingLayout from "./layout/BookingLayout.jsx";
 import BookingPage from "./pages/BookingPage.jsx";
@@ -128,7 +129,7 @@ const router = createBrowserRouter([
         path: "/my_bookings",
         element: (
           <ProtectedRoute>
-            <MyBookings />,
+            <MyBookings />
           </ProtectedRoute>
         ),
       },
@@ -140,7 +141,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/admin",
-        element: <AdminPage />,
+        element: (
+          <ProtectedAdminRoute>
+            <AdminPage />
+          </ProtectedAdminRoute>
+        ),
       },
     ],
   },
