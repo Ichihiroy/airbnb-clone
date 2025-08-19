@@ -176,7 +176,7 @@ const Details = () => {
       </div>
 
       {showModal && (
-        <div className="fixed bg-white w-full shadow-md border-1 border-gray-200 h-[85vh] px-5 z-50 bottom-0 rounded-t-3xl">
+        <div className="fixed bg-white w-full shadow-md border-1  border-gray-200 h-[85vh] px-5 z-50 bottom-0 rounded-t-3xl">
           <BookingComponent {...property} mobile={true} />
           <X
             className="absolute top-4 right-4 cursor-pointer bg-gray-100 rounded-full p-2"
@@ -243,10 +243,10 @@ const Details = () => {
       </div>
 
       <div
-        className="flex flex-col md:flex-row gap-35 px-5 md:px-0"
+        className="flex flex-col md:flex-row xl:gap-10 gap-5 px-5 md:px-0"
         id="details"
       >
-        <div className="flex-1 ">
+        <div className="lg:w-[800px] md:w-[600px] sm:w-full">
           <p className="text-xl font-medium">
             {property.typeOfPlace} in {property.location.city},{" "}
             {property.location.country}
@@ -354,7 +354,7 @@ const Details = () => {
         </div>
 
         <div
-          className={` lg:w-[400px]  border hidden md:block border-gray-200 rounded-xl py-5 px-6 shadow-md sticky top-25  self-start `}
+          className={`md:w-full lg:w-[400px]  border hidden md:block border-gray-200 rounded-xl py-5 px-6 shadow-md sticky top-25  self-start `}
         >
           <BookingComponent {...property} />
         </div>

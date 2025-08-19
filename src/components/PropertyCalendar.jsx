@@ -1,7 +1,6 @@
 import { Calendar } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import React from "react";
 
 // Helper to extract unavailable dates from a single check-in and check-out
 function getUnavailableDates(checkIn, checkOut) {
@@ -124,6 +123,13 @@ export default function PropertyCalendar({ propertyId }) {
           .airbnb-calendar-component {
             max-width: 100%; /* Ensure full width on mobile */
             margin: 0 auto;
+          }
+
+          .rdrMonths {
+            margin: 0 auto;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
           }
 
         }
