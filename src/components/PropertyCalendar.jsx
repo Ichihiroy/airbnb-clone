@@ -2,7 +2,6 @@ import { Calendar } from "react-date-range";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 
-// Helper to extract unavailable dates from a single check-in and check-out
 function getUnavailableDates(checkIn, checkOut) {
   const dates = [];
   let current = new Date(checkIn);
